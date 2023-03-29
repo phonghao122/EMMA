@@ -1,0 +1,34 @@
+﻿
+@{
+    ViewBag.Title = "EMMA";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    EMMA.Models.EMMAEntities db = new EMMA.Models.EMMAEntities();
+}
+
+<h4 class="card-title mb-1">Chào Mừng Bạn Đến Với Công Ty Chúng Tôi 👋</h4>
+
+<form class="auth-login-form mt-2" method="post">
+    <div class="mb-1">
+        <label class="form-label">Username</label>
+        <input type="text"
+               class="form-control"
+               name="username"
+               placeholder="Username"
+               />
+    </div>
+
+    <div class="mb-1">
+        <div class="d-flex justify-content-between">
+            <label class="form-label" for="login-password">Password</label>
+            <input type="password"
+                   class="form-control form-control-merge"
+                   name="password"
+                   placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" />
+        </div>
+    </div>
+   <p style="color: orangered">
+       @TempData["error"]
+   </p>
+    <button class="btn btn-primary w-100" type="submit">Sign in</button>
+</form>
+
