@@ -22,8 +22,16 @@ namespace EMMA.Controllers
             var nhanVien = db.NHANVIEN.SingleOrDefault(m => m.Username.ToLower() == username.ToLower() && m.Password == password);
             if (nhanVien != null)
             {
-                Session["user"] = nhanVien;
-                return Redirect("~/Manager/HomeManager/Index");
+                if(nhanVien.Role == 1)
+                {
+                    Session["user"] = nhanVien;
+                    return Redirect("~/Manager/HomeManager/Index");
+                }
+                else
+                {
+                    Session["user"] = nhanVien;
+                    return Redirect("~/Staff/HomeStaff/Index");
+                }
             }
             else
             {

@@ -11,19 +11,6 @@ namespace EMMA.Areas.Manager.Controllers
     {
         EMMAEntities db = new EMMAEntities();
 
-        public bool CheckPhanQuyen(int idChucNang)
-        {
-            NHANVIEN nv = (NHANVIEN)Session["user"];
-            var checkPhanQuyen = db.PhanQuyen.Count(m => m.MaNV == nv.MaNV && m.IdChucNang == idChucNang);
-            if(checkPhanQuyen == 0)
-            {
-                return false;
-            }    
-            else
-            {
-                return true;
-            }    
-        }
         public ActionResult Index()
         {
             if (Session["user"] == null)
@@ -38,27 +25,14 @@ namespace EMMA.Areas.Manager.Controllers
 
         public ActionResult DanhSachNV()
         {
-            if(CheckPhanQuyen(1) == false)
-            {
-                return Redirect("~/Error/KhongCoQuyen");
-            }    
-            else
-            {
-                List<NHANVIEN> dsNV = db.NHANVIEN.ToList();
-                return View(dsNV);
-            }    
+            List<NHANVIEN> dsNV = db.NHANVIEN.ToList();
+            return View(dsNV);
         }
 
         public ActionResult ThemMoiNV()
         {
-            if (CheckPhanQuyen(2) == false)
-            {
-                return Redirect("~/Error/KhongCoQuyen");
-            }
-            else
-            {
-                return View();
-            }
+
+            return View();
         }
 
         [HttpPost]
@@ -71,15 +45,8 @@ namespace EMMA.Areas.Manager.Controllers
 
         public ActionResult CapNhatNV(string id)
         {
-            if (CheckPhanQuyen(3) == false)
-            {
-                return Redirect("~/Error/KhongCoQuyen");
-            }
-            else
-            {
-                var nhanVien = db.NHANVIEN.Find(id);
-                return View(nhanVien);
-            }    
+            var nhanVien = db.NHANVIEN.Find(id);
+            return View(nhanVien);
         }
 
         [HttpPost]
@@ -107,30 +74,15 @@ namespace EMMA.Areas.Manager.Controllers
 
         public ActionResult XoaNV(string id)
         {
-            if (CheckPhanQuyen(4) == false)
-            {
-                return Redirect("~/Error/KhongCoQuyen");
-            }
-            else
-            {
-                var nhanVien = db.NHANVIEN.FirstOrDefault(m => m.MaNV == id);
-                db.NHANVIEN.Remove(nhanVien);
-                db.SaveChanges();
-                return RedirectToAction("DanhSachNV");
-            }    
+            var nhanVien = db.NHANVIEN.FirstOrDefault(m => m.MaNV == id);
+            db.NHANVIEN.Remove(nhanVien);
+            db.SaveChanges();
+            return RedirectToAction("DanhSachNV");
         }
 
         public ActionResult ThongTinCaNhan()
         {
-            if(!CheckPhanQuyen(5) == false)
-            {
-                return Redirect("~/Error/KhongCoQuyen");
-            }
-            else
-            {
-                return View();
-            }    
-            
+            return View();
         }
     }
 }

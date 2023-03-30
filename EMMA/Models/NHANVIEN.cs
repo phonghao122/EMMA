@@ -37,6 +37,7 @@ namespace EMMA.Models
         public string MaCV { get; set; }
         public string BacLuong { get; set; }
         public byte[] Avt { get; set; }
+        public Nullable<int> Role { get; set; }
     
         public virtual CHUCVU CHUCVU { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
