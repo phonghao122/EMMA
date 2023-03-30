@@ -25,11 +25,13 @@ namespace EMMA.Controllers
                 if(nhanVien.Role == 1)
                 {
                     Session["user"] = nhanVien;
+                    Session["id"] = nhanVien.MaNV;
                     return Redirect("~/Manager/HomeManager/Index");
                 }
                 else
                 {
                     Session["user"] = nhanVien;
+                    Session["id"] = nhanVien.MaNV;
                     return Redirect("~/Staff/HomeStaff/Index");
                 }
             }

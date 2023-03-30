@@ -82,7 +82,9 @@ namespace EMMA.Areas.Manager.Controllers
 
         public ActionResult ThongTinCaNhan()
         {
-            return View();
+            var id = Session["id"].ToString();
+            var nv = db.NHANVIEN.Find(id);
+            return View(nv);
         }
     }
 }
