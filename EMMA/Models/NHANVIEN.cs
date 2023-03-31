@@ -36,7 +36,7 @@ namespace EMMA.Models
         public string MaPB { get; set; }
         public string MaCV { get; set; }
         public string BacLuong { get; set; }
-        public byte[] Avt { get; set; }
+        public string Avt { get; set; }
         public Nullable<int> Role { get; set; }
     
         public virtual CHUCVU CHUCVU { get; set; }
