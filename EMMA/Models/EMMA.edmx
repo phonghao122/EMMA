@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="EMMAModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="EMMAModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="CHUCNANG">
           <Key>
             <PropertyRef Name="ID" />
@@ -59,7 +59,7 @@
           <Property Name="MaPB" Type="varchar" MaxLength="50" />
           <Property Name="MaCV" Type="varchar" MaxLength="50" />
           <Property Name="BacLuong" Type="varchar" MaxLength="50" />
-          <Property Name="Avt" Type="image" />
+          <Property Name="Avt" Type="text" />
           <Property Name="Role" Type="int" />
         </EntityType>
         <EntityType Name="PhanQuyen">
@@ -206,7 +206,8 @@
             <End Role="PhanQuyen" EntitySet="PhanQuyen" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="EMMAModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -268,13 +269,13 @@
           <Property Name="MaPB" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="MaCV" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="BacLuong" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Avt" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Avt" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Role" Type="Int32" />
           <NavigationProperty Name="CHUCVU" Relationship="Self.FK_NHANVIEN_CHUCVU1" FromRole="NHANVIEN" ToRole="CHUCVU" />
           <NavigationProperty Name="HOPDONGLAODONG" Relationship="Self.FK_HOPDONGLAODONG_NHANVIEN" FromRole="NHANVIEN" ToRole="HOPDONGLAODONG" />
           <NavigationProperty Name="LUONG" Relationship="Self.FK_NHANVIEN_LUONG1" FromRole="NHANVIEN" ToRole="LUONG" />
           <NavigationProperty Name="PHONGBAN" Relationship="Self.FK_NHANVIEN_PHONGBAN1" FromRole="NHANVIEN" ToRole="PHONGBAN" />
           <NavigationProperty Name="PhanQuyen" Relationship="Self.FK_PhanQuyen_NHANVIEN" FromRole="NHANVIEN" ToRole="PhanQuyen" />
-          <Property Name="Role" Type="Int32" />
         </EntityType>
         <EntityType Name="PhanQuyen">
           <Key>
@@ -334,7 +335,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_HOPDONGLAODONG_NHANVIEN">
-          <End Role="NHANVIEN" Type="Self.NHANVIEN" Multiplicity="1" />
+          <End Role="NHANVIEN" Type="Self.NHANVIEN" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="HOPDONGLAODONG" Type="Self.HOPDONGLAODONG" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="NHANVIEN">
@@ -469,7 +472,6 @@
           <EntitySetMapping Name="NHANVIEN">
             <EntityTypeMapping TypeName="EMMAModel.NHANVIEN">
               <MappingFragment StoreEntitySet="NHANVIEN">
-                <ScalarProperty Name="Role" ColumnName="Role" />
                 <ScalarProperty Name="MaNV" ColumnName="MaNV" />
                 <ScalarProperty Name="HoTenNV" ColumnName="HoTenNV" />
                 <ScalarProperty Name="GioiTinh" ColumnName="GioiTinh" />
@@ -486,6 +488,7 @@
                 <ScalarProperty Name="MaCV" ColumnName="MaCV" />
                 <ScalarProperty Name="BacLuong" ColumnName="BacLuong" />
                 <ScalarProperty Name="Avt" ColumnName="Avt" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
