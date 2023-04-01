@@ -1,11 +1,11 @@
 ﻿@model EMMA.Models.NHANVIEN
 
 @{
-    ViewBag.Title = "ThongTinCaNhan";
+    ViewBag.Title = "ChiTietNV";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>ThongTinCaNhan</h2>
+<h2>ChiTietNV</h2>
 
 <div>
     <h4>NHANVIEN</h4>
@@ -122,11 +122,9 @@
             @Html.DisplayFor(model => model.PHONGBAN.TenPB)
         </dd>
 
-
-
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "CapNhatTTCN", new { id = Model.MaNV }) |
-    @Html.ActionLink("Back to Home", "Index")
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MaNV }) |
+    @Html.ActionLink("Back to List", "Index")
 </p>

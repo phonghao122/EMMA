@@ -1,14 +1,13 @@
 ﻿@model EMMA.Models.NHANVIEN
 
 @{
-    ViewBag.Title = "CapNhatNV";
+    ViewBag.Title = "CapNhatTTCN";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    EMMA.Models.EMMAEntities db = new EMMA.Models.EMMAEntities();
 }
 
-<h2>CapNhatNV</h2>
+<h2>CapNhatTTCN</h2>
 
-@using (Html.BeginForm("CapNhatNV", "HomeManager", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     
@@ -53,7 +52,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.NgaySinh, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <input class="form-control" name="NgaySinh" type="date" />
+                <input class = "form-control" name="NgaySinh" type="date" />
                 @Html.ValidationMessageFor(model => model.NgaySinh, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -107,45 +106,6 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.MaPB, "MaPB", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <select class="form-control" name="MaPB">
-                    @foreach (var item in db.PHONGBAN)
-                    {
-                        <option value="@item.MaPB">@item.TenPB</option>
-                    }
-                </select>
-                @Html.ValidationMessageFor(model => model.MaPB, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.MaCV, "MaCV", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <select class="form-control" name="MaCV">
-                    @foreach (var item in db.CHUCVU)
-                    {
-                        <option value="@item.MaCV">@item.TenCV</option>
-                    }
-                </select>
-                @Html.ValidationMessageFor(model => model.MaCV, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.BacLuong, "BacLuong", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <select class="form-control" name="BacLuong">
-                    @foreach (var item in db.LUONG)
-                    {
-                        <option value="@item.BacLuong">@item.LuongCoBan</option>
-                    }
-                </select>
-                @Html.ValidationMessageFor(model => model.BacLuong, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
             @Html.LabelFor(model => model.Avt, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <input type="file" name="fileAnh" />
@@ -162,5 +122,5 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "DanhSachNV")
+    @Html.ActionLink("Cancel", "ThongTinCaNhan")
 </div>

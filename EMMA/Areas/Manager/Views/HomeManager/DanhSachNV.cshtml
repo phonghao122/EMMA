@@ -13,40 +13,19 @@
 <table class="table">
     <tr>
         <th>
+            @Html.DisplayNameFor(model => model.Avt)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.HoTenNV)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.GioiTinh)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Username)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Password)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.NgaySinh)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DiaChi)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.SDT)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.QueQuan)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CCCD)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TrinhDoHocVan)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Avt)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.CHUCVU.TenCV)
@@ -57,11 +36,16 @@
         <th>
             @Html.DisplayNameFor(model => model.PHONGBAN.TenPB)
         </th>
+
+
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
+        <td>
+            <img src="@item.Avt" style="width:100px; height:100px" />
+        </td>
         <td>
             @Html.DisplayFor(modelItem => item.HoTenNV)
         </td>
@@ -69,34 +53,10 @@
             @Html.DisplayFor(modelItem => item.GioiTinh)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Username)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Password)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NgaySinh)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DiaChi)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.SDT)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.QueQuan)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CCCD)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TrinhDoHocVan)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Avt)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.CHUCVU.TenCV)
@@ -107,10 +67,11 @@
         <td>
             @Html.DisplayFor(modelItem => item.PHONGBAN.TenPB)
         </td>
+
         <td>
-            @Html.ActionLink("Edit", "CapNhatNV", new { id=item.MaNV }) |
-            @Html.ActionLink("Details", "Details", new { id=item.MaNV }) |
-            @Html.ActionLink("Delete", "XoaNV", new { id=item.MaNV })
+            @Html.ActionLink("Edit", "CapNhatNV", new { id = item.MaNV }) |
+            @Html.ActionLink("Details", "ChiTietNV", new { id = item.MaNV }) |
+            @Html.ActionLink("Delete", "XoaNV", new { id = item.MaNV })
         </td>
     </tr>
 }
