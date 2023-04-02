@@ -199,6 +199,78 @@ namespace EMMA.Areas.Manager.Controllers
             }
         }
 
+        public ActionResult DSLuong()
+        {
+            if (Session["user"] == null)
+            {
+                return Redirect("~/Login/Login");
+            }
+            else
+            {
+                List<LUONG> dsLuong = db.LUONG.ToList();
+                return View(dsLuong);
+            }
 
+        }
+
+        public ActionResult ThemLuong()
+        {
+            if (Session["user"] == null)
+            {
+                return Redirect("~/Login/Login");
+            }
+            else
+            {
+                return View();
+            }
+        }
+
+        [HttpPost]
+        public ActionResult ThemLuong(LUONG model)
+        {
+            db.LUONG.Add(model);
+            db.SaveChanges();
+            return RedirectToAction("DSLuong");
+        }
+
+        public ActionResult CapNhatLuong(string id)
+        {
+            if (Session["user"] == null)
+            {
+                return Redirect("~/Login/Login");
+            }
+            else
+            {
+                var luong = db.LUONG.Find(id);
+                return View(luong);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult CapNhatLuong(string id, LUONG model)
+        {
+            var luong = db.LUONG.Find(model.BacLuong);
+            luong.HSLuong = model.HSLuong;
+            luong.HSPhuCap = model.HSPhuCap;
+            luong.LuongCoBan = model.LuongCoBan;
+            luong.SoNgayNghi = model.SoNgayNghi;
+            db.SaveChanges();
+            return RedirectToAction("DSLuong");
+        }
+
+        public ActionResult XoaLuong(string id)
+        {
+            if (Session["user"] == null)
+            {
+                return Redirect("~/Login/Login");
+            }
+            else
+            {
+                var luong = db.LUONG.Find(id);
+                db.LUONG.Remove(luong);
+                db.SaveChanges();
+                return RedirectToAction("DSLuong");
+            }
+        }
     }
 }
