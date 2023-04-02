@@ -198,7 +198,10 @@ namespace EMMA.Areas.Manager.Controllers
                 return View(nv);
             }
         }
+        //public ActionResult PhongBan()
+        //{
 
+        //}
 
     }
 }

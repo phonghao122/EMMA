@@ -187,6 +187,7 @@
     <Content Include="Areas\Manager\Views\HomeManager\ChiTietNV.cshtml" />
     <Content Include="Areas\Staff\Views\HomeStaff\CapNhatTTCN.cshtml" />
     <Content Include="Areas\Staff\Views\HomeStaff\ChamCong.cshtml" />
+    <Content Include="Areas\Manager\Views\HomeManager\PhongBan.cshtml" />
     <None Include="packages.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
