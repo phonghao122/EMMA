@@ -187,9 +187,6 @@
     <Content Include="Areas\Manager\Views\HomeManager\ChiTietNV.cshtml" />
     <Content Include="Areas\Staff\Views\HomeStaff\CapNhatTTCN.cshtml" />
     <Content Include="Areas\Staff\Views\HomeStaff\ChamCong.cshtml" />
-    <Content Include="Areas\Manager\Views\HomeManager\DSLuong.cshtml" />
-    <Content Include="Areas\Manager\Views\HomeManager\ThemLuong.cshtml" />
-    <Content Include="Areas\Manager\Views\HomeManager\CapNhatLuong.cshtml" />
     <None Include="packages.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
