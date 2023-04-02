@@ -5,168 +5,286 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     EMMA.Models.EMMAEntities db = new EMMA.Models.EMMAEntities();
 }
+<body class="horizontal-layout horizontal-menu  navbar-floating footer-static  " data-open="hover"
+      data-menu="horizontal-menu" data-col="">
+    <nav class="header-navbar navbar-expand-lg navbar navbar-fixed align-items-center navbar-shadow navbar-brand-center"
+         data-nav="brand-center">
+        <div style="margin-top:1px " class="navbar-header d-xl-block d-none">
+            <ul class="nav navbar-nav">
+                <li class="nav-item">
+                    <a class="navbar-brand"
+                       href="/html/ltr/horizontal-menu-template/index.html">
+                        <h2 class="brand-text mb-0">Vuexy</h2>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="navbar-container d-flex content">
+            <div class="bookmark-wrapper d-flex align-items-center">
+                <ul class="nav navbar-nav d-xl-none">
+                    <li class="nav-item">
+                        <a class="nav-link menu-toggle" href="#">
+                            <i class="ficon"
+                               data-feather="menu"></i>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav bookmark-icons">
+                    <li class="nav-item d-none d-lg-block">
+                        <a class="nav-link" href="app-email.html"
+                           data-bs-toggle="tooltip" data-bs-placement="bottom" title="Email">
+                            <i class="ficon"
+                               data-feather="mail"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item d-none d-lg-block">
+                        <a class="nav-link" href="app-chat.html"
+                           data-bs-toggle="tooltip" data-bs-placement="bottom" title="Chat">
+                            <i class="ficon"
+                               data-feather="message-square"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item d-none d-lg-block">
+                        <a class="nav-link" href="app-calendar.html"
+                           data-bs-toggle="tooltip" data-bs-placement="bottom" title="Calendar">
+                            <i class="ficon"
+                               data-feather="calendar"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item d-none d-lg-block">
+                        <a class="nav-link" href="app-todo.html"
+                           data-bs-toggle="tooltip" data-bs-placement="bottom" title="Todo">
+                            <i class="ficon"
+                               data-feather="check-square"></i>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav">
+                    <li class="nav-item d-none d-lg-block">
+                        <a class="nav-link bookmark-star">
+                            <i class="ficon text-warning" data-feather="star"></i>
+                        </a>
 
-<h2>ThemMoiNV</h2>
+                    </li>
+                </ul>
+            </div>
+            <ul class="nav navbar-nav align-items-center ms-auto">
+                <li class="nav-item d-none d-lg-block">
+                    <a class="nav-link nav-link-style">
+                        <i class="ficon"
+                           data-feather="moon"></i>
+                    </a>
+                </li>
+                <li class="nav-item dropdown dropdown-user">
+                    <a class="nav-link dropdown-toggle dropdown-user-link"
+                       id="dropdown-user" href="#" data-bs-toggle="dropdown" aria-haspopup="true"
+                       aria-expanded="false">
+                        <div class="user-nav d-sm-flex d-none">
+                            <span class="user-name fw-bolder">John Doe</span><span class="user-status">Admin</span>
+                        </div><span class="avatar">
+                            <img class="round"
+                                 src="~/public/app-assets/images/portrait/small/avatar-s-11.jpg" alt="avatar"
+                                 height="40" width="40"><span class="avatar-status-online"></span>
+                        </span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-user">
+                        @*<a class="dropdown-item"
+                            href="page-faq.html"><i class="me-50" data-feather="help-circle"></i> FAQ</a>*@
+                        <a class="dropdown-item" href="~/Login/Logout">
+                            <i class="me-50"
+                               data-feather="power"></i> Logout
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <ul class="main-search-list-defaultlist-other-list d-none">
+        <li class="auto-suggestion justify-content-between">
+            <a class="d-flex align-items-center justify-content-between w-100 py-50">
+                <div class="d-flex justify-content-start">
+                    <span class="me-75"
+                          data-feather="alert-circle"></span><span>No results found.</span>
+                </div>
+            </a>
+        </li>
+    </ul>
+    <div class="container-fluid">
+        <div class="horizontal-menu-wrapper">
+            <div class="header-navbar navbar-expand-sm navbar navbar-horizontal floating-nav avbar-light navbar-shadow menu-border "
+                 role="navigation" data-menu="menu-wrapper" data-menu-type="floating-nav">
+                <div class="navbar-header">
+                </div>
+                <div class="shadow-bottom"></div>
+                <div class="navbar-container main-menu-content" data-menu="menu-container">
+                    <ul class="nav navbar-nav" id="main-menu-navigation" data-menu="menu-navigation">
+                        <li data-menu="">
+                            <a class="dropdown-item d-flex align-items-center" href="~/Manager/HomeManager/Index" data-bs-toggle="" data-i18n="Dashboards">
+                                <span data-i18n="Analytics"><h5>Trang Chủ</h5></span>
+                            </a>
+                        </li>
 
-@using (Html.BeginForm("ThemMoiNV","HomeManager",FormMethod.Post, new {enctype = "multipart/form-data" })) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>NHANVIEN</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.MaNV, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.MaNV, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.MaNV, "", new { @class = "text-danger" })
+                        <li data-menu="">
+                            <a class="dropdown-item d-flex align-items-center" href="~/Manager/HomeManager/DanhSachNV" data-bs-toggle="" data-i18n="Analytics">
+                                <span data-i18n="Analytics"><h5>Danh Sách Nhân Viên</h5></span>
+                            </a>
+                        </li>
+
+
+                    </ul>
+                </div>
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.HoTenNV, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.HoTenNV, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.HoTenNV, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.GioiTinh, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.GioiTinh, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.GioiTinh, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Username, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.NgaySinh, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <input class = "form-control" name="NgaySinh" type="date" />
-                @Html.ValidationMessageFor(model => model.NgaySinh, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.DiaChi, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DiaChi, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DiaChi, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.SDT, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.SDT, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.SDT, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.QueQuan, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.QueQuan, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.QueQuan, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.CCCD, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CCCD, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CCCD, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.TrinhDoHocVan, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.TrinhDoHocVan, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.TrinhDoHocVan, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.MaPB, "MaPB", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <select class="form-control" name="MaPB">
-                    @foreach(var item in db.PHONGBAN)
-                {
-                    <option value="@item.MaPB">@item.TenPB</option>
-                }
-                </select>
-                @Html.ValidationMessageFor(model => model.MaPB, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.MaCV, "MaCV", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <select class="form-control" name="MaCV">
-                    @foreach (var item in db.CHUCVU)
-                    {
-                        <option value="@item.MaCV">@item.TenCV</option>
-                    }
-                </select>
-                @Html.ValidationMessageFor(model => model.MaCV, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.BacLuong, "BacLuong", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <select class="form-control" name="BacLuong">
-                    @foreach (var item in db.LUONG)
-                    {
-                        <option value="@item.BacLuong">@item.LuongCoBan</option>
-                    }
-                </select>
-                @Html.ValidationMessageFor(model => model.BacLuong, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Avt, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <input type="file" name="fileAnh" />
-                @Html.ValidationMessageFor(model => model.Avt, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
     </div>
-}
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
+    <script src="~/public/app-assets/vendors/js/vendors.min.js"></script>
+    <script src="~/public/app-assets/vendors/js/ui/jquery.sticky.js"></script>
+    <script src="~/public/app-assets/vendors/js/charts/apexcharts.min.js"></script>
+    <script src="~/public/app-assets/vendors/js/extensions/toastr.min.js"></script>
+    <script src="~/public/app-assets/js/core/app-menu.js"></script>
+    <script src="~/public/app-assets/js/core/app.js"></script>
+    <script src="~/public/app-assets/js/scripts/pages/dashboard-ecommerce.js"></script>
+
+
+
+</body>
+
+<div class="row">
+    <div class="col-md-1">
+    </div>
+
+    <div style="margin-top:180px" class="col-md-10">
+        <form method="post">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="card">
+                <div class="card-heard" style="background-color:aqua">
+                    <h2 style="margin-top: 30px" class="card-title mb-2 text-center">Thêm Mới Nhân Viên</h2>
+                </div>
+                <div class="card-body">
+                    <label> <h4>Mã Nhân Viên:</h4> </label>
+                    <div class="col-md-12">
+                        @Html.EditorFor(model => model.MaNV, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.MaNV, "", new { @class = "text-danger" })
+                    </div>
+                    <label class="manv mt-1"> <h4>Họ Tên Nhân Viên:</h4> </label>
+                    <div class="col-md-12">
+                        @Html.EditorFor(model => model.HoTenNV, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.HoTenNV, "", new { @class = "text-danger" })
+                    </div>
+                    <label class="gt mt-1"> <h4>Giới Tính:</h4> </label>
+                    <div class="col-md-12">
+                        <select name="GioiTinh" class="form-control">
+                            <option value="Nam">Nam</option>
+                            <option value="Nữ">Nữ</option>
+                            <option value="Khác">Khác</option>
+                        </select>
+                        @Html.ValidationMessageFor(model => model.GioiTinh, "", new { @class = "text-danger" })
+                    </div>
+                    <label class="username mt-1"> <h4>Username:</h4> </label>
+                    <div class="col-md-12">
+                        @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+                    </div>
+                    <label class="mk mt-1"> <h4>Password:</h4> </label>
+                    <div class="col-md-12">
+                        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                    </div>
+                    <label class="ns mt-1"> <h4>Ngày Sinh:</h4> </label>
+                    <div class="col-md-12">
+                        <input class="form-control" name="NgaySinh" type="date" />
+                        @Html.ValidationMessageFor(model => model.NgaySinh, "", new { @class = "text-danger" })
+                    </div>
+                    <label class="dc mt-1"> <h4>Địa Chỉ:</h4> </label>
+                    <div class="col-md-12">
+                        @Html.EditorFor(model => model.DiaChi, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.DiaChi, "", new { @class = "text-danger" })
+                    </div>
+                    <label class="sdt mt-1"> <h4>Số Điện Thoại:</h4> </label>
+                    <div class="col-md-12">
+                        @Html.EditorFor(model => model.SDT, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.SDT, "", new { @class = "text-danger" })
+                    </div>
+                    <label class="email mt-1"> <h4>Email:</h4> </label>
+                    <div class="col-md-12">
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                    </div>
+                    <label class="qq mt-1"> <h4>Quê Quán:</h4> </label>
+                    <div class="col-md-12">
+                        @Html.EditorFor(model => model.QueQuan, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.QueQuan, "", new { @class = "text-danger" })
+                    </div>
+                    <label class="CCCD mt-1"> <h4>Căng Cước Công Dân:</h4> </label>
+                    <div class="col-md-12">
+                        @Html.EditorFor(model => model.CCCD, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CCCD, "", new { @class = "text-danger" })
+                    </div>
+                    <label class="tdhv mt-1"> <h4>Trình Độ Học Vấn:</h4> </label>
+                    <div class="col-md-12">
+                        <select name="TrinhDoHocVan" class="form-control">
+                            <option value="Tieuhoc">Tiểu Học</option>
+                            <option value="Trunghoccoso">Trung Học Cơ Sở</option>
+                            <option value="Trunghocphothong">Trung Học Phổ Thông</option>
+                            <option value="Caodang">Cao Đẳng</option>
+                            <option value="Daihoc">Đại Học</option>
+                            <option value="Caohoc">Cao Học</option>
+                            <option value="Thacsi">Thạc Sĩ</option>
+                            <option value="Tiensi">Tiến Sĩ</option>
+                            <option value="khac">Khác</option>
+                        </select>
+                        @Html.ValidationMessageFor(model => model.TrinhDoHocVan, "", new { @class = "text-danger" })
+                    </div>
+                    <label class="mapb mt-1"> <h4>Mã Phòng Ban:</h4> </label>
+                    <div class="col-md-12">
+                        <select class="form-control" name="MaPB">
+                            @foreach (var item in db.PHONGBAN)
+                            {
+                                <option value="@item.MaPB">@item.TenPB</option>
+                            }
+                        </select>
+                        @Html.ValidationMessageFor(model => model.MaPB, "", new { @class = "text-danger" })
+                    </div>
+                    <label class="macv mt-1"> <h4>Mã Công Việc:</h4> </label>
+                    <div class="col-md-12">
+                        <select class="form-control" name="MaCV">
+                            @foreach (var item in db.CHUCVU)
+                            {
+                                <option value="@item.MaCV">@item.TenCV</option>
+                            }
+                        </select>
+                        @Html.ValidationMessageFor(model => model.MaCV, "", new { @class = "text-danger" })
+                    </div>
+                    <label class="bl mt-1"> <h4>Bậc Lương:</h4> </label>
+                    <div class="col-md-12">
+                        <select class="form-control" name="BacLuong">
+                            @foreach (var item in db.LUONG)
+                            {
+                                <option value="@item.BacLuong">@item.LuongCoBan</option>
+                            }
+                        </select>
+                        @Html.ValidationMessageFor(model => model.BacLuong, "", new { @class = "text-danger" })
+                    </div>
+                    <label class="avt mt-1"> <h4>Avata:</h4> </label>
+                    <div class="col-md-12">
+                        <input type="file" name="fileAnh" />
+                        @Html.ValidationMessageFor(model => model.Avt, "", new { @class = "text-danger" })
+                    </div>
+
+
+                </div>
+                <div class="card-footer">
+                    <div class="form-group">
+                        <div class="text-end">
+                            <button class="btn btn-warning"> @Html.ActionLink("Back to List", "Index")</button>
+                            <input type="submit" value="ThemMoi" class="btn btn-info">
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+    </form>
 </div>
