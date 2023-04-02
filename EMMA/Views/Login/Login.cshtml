@@ -1,34 +1,30 @@
 ﻿
 @{
     ViewBag.Title = "EMMA";
-    Layout = "~/Views/Shared/_Layout.cshtml";
     EMMA.Models.EMMAEntities db = new EMMA.Models.EMMAEntities();
 }
 
-<h4 class="card-title mb-1">Chào Mừng Bạn Đến Với Công Ty Chúng Tôi 👋</h4>
-
-<form class="auth-login-form mt-2" method="post">
-    <div class="mb-1">
-        <label class="form-label">Username</label>
-        <input type="text"
-               class="form-control"
-               name="username"
-               placeholder="Username"
-               />
-    </div>
-
-    <div class="mb-1">
-        <div class="d-flex justify-content-between">
-            <label class="form-label" for="login-password">Password</label>
-            <input type="password"
-                   class="form-control form-control-merge"
-                   name="password"
-                   placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" />
+<div style="background-color:aliceblue" class="giaodien">
+    <div style="margin-top: 200px" class="row">
+        <div class="col-md-4">
         </div>
+        <div class="col-md-5 ">
+            <form method="post">
+                <div class="card">
+                    <div class="card-heard" style="background-color:aqua">
+                        <h4 style="margin-top: 30px" class="card-title mb-1 text-center">Chào Mừng Bạn Đến Với Công Ty Chúng Tôi 👋</h4>
+                    </div>
+                    <div class="card-body">
+                        <label>Username</label>
+                        <input class="form-control" name="Username" type="text" placeholder="Username">
+                        <label>Password</label>
+                        <input type="password" name="Password" class="form-control" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;">
+                    </div>
+                    <div class="card-footer text-center">
+                        <button class="btn btn-primary w-50" type="submit">Sign in</button>
+                    </div>
+                </div>
+        </div>
+        </form>
     </div>
-   <p style="color: orangered">
-       @TempData["error"]
-   </p>
-    <button class="btn btn-primary w-100" type="submit">Sign in</button>
-</form>
-
+</div>
