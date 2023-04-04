@@ -1,0 +1,42 @@
+﻿@model IEnumerable<EMMA.Models.PHONGBAN>
+
+@{
+    ViewBag.Title = "DanhSachPB";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div style="margin-top: 150px" class="row">
+    <div class="col-md-1">
+    </div>
+    <p>
+        @Html.ActionLink("Create New", "ThemPB")
+    </p>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-heard" style="background-color:aquamarine ">
+                <h3 style="margin-top:25px" class="text-center"> Danh Sách Phòng Ban</h3>
+            </div>
+            <div class="card-body">
+                <table class="table tabel-bordered">
+                    <thead>
+                    <th class="text-center text-nowrap">Mã Phòng Ban</th>
+                    <th class="text-center text-nowrap">Tên Phòng Ban</th>
+                    <th class="text-center text-nowrap">Acction</th>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="text-center text-nowrap">@Html.DisplayFor(modelItem => item.MaPB)</td>
+                                <td class="text-center text-nowrap">@Html.DisplayFor(modelItem => item.TenPB)</td>
+                                <td class="text-center text-nowrap">
+                                    <button class="btn btn-success">@Html.ActionLink("Edit", "EditPB", new { id = item.MaPB })</button>
+                                    <button class="btn btn-warning">@Html.ActionLink("Delete", "DeletePB", new { id = item.MaPB })</button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>

@@ -143,7 +143,7 @@
                     <h2 style="margin-top: 30px" class="card-title mb-2 text-center">Thêm Mới Nhân Viên</h2>
                 </div>
                 <div class="card-body">
-                    <label> <h4>Mã Nhân Viên:</h4> </label>
+                    <label class="manv mt-1"> <h4>Mã Nhân Viên:</h4> </label>
                     <div class="col-md-12">
                         @Html.EditorFor(model => model.MaNV, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.MaNV, "", new { @class = "text-danger" })
@@ -189,7 +189,7 @@
                     </div>
                     <label class="email mt-1"> <h4>Email:</h4> </label>
                     <div class="col-md-12">
-                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                        <input name="Email" type="email" class="form-control" />
                         @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                     </div>
                     <label class="qq mt-1"> <h4>Quê Quán:</h4> </label>
@@ -205,15 +205,15 @@
                     <label class="tdhv mt-1"> <h4>Trình Độ Học Vấn:</h4> </label>
                     <div class="col-md-12">
                         <select name="TrinhDoHocVan" class="form-control">
-                            <option value="Tieuhoc">Tiểu Học</option>
-                            <option value="Trunghoccoso">Trung Học Cơ Sở</option>
-                            <option value="Trunghocphothong">Trung Học Phổ Thông</option>
-                            <option value="Caodang">Cao Đẳng</option>
-                            <option value="Daihoc">Đại Học</option>
-                            <option value="Caohoc">Cao Học</option>
-                            <option value="Thacsi">Thạc Sĩ</option>
-                            <option value="Tiensi">Tiến Sĩ</option>
-                            <option value="khac">Khác</option>
+                            <option value="Tiểu Học">Tiểu Học</option>
+                            <option value="Trung Học Cơ Sở">Trung Học Cơ Sở</option>
+                            <option value="Trung Học Phổ Thông">Trung Học Phổ Thông</option>
+                            <option value="Cao Đẳng">Cao Đẳng</option>
+                            <option value="Đại Học">Đại Học</option>
+                            <option value="Cao Học">Cao Học</option>
+                            <option value="Thạc Sĩ">Thạc Sĩ</option>
+                            <option value="Tiến Sĩ">Tiến Sĩ</option>
+                            <option value="Khác">Khác</option>
                         </select>
                         @Html.ValidationMessageFor(model => model.TrinhDoHocVan, "", new { @class = "text-danger" })
                     </div>
@@ -249,7 +249,7 @@
                     </div>
                     <label class="avt mt-1"> <h4>Avata:</h4> </label>
                     <div class="col-md-12">
-                        <input type="file" name="fileAnh" />
+                        <input type="file" class="form-control" name="fileAnh" />
                         @Html.ValidationMessageFor(model => model.Avt, "", new { @class = "text-danger" })
                     </div>
 

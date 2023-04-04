@@ -1,0 +1,33 @@
+﻿@model EMMA.Models.PHONGBAN
+
+@{
+    ViewBag.Title = "ThemPB";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div style="margin-top: 150px" class="row">
+    <div class="col-md-1">
+    </div>
+    <div class="col-md-4">
+        <form method="post">
+            <div class="card">
+                <div class="card-heard" style="background-color:aquamarine">
+                    <h3 style="margin-top:25px " class="text-center"> Thêm Phòng Ban</h3>
+                </div>
+                <div class="card-body">
+                    <label> <h4>Mã Phòng Ban</h4> </label>
+                    <input class="form-control" type="text" name="MaPB" placeholder="Nhập Mã Phòng Ban ...">
+                    <label style="margin-top:10px "><h4>Tên Phòng Ban</h4> </label>
+                    <input class="form-control" type="text" name="TenPB" placeholder="Nhập Tên Phòng Ban ...">
+                </div>
+                <div class="card-footer text-end">
+                    <button type="submit" class="btn btn-info"> Thêm Mới </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    @Html.ActionLink("Back to List", "DanhSachPB")
+</div>

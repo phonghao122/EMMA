@@ -187,7 +187,9 @@
     <Content Include="Areas\Manager\Views\HomeManager\ChiTietNV.cshtml" />
     <Content Include="Areas\Staff\Views\HomeStaff\CapNhatTTCN.cshtml" />
     <Content Include="Areas\Staff\Views\HomeStaff\ChamCong.cshtml" />
-    <Content Include="Areas\Manager\Views\HomeManager\PhongBan.cshtml" />
+    <Content Include="Areas\Manager\Views\HomeManager\ThemPB.cshtml" />
+    <Content Include="Areas\Manager\Views\HomeManager\EditPB.cshtml" />
+    <Content Include="Areas\Manager\Views\HomeManager\DanhSachPB.cshtml" />
     <None Include="packages.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
