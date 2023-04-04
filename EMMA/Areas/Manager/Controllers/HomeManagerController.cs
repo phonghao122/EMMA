@@ -200,13 +200,27 @@ namespace EMMA.Areas.Manager.Controllers
         }
         public ActionResult DanhSachPB()
         {
-            List<PHONGBAN> pb = db.PHONGBAN.ToList();
-            return View(pb);
+            if (Session["user"] == null)
+            {
+                return Redirect("~/Login/Login");
+            }
+            else
+            {
+                List<PHONGBAN> pb = db.PHONGBAN.ToList();
+                return View(pb);
+            }
         }
 
         public ActionResult ThemPB()
         {
-            return View();
+            if (Session["user"] == null)
+            {
+                return Redirect("~/Login/Login");
+            }
+            else
+            {
+                return View();
+            }
         }
 
         [HttpPost]
@@ -219,8 +233,15 @@ namespace EMMA.Areas.Manager.Controllers
 
         public ActionResult EditPB(string id)
         {
-            var pb = db.PHONGBAN.Find(id);
-            return View(pb);
+            if (Session["user"] == null)
+            {
+                return Redirect("~/Login/Login");
+            }
+            else
+            {
+                var pb = db.PHONGBAN.Find(id);
+                return View(pb);
+            }
         }
 
         [HttpPost]
