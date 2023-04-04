@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     EMMA.Models.EMMAEntities db = new EMMA.Models.EMMAEntities();
 }
-<body class="horizontal-layout horizontal-menu  navbar-floating footer-static  " data-open="hover"
+<body class="horizontal-layout horizontal-menu  navbar-floating footer-static" data-open="hover"
       data-menu="horizontal-menu" data-col="">
     <nav class="header-navbar navbar-expand-lg navbar navbar-fixed align-items-center navbar-shadow navbar-brand-center"
          data-nav="brand-center">
@@ -14,21 +14,13 @@
                 <li class="nav-item">
                     <a class="navbar-brand"
                        href="/html/ltr/horizontal-menu-template/index.html">
-                        <h2 class="brand-text mb-0">Vuexy</h2>
+                        <h2 class="brand-text mb-0">EMMA</h2>
                     </a>
                 </li>
             </ul>
         </div>
         <div class="navbar-container d-flex content">
             <div class="bookmark-wrapper d-flex align-items-center">
-                <ul class="nav navbar-nav d-xl-none">
-                    <li class="nav-item">
-                        <a class="nav-link menu-toggle" href="#">
-                            <i class="ficon"
-                               data-feather="menu"></i>
-                        </a>
-                    </li>
-                </ul>
                 <ul class="nav navbar-nav bookmark-icons">
                     <li class="nav-item d-none d-lg-block">
                         <a class="nav-link" href="app-email.html"
@@ -84,12 +76,10 @@
                         </div><span class="avatar">
                             <img class="round"
                                  src="~/public/app-assets/images/portrait/small/avatar-s-11.jpg" alt="avatar"
-                                 height="40" width="40"><span class="avatar-status-online"></span>
+                                 height="40" width="40">
                         </span>
                     </a>
-                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-user">
-                        @*<a class="dropdown-item"
-                            href="page-faq.html"><i class="me-50" data-feather="help-circle"></i> FAQ</a>*@
+                    <div class="dropdown-menu dropdown-menu-end">
                         <a class="dropdown-item" href="~/Login/Logout">
                             <i class="me-50"
                                data-feather="power"></i> Logout
@@ -99,19 +89,9 @@
             </ul>
         </div>
     </nav>
-    <ul class="main-search-list-defaultlist-other-list d-none">
-        <li class="auto-suggestion justify-content-between">
-            <a class="d-flex align-items-center justify-content-between w-100 py-50">
-                <div class="d-flex justify-content-start">
-                    <span class="me-75"
-                          data-feather="alert-circle"></span><span>No results found.</span>
-                </div>
-            </a>
-        </li>
-    </ul>
     <div class="container-fluid">
         <div class="horizontal-menu-wrapper">
-            <div class="header-navbar navbar-expand-sm navbar navbar-horizontal floating-nav avbar-light navbar-shadow menu-border "
+            <div style="margin-top:0px" class="header-navbar navbar-expand-sm navbar navbar-horizontal floating-nav avbar-light navbar-shadow menu-border "
                  role="navigation" data-menu="menu-wrapper" data-menu-type="floating-nav">
                 <div class="navbar-header">
                 </div>
@@ -143,7 +123,6 @@
     <script src="~/public/app-assets/vendors/js/vendors.min.js"></script>
     <script src="~/public/app-assets/vendors/js/ui/jquery.sticky.js"></script>
     <script src="~/public/app-assets/vendors/js/charts/apexcharts.min.js"></script>
-    <script src="~/public/app-assets/vendors/js/extensions/toastr.min.js"></script>
     <script src="~/public/app-assets/js/core/app-menu.js"></script>
     <script src="~/public/app-assets/js/core/app.js"></script>
     <script src="~/public/app-assets/js/scripts/pages/dashboard-ecommerce.js"></script>
@@ -157,14 +136,14 @@
     </div>
 
     <div style="margin-top:180px" class="col-md-10">
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="card">
                 <div class="card-heard" style="background-color:aqua">
                     <h2 style="margin-top: 30px" class="card-title mb-2 text-center">Thêm Mới Nhân Viên</h2>
                 </div>
                 <div class="card-body">
-                    <label> <h4>Mã Nhân Viên:</h4> </label>
+                    <label class="manv mt-1"> <h4>Mã Nhân Viên:</h4> </label>
                     <div class="col-md-12">
                         @Html.EditorFor(model => model.MaNV, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.MaNV, "", new { @class = "text-danger" })
@@ -210,7 +189,7 @@
                     </div>
                     <label class="email mt-1"> <h4>Email:</h4> </label>
                     <div class="col-md-12">
-                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                        <input name="Email" type="email" class="form-control" />
                         @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                     </div>
                     <label class="qq mt-1"> <h4>Quê Quán:</h4> </label>
@@ -226,19 +205,19 @@
                     <label class="tdhv mt-1"> <h4>Trình Độ Học Vấn:</h4> </label>
                     <div class="col-md-12">
                         <select name="TrinhDoHocVan" class="form-control">
-                            <option value="Tieuhoc">Tiểu Học</option>
-                            <option value="Trunghoccoso">Trung Học Cơ Sở</option>
-                            <option value="Trunghocphothong">Trung Học Phổ Thông</option>
-                            <option value="Caodang">Cao Đẳng</option>
-                            <option value="Daihoc">Đại Học</option>
-                            <option value="Caohoc">Cao Học</option>
-                            <option value="Thacsi">Thạc Sĩ</option>
-                            <option value="Tiensi">Tiến Sĩ</option>
-                            <option value="khac">Khác</option>
+                            <option value="Tiểu Học">Tiểu Học</option>
+                            <option value="Trung Học Cơ Sở">Trung Học Cơ Sở</option>
+                            <option value="Trung Học Phổ Thông">Trung Học Phổ Thông</option>
+                            <option value="Cao Đẳng">Cao Đẳng</option>
+                            <option value="Đại Học">Đại Học</option>
+                            <option value="Cao Học">Cao Học</option>
+                            <option value="Thạc Sĩ">Thạc Sĩ</option>
+                            <option value="Tiến Sĩ">Tiến Sĩ</option>
+                            <option value="Khác">Khác</option>
                         </select>
                         @Html.ValidationMessageFor(model => model.TrinhDoHocVan, "", new { @class = "text-danger" })
                     </div>
-                    <label class="mapb mt-1"> <h4>Mã Phòng Ban:</h4> </label>
+                    <label class="mapb mt-1"> <h4> Phòng Ban:</h4> </label>
                     <div class="col-md-12">
                         <select class="form-control" name="MaPB">
                             @foreach (var item in db.PHONGBAN)
@@ -248,7 +227,7 @@
                         </select>
                         @Html.ValidationMessageFor(model => model.MaPB, "", new { @class = "text-danger" })
                     </div>
-                    <label class="macv mt-1"> <h4>Mã Công Việc:</h4> </label>
+                    <label class="macv mt-1"> <h4>Chức Vụ:</h4> </label>
                     <div class="col-md-12">
                         <select class="form-control" name="MaCV">
                             @foreach (var item in db.CHUCVU)
@@ -258,7 +237,7 @@
                         </select>
                         @Html.ValidationMessageFor(model => model.MaCV, "", new { @class = "text-danger" })
                     </div>
-                    <label class="bl mt-1"> <h4>Bậc Lương:</h4> </label>
+                    <label class="bl mt-1"> <h4>Lương Cơ Bản:</h4> </label>
                     <div class="col-md-12">
                         <select class="form-control" name="BacLuong">
                             @foreach (var item in db.LUONG)
@@ -270,7 +249,7 @@
                     </div>
                     <label class="avt mt-1"> <h4>Avata:</h4> </label>
                     <div class="col-md-12">
-                        <input type="file" name="fileAnh" />
+                        <input type="file" class="form-control" name="fileAnh" />
                         @Html.ValidationMessageFor(model => model.Avt, "", new { @class = "text-danger" })
                     </div>
 
