@@ -95,5 +95,38 @@ namespace EMMA.Areas.Staff.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        public ActionResult ChamCong(ChamCong model, bool faceid)
+        {
+            model.Ngay = (int)DateTime.Now.Day;
+            model.Thang = (int)DateTime.Now.Month;
+            model.Nam = (int)DateTime.Now.Year;
+            model.MaNV = Session["user_id"].ToString();
+            if (faceid == true)
+            {
+                if(model.Vao == null)
+                {
+                    model.Vao = "Yes";
+                    Session["Da Cham cong"] = "Vao";
+                    db.ChamCong.Add(model);
+                    db.SaveChanges();
+                    return View();
+                }
+                else
+                {
+                    model.Ra = "Yes";
+                    db.ChamCong.Add(model);
+                    db.SaveChanges();
+                    Session["Da Cham cong"] = "Ra";
+                    return View();
+                }
+            }
+            else
+            {
+                Session["Chua Cham Cong"] = "Yes";
+                return View();
+            }
+        }
     }
 }

@@ -121,7 +121,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\CHUCNANG.cs">
+    <Compile Include="Models\ChamCong.cs">
       <DependentUpon>EMMA.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CHUCVU.cs">
@@ -151,9 +151,6 @@
     <Compile Include="Models\NHANVIEN.cs">
       <DependentUpon>EMMA.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\PhanQuyen.cs">
-      <DependentUpon>EMMA.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\PHONGBAN.cs">
       <DependentUpon>EMMA.tt</DependentUpon>
     </Compile>
@@ -177,6 +174,12 @@
     <Content Include="Areas\Manager\Views\HomeManager\CapNhatNV.cshtml" />
     <Content Include="Areas\Staff\Views\HomeStaff\ThongTinCaNhan.cshtml" />
     <Content Include="Areas\Manager\Views\HomeManager\ThongTinCaNhan.cshtml" />
+    <Content Include="Areas\Manager\Views\HomeManager\ChiTietNV.cshtml" />
+    <Content Include="Areas\Staff\Views\HomeStaff\CapNhatTTCN.cshtml" />
+    <Content Include="Areas\Staff\Views\HomeStaff\ChamCong.cshtml" />
+    <Content Include="Areas\Manager\Views\HomeManager\ThemPB.cshtml" />
+    <Content Include="Areas\Manager\Views\HomeManager\EditPB.cshtml" />
+    <Content Include="Areas\Manager\Views\HomeManager\DanhSachPB.cshtml" />
     <EntityDeploy Include="Models\EMMA.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>EMMA.Designer.cs</LastGenOutput>
@@ -184,12 +187,6 @@
     <Content Include="Models\EMMA.edmx.diagram">
       <DependentUpon>EMMA.edmx</DependentUpon>
     </Content>
-    <Content Include="Areas\Manager\Views\HomeManager\ChiTietNV.cshtml" />
-    <Content Include="Areas\Staff\Views\HomeStaff\CapNhatTTCN.cshtml" />
-    <Content Include="Areas\Staff\Views\HomeStaff\ChamCong.cshtml" />
-    <Content Include="Areas\Manager\Views\HomeManager\ThemPB.cshtml" />
-    <Content Include="Areas\Manager\Views\HomeManager\EditPB.cshtml" />
-    <Content Include="Areas\Manager\Views\HomeManager\DanhSachPB.cshtml" />
     <None Include="packages.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
