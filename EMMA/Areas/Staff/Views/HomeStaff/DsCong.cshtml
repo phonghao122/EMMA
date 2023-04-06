@@ -1,0 +1,46 @@
+﻿@model IEnumerable<EMMA.Models.ChamCong>
+
+@{
+    ViewBag.Title = "DsCong";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    EMMA.Models.EMMAEntities db = new EMMA.Models.EMMAEntities();
+}
+
+@Html.ActionLink("Create New", "ChamCong")
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.NHANVIEN.HoTenNV)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Vao)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Ra)
+        </th>
+
+        <th></th>
+    </tr>
+    @{
+        string id = Session["id"].ToString();
+        foreach (var item in db.ChamCong.ToList())
+        {
+            if (item.MaNV == id)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NHANVIEN.HoTenNV)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Vao)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Ra)
+                    </td>
+
+                </tr>
+            }
+        }
+    }
+
+</table>

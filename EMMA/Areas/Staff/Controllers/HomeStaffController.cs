@@ -91,18 +91,40 @@ namespace EMMA.Areas.Staff.Controllers
             
         }
 
+        public ActionResult DsCong()
+        {
+            if (Session["user"] == null)
+            {
+                return Redirect("~/Login/Login");
+            }
+            else
+            {
+                List<ChamCong> chamCongs = db.ChamCong.ToList();
+                return View(chamCongs);
+            }
+        }
+
         public ActionResult ChamCong()
         {
-            return View();
+            if (Session["user"] == null)
+            {
+                return Redirect("~/Login/Login");
+            }
+            else
+            {
+                return View();
+            }
         }
 
         [HttpPost]
-        public ActionResult ChamCong(ChamCong model, bool faceid)
+        public ActionResult ChamCong(ChamCong model)
         {
+
+            bool faceid = true;
             model.Ngay = (int)DateTime.Now.Day;
             model.Thang = (int)DateTime.Now.Month;
             model.Nam = (int)DateTime.Now.Year;
-            model.MaNV = Session["user_id"].ToString();
+            model.MaNV = Session["id"].ToString();
             if (faceid == true)
             {
                 if(model.Vao == null)
