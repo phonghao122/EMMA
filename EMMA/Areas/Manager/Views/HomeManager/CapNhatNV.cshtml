@@ -110,6 +110,12 @@
                             </a>
                         </li>
 
+                        <li data-menu="">
+                            <a class="dropdown-item d-flex align-items-center" href="~/Manager/HomeManager/DanhSachPB" data-bs-toggle="" data-i18n="Analytics">
+                                <span data-i18n="Analytics"><h5>Phòng Ban</h5></span>
+                            </a>
+                        </li>
+
 
                     </ul>
                 </div>
@@ -131,14 +137,15 @@
 
 </body>
 
+
 <div class="row">
     <div class="col-md-1">
     </div>
 
-    <div style="margin-top:180px" class="col-md-10">
+    <div style="margin-top:160px" class="col-md-10">
         <form method="post" enctype="multipart/form-data">
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            @Html.HiddenFor(model => model.MaNV);
+            @Html.HiddenFor(model => model.MaNV)
             <div class="card">
                 <div class="card-heard" style="background-color:aqua">
                     <h2 style="margin-top: 30px" class="card-title mb-2 text-center">Cập Nhật Nhân Viên</h2>
