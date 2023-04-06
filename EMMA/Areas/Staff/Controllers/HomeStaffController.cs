@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Metadata.Edm;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -125,29 +126,65 @@ namespace EMMA.Areas.Staff.Controllers
             model.Thang = (int)DateTime.Now.Month;
             model.Nam = (int)DateTime.Now.Year;
             model.MaNV = Session["id"].ToString();
-            if (faceid == true)
+            if(model.Vao == null)
             {
-                if(model.Vao == null)
+                if (faceid == true)
                 {
                     model.Vao = "Yes";
-                    Session["Da Cham cong"] = "Vao";
                     db.ChamCong.Add(model);
                     db.SaveChanges();
-                    return View();
+                    return RedirectToAction("DsCong");
                 }
                 else
                 {
-                    model.Ra = "Yes";
-                    db.ChamCong.Add(model);
-                    db.SaveChanges();
-                    Session["Da Cham cong"] = "Ra";
-                    return View();
+                    Session["Chua Cham Cong"] = "Yes";
+                    return View(model);
                 }
             }
             else
             {
-                Session["Chua Cham Cong"] = "Yes";
-                return View();
+                Session["Da Cham Cong"] = "Yes";
+                return RedirectToAction("DsCong");
+            }
+        }
+
+        public ActionResult ChamCongRa(string id)
+        {
+            if (Session["user"] == null)
+            {
+                return Redirect("~/Login/Login");
+            }
+            else
+            {
+                var nv = db.ChamCong.FirstOrDefault(m => m.MaNV == id && m.Ngay ==(int) DateTime.Now.Day && m.Thang == (int)DateTime.Now.Month && m.Nam == (int)DateTime.Now.Year);
+                return View(nv);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult ChamCongRa(ChamCong model)
+        {
+            bool faceid = true;
+            var nv = db.ChamCong.FirstOrDefault(m => m.MaNV == model.MaNV && m.Ngay == model.Ngay && m.Thang == model.Thang && m.Nam == model.Nam);
+            if(nv.Ra == null)
+            {
+                if (faceid == true)
+                {
+                    model.Ra = "Yes";
+                    nv.Ra = model.Ra;
+                    db.SaveChanges();
+                    return RedirectToAction("DsCong");
+                }
+                else
+                {
+                    Session["Chua Cham Cong"] = "Yes";
+                    return View(model);
+                }
+            }
+            else
+            {
+                Session["Da Cham Cong"] = "Yes";
+                return RedirectToAction("DsCong");
             }
         }
     }

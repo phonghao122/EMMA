@@ -13,6 +13,15 @@
             @Html.DisplayNameFor(model => model.NHANVIEN.HoTenNV)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.Ngay)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Thang)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Nam)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Vao)
         </th>
         <th>
@@ -32,10 +41,22 @@
                         @Html.DisplayFor(modelItem => item.NHANVIEN.HoTenNV)
                     </td>
                     <td>
+                        @Html.DisplayFor(modelItem => item.Ngay)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Thang)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nam)
+                    </td>
+                    <td>
                         @Html.DisplayFor(modelItem => item.Vao)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Ra)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Cham Cong Ra", "ChamCongRa", new { id = item.MaNV})
                     </td>
 
                 </tr>
