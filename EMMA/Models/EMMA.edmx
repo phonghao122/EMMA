@@ -5,13 +5,19 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="EMMAModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="CHUCNANG">
+        <EntityType Name="ChamCong">
           <Key>
-            <PropertyRef Name="ID" />
+            <PropertyRef Name="MaNV" />
+            <PropertyRef Name="Ngay" />
+            <PropertyRef Name="Thang" />
+            <PropertyRef Name="Nam" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" />
-          <Property Name="TenChucNang" Type="nvarchar" MaxLength="50" />
-          <Property Name="MaChucNang" Type="nvarchar" MaxLength="50" />
+          <Property Name="MaNV" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Ngay" Type="int" Nullable="false" />
+          <Property Name="Thang" Type="int" Nullable="false" />
+          <Property Name="Nam" Type="int" Nullable="false" />
+          <Property Name="Vao" Type="varchar" MaxLength="50" />
+          <Property Name="Ra" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="CHUCVU">
           <Key>
@@ -62,15 +68,6 @@
           <Property Name="Avt" Type="text" />
           <Property Name="Role" Type="int" />
         </EntityType>
-        <EntityType Name="PhanQuyen">
-          <Key>
-            <PropertyRef Name="MaNV" />
-            <PropertyRef Name="IdChucNang" />
-          </Key>
-          <Property Name="MaNV" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="IdChucNang" Type="int" Nullable="false" />
-          <Property Name="GhiChu" Type="nvarchar" MaxLength="50" />
-        </EntityType>
         <EntityType Name="PHONGBAN">
           <Key>
             <PropertyRef Name="MaPB" />
@@ -88,6 +85,18 @@
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
+        <Association Name="FK_ChamCong_NHANVIEN">
+          <End Role="NHANVIEN" Type="Self.NHANVIEN" Multiplicity="1" />
+          <End Role="ChamCong" Type="Self.ChamCong" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NHANVIEN">
+              <PropertyRef Name="MaNV" />
+            </Principal>
+            <Dependent Role="ChamCong">
+              <PropertyRef Name="MaNV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_HOPDONGLAODONG_NHANVIEN">
           <End Role="NHANVIEN" Type="Self.NHANVIEN" Multiplicity="1" />
           <End Role="HOPDONGLAODONG" Type="Self.HOPDONGLAODONG" Multiplicity="*" />
@@ -136,39 +145,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PhanQuyen_CHUCNANG">
-          <End Role="CHUCNANG" Type="Self.CHUCNANG" Multiplicity="1" />
-          <End Role="PhanQuyen" Type="Self.PhanQuyen" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CHUCNANG">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="PhanQuyen">
-              <PropertyRef Name="IdChucNang" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PhanQuyen_NHANVIEN">
-          <End Role="NHANVIEN" Type="Self.NHANVIEN" Multiplicity="1" />
-          <End Role="PhanQuyen" Type="Self.PhanQuyen" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="NHANVIEN">
-              <PropertyRef Name="MaNV" />
-            </Principal>
-            <Dependent Role="PhanQuyen">
-              <PropertyRef Name="MaNV" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="EMMAModelStoreContainer">
-          <EntitySet Name="CHUCNANG" EntityType="Self.CHUCNANG" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ChamCong" EntityType="Self.ChamCong" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CHUCVU" EntityType="Self.CHUCVU" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HOPDONGLAODONG" EntityType="Self.HOPDONGLAODONG" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LUONG" EntityType="Self.LUONG" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NHANVIEN" EntityType="Self.NHANVIEN" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="PhanQuyen" EntityType="Self.PhanQuyen" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PHONGBAN" EntityType="Self.PHONGBAN" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ChamCong_NHANVIEN" Association="Self.FK_ChamCong_NHANVIEN">
+            <End Role="NHANVIEN" EntitySet="NHANVIEN" />
+            <End Role="ChamCong" EntitySet="ChamCong" />
+          </AssociationSet>
           <AssociationSet Name="FK_HOPDONGLAODONG_NHANVIEN" Association="Self.FK_HOPDONGLAODONG_NHANVIEN">
             <End Role="NHANVIEN" EntitySet="NHANVIEN" />
             <End Role="HOPDONGLAODONG" EntitySet="HOPDONGLAODONG" />
@@ -185,27 +173,25 @@
             <End Role="PHONGBAN" EntitySet="PHONGBAN" />
             <End Role="NHANVIEN" EntitySet="NHANVIEN" />
           </AssociationSet>
-          <AssociationSet Name="FK_PhanQuyen_CHUCNANG" Association="Self.FK_PhanQuyen_CHUCNANG">
-            <End Role="CHUCNANG" EntitySet="CHUCNANG" />
-            <End Role="PhanQuyen" EntitySet="PhanQuyen" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PhanQuyen_NHANVIEN" Association="Self.FK_PhanQuyen_NHANVIEN">
-            <End Role="NHANVIEN" EntitySet="NHANVIEN" />
-            <End Role="PhanQuyen" EntitySet="PhanQuyen" />
-          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="EMMAModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="CHUCNANG">
+        <EntityType Name="ChamCong">
           <Key>
-            <PropertyRef Name="ID" />
+            <PropertyRef Name="MaNV" />
+            <PropertyRef Name="Ngay" />
+            <PropertyRef Name="Thang" />
+            <PropertyRef Name="Nam" />
           </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" />
-          <Property Name="TenChucNang" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="MaChucNang" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="PhanQuyen" Relationship="Self.FK_PhanQuyen_CHUCNANG" FromRole="CHUCNANG" ToRole="PhanQuyen" />
+          <Property Name="MaNV" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Ngay" Type="Int32" Nullable="false" />
+          <Property Name="Thang" Type="Int32" Nullable="false" />
+          <Property Name="Nam" Type="Int32" Nullable="false" />
+          <Property Name="Vao" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Ra" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="NHANVIEN" Relationship="Self.FK_ChamCong_NHANVIEN" FromRole="ChamCong" ToRole="NHANVIEN" />
         </EntityType>
         <EntityType Name="CHUCVU">
           <Key>
@@ -258,22 +244,11 @@
           <Property Name="BacLuong" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Avt" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Role" Type="Int32" />
+          <NavigationProperty Name="ChamCong" Relationship="Self.FK_ChamCong_NHANVIEN" FromRole="NHANVIEN" ToRole="ChamCong" />
           <NavigationProperty Name="CHUCVU" Relationship="Self.FK_NHANVIEN_CHUCVU1" FromRole="NHANVIEN" ToRole="CHUCVU" />
           <NavigationProperty Name="HOPDONGLAODONG" Relationship="Self.FK_HOPDONGLAODONG_NHANVIEN" FromRole="NHANVIEN" ToRole="HOPDONGLAODONG" />
           <NavigationProperty Name="LUONG" Relationship="Self.FK_NHANVIEN_LUONG1" FromRole="NHANVIEN" ToRole="LUONG" />
           <NavigationProperty Name="PHONGBAN" Relationship="Self.FK_NHANVIEN_PHONGBAN1" FromRole="NHANVIEN" ToRole="PHONGBAN" />
-          <NavigationProperty Name="PhanQuyen" Relationship="Self.FK_PhanQuyen_NHANVIEN" FromRole="NHANVIEN" ToRole="PhanQuyen" />
-        </EntityType>
-        <EntityType Name="PhanQuyen">
-          <Key>
-            <PropertyRef Name="MaNV" />
-            <PropertyRef Name="IdChucNang" />
-          </Key>
-          <Property Name="MaNV" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="IdChucNang" Type="Int32" Nullable="false" />
-          <Property Name="GhiChu" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="CHUCNANG" Relationship="Self.FK_PhanQuyen_CHUCNANG" FromRole="PhanQuyen" ToRole="CHUCNANG" />
-          <NavigationProperty Name="NHANVIEN" Relationship="Self.FK_PhanQuyen_NHANVIEN" FromRole="PhanQuyen" ToRole="NHANVIEN" />
         </EntityType>
         <EntityType Name="PHONGBAN">
           <Key>
@@ -293,24 +268,20 @@
           <Property Name="version" Type="Int32" />
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
-        <Association Name="FK_PhanQuyen_CHUCNANG">
-          <End Role="CHUCNANG" Type="Self.CHUCNANG" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="PhanQuyen" Type="Self.PhanQuyen" Multiplicity="*" />
+        <Association Name="FK_ChamCong_NHANVIEN">
+          <End Role="NHANVIEN" Type="Self.NHANVIEN" Multiplicity="1" />
+          <End Role="ChamCong" Type="Self.ChamCong" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="CHUCNANG">
-              <PropertyRef Name="ID" />
+            <Principal Role="NHANVIEN">
+              <PropertyRef Name="MaNV" />
             </Principal>
-            <Dependent Role="PhanQuyen">
-              <PropertyRef Name="IdChucNang" />
+            <Dependent Role="ChamCong">
+              <PropertyRef Name="MaNV" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_NHANVIEN_CHUCVU1">
-          <End Role="CHUCVU" Type="Self.CHUCVU" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="CHUCVU" Type="Self.CHUCVU" Multiplicity="0..1" />
           <End Role="NHANVIEN" Type="Self.NHANVIEN" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="CHUCVU">
@@ -322,9 +293,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_HOPDONGLAODONG_NHANVIEN">
-          <End Role="NHANVIEN" Type="Self.NHANVIEN" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="NHANVIEN" Type="Self.NHANVIEN" Multiplicity="1" />
           <End Role="HOPDONGLAODONG" Type="Self.HOPDONGLAODONG" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="NHANVIEN">
@@ -336,9 +305,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_NHANVIEN_LUONG1">
-          <End Role="LUONG" Type="Self.LUONG" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="LUONG" Type="Self.LUONG" Multiplicity="0..1" />
           <End Role="NHANVIEN" Type="Self.NHANVIEN" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="LUONG">
@@ -350,9 +317,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_NHANVIEN_PHONGBAN1">
-          <End Role="PHONGBAN" Type="Self.PHONGBAN" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="PHONGBAN" Type="Self.PHONGBAN" Multiplicity="0..1" />
           <End Role="NHANVIEN" Type="Self.NHANVIEN" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="PHONGBAN">
@@ -363,32 +328,17 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PhanQuyen_NHANVIEN">
-          <End Role="NHANVIEN" Type="Self.NHANVIEN" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="PhanQuyen" Type="Self.PhanQuyen" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="NHANVIEN">
-              <PropertyRef Name="MaNV" />
-            </Principal>
-            <Dependent Role="PhanQuyen">
-              <PropertyRef Name="MaNV" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="EMMAEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="CHUCNANG" EntityType="Self.CHUCNANG" />
+          <EntitySet Name="ChamCong" EntityType="Self.ChamCong" />
           <EntitySet Name="CHUCVU" EntityType="Self.CHUCVU" />
           <EntitySet Name="HOPDONGLAODONG" EntityType="Self.HOPDONGLAODONG" />
           <EntitySet Name="LUONG" EntityType="Self.LUONG" />
           <EntitySet Name="NHANVIEN" EntityType="Self.NHANVIEN" />
-          <EntitySet Name="PhanQuyen" EntityType="Self.PhanQuyen" />
           <EntitySet Name="PHONGBAN" EntityType="Self.PHONGBAN" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
-          <AssociationSet Name="FK_PhanQuyen_CHUCNANG" Association="Self.FK_PhanQuyen_CHUCNANG">
-            <End Role="CHUCNANG" EntitySet="CHUCNANG" />
-            <End Role="PhanQuyen" EntitySet="PhanQuyen" />
+          <AssociationSet Name="FK_ChamCong_NHANVIEN" Association="Self.FK_ChamCong_NHANVIEN">
+            <End Role="NHANVIEN" EntitySet="NHANVIEN" />
+            <End Role="ChamCong" EntitySet="ChamCong" />
           </AssociationSet>
           <AssociationSet Name="FK_NHANVIEN_CHUCVU1" Association="Self.FK_NHANVIEN_CHUCVU1">
             <End Role="CHUCVU" EntitySet="CHUCVU" />
@@ -406,10 +356,6 @@
             <End Role="PHONGBAN" EntitySet="PHONGBAN" />
             <End Role="NHANVIEN" EntitySet="NHANVIEN" />
           </AssociationSet>
-          <AssociationSet Name="FK_PhanQuyen_NHANVIEN" Association="Self.FK_PhanQuyen_NHANVIEN">
-            <End Role="NHANVIEN" EntitySet="NHANVIEN" />
-            <End Role="PhanQuyen" EntitySet="PhanQuyen" />
-          </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
@@ -417,12 +363,15 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="EMMAModelStoreContainer" CdmEntityContainer="EMMAEntities">
-          <EntitySetMapping Name="CHUCNANG">
-            <EntityTypeMapping TypeName="EMMAModel.CHUCNANG">
-              <MappingFragment StoreEntitySet="CHUCNANG">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="TenChucNang" ColumnName="TenChucNang" />
-                <ScalarProperty Name="MaChucNang" ColumnName="MaChucNang" />
+          <EntitySetMapping Name="ChamCong">
+            <EntityTypeMapping TypeName="EMMAModel.ChamCong">
+              <MappingFragment StoreEntitySet="ChamCong">
+                <ScalarProperty Name="MaNV" ColumnName="MaNV" />
+                <ScalarProperty Name="Ngay" ColumnName="Ngay" />
+                <ScalarProperty Name="Thang" ColumnName="Thang" />
+                <ScalarProperty Name="Nam" ColumnName="Nam" />
+                <ScalarProperty Name="Vao" ColumnName="Vao" />
+                <ScalarProperty Name="Ra" ColumnName="Ra" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -476,15 +425,6 @@
                 <ScalarProperty Name="BacLuong" ColumnName="BacLuong" />
                 <ScalarProperty Name="Avt" ColumnName="Avt" />
                 <ScalarProperty Name="Role" ColumnName="Role" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PhanQuyen">
-            <EntityTypeMapping TypeName="EMMAModel.PhanQuyen">
-              <MappingFragment StoreEntitySet="PhanQuyen">
-                <ScalarProperty Name="MaNV" ColumnName="MaNV" />
-                <ScalarProperty Name="IdChucNang" ColumnName="IdChucNang" />
-                <ScalarProperty Name="GhiChu" ColumnName="GhiChu" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

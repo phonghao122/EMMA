@@ -25,12 +25,11 @@ namespace EMMA.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<CHUCNANG> CHUCNANG { get; set; }
+        public virtual DbSet<ChamCong> ChamCong { get; set; }
         public virtual DbSet<CHUCVU> CHUCVU { get; set; }
         public virtual DbSet<HOPDONGLAODONG> HOPDONGLAODONG { get; set; }
         public virtual DbSet<LUONG> LUONG { get; set; }
         public virtual DbSet<NHANVIEN> NHANVIEN { get; set; }
-        public virtual DbSet<PhanQuyen> PhanQuyen { get; set; }
         public virtual DbSet<PHONGBAN> PHONGBAN { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
     }

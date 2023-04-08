@@ -72,13 +72,11 @@
                        aria-expanded="false">
                         <div class="user-nav d-sm-flex d-none">
                             <span class="user-name fw-bolder">John Doe</span><span class="user-status">Admin</span>
-                        </div>
-                        <span class="avatar">
+                        </div><span class="avatar">
                             <img class="round"
                                  src="~/public/app-assets/images/portrait/small/avatar-s-11.jpg" alt="avatar"
                                  height="40" width="40">
                         </span>
-                        
                     </a>
                     <div class="dropdown-menu dropdown-menu-end">
                         <a class="dropdown-item" href="~/Login/Logout">
@@ -92,7 +90,7 @@
     </nav>
     <div class="container-fluid">
         <div class="horizontal-menu-wrapper">
-            <div style="margin-top:2px" class="header-navbar navbar-expand-sm navbar navbar-horizontal floating-nav avbar-light navbar-shadow menu-border "
+            <div style="margin-top:0px" class="header-navbar navbar-expand-sm navbar navbar-horizontal floating-nav avbar-light navbar-shadow menu-border "
                  role="navigation" data-menu="menu-wrapper" data-menu-type="floating-nav">
                 <div class="navbar-header">
                 </div>
@@ -108,6 +106,12 @@
                         <li data-menu="">
                             <a class="dropdown-item d-flex align-items-center" href="~/Manager/HomeManager/DanhSachNV" data-bs-toggle="" data-i18n="Analytics">
                                 <span data-i18n="Analytics"><h5>Danh Sách Nhân Viên</h5></span>
+                            </a>
+                        </li>
+
+                        <li data-menu="">
+                            <a class="dropdown-item d-flex align-items-center" href="~/Manager/HomeManager/DanhSachPB" data-bs-toggle="" data-i18n="Analytics">
+                                <span data-i18n="Analytics"><h5>Phòng Ban</h5></span>
                             </a>
                         </li>
 
@@ -131,6 +135,7 @@
 
 
 </body>
+
 <div class="row">
     <div style="margin-top:150px" class="col-12"
         <div class="card">
@@ -155,7 +160,7 @@
                         <a  href="~/Manager/HomeManager/ThemMoiNV" data-bs-toggle="" >
                             <button style="height:45px" class="btn btn-info"><h5 style="margin-top:1px">Thêm Mới</h5></button>
                         </a>
-                       
+
                     </div>
                 </div>
                 </div>

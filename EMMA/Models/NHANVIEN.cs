@@ -17,8 +17,8 @@ namespace EMMA.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public NHANVIEN()
         {
+            this.ChamCong = new HashSet<ChamCong>();
             this.HOPDONGLAODONG = new HashSet<HOPDONGLAODONG>();
-            this.PhanQuyen = new HashSet<PhanQuyen>();
         }
     
         public string MaNV { get; set; }
@@ -39,12 +39,12 @@ namespace EMMA.Models
         public string Avt { get; set; }
         public Nullable<int> Role { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ChamCong> ChamCong { get; set; }
         public virtual CHUCVU CHUCVU { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<HOPDONGLAODONG> HOPDONGLAODONG { get; set; }
         public virtual LUONG LUONG { get; set; }
         public virtual PHONGBAN PHONGBAN { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PhanQuyen> PhanQuyen { get; set; }
     }
 }
