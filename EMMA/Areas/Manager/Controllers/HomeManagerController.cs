@@ -293,6 +293,7 @@ namespace EMMA.Areas.Manager.Controllers
                             dsCong.Add(item);
                         }
                     }
+                    model.MaNV = i.MaNV;
                     model.SoNgayCong = dsCong.Count;
                     model.SoNgayNghi = DateTime.DaysInMonth(nam, thang) - model.SoNgayCong;
                     model.Thang = thang;
@@ -372,8 +373,11 @@ namespace EMMA.Areas.Manager.Controllers
                 }
                 foreach (var item in ds)
                 {
+                    model.BacLuong = item.NHANVIEN.BacLuong;
+                    model.MaNV = item.MaNV;
                     model.HSPhuCap = HsPhuCap((int)item.SoNgayCong, (int)item.SoNgayNghi, item.Thang, item.Nam, item.MaNV);
-                    model.ThucLinh = model.LUONG.LuongCoBan * model.LUONG.HSLuong + model.HSPhuCap * model.LUONG.LuongCoBan;
+                    var luongCB = db.LUONG.Find(model.BacLuong);
+                    model.ThucLinh = luongCB.LuongCoBan * luongCB.HSLuong + model.HSPhuCap * luongCB.LuongCoBan;
                     db.HOADONLUONG.Add(model);
                 }
                 db.SaveChanges();
