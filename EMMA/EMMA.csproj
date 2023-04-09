@@ -127,6 +127,9 @@
     <Compile Include="Models\CHUCVU.cs">
       <DependentUpon>EMMA.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CONG.cs">
+      <DependentUpon>EMMA.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\EMMA.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -141,6 +144,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>EMMA.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HOADONLUONG.cs">
+      <DependentUpon>EMMA.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\HOPDONGLAODONG.cs">
       <DependentUpon>EMMA.tt</DependentUpon>
@@ -179,6 +185,10 @@
     <Content Include="Areas\Manager\Views\HomeManager\ThemPB.cshtml" />
     <Content Include="Areas\Manager\Views\HomeManager\EditPB.cshtml" />
     <Content Include="Areas\Manager\Views\HomeManager\DanhSachPB.cshtml" />
+    <Content Include="Areas\Staff\Views\HomeStaff\DsCong.cshtml" />
+    <Content Include="Areas\Staff\Views\HomeStaff\ChamCong.cshtml" />
+    <Content Include="Areas\Staff\Views\HomeStaff\ChamCongRa.cshtml" />
+    <Content Include="Areas\Manager\Views\HomeManager\DsLuong.cshtml" />
     <EntityDeploy Include="Models\EMMA.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>EMMA.Designer.cs</LastGenOutput>
@@ -186,9 +196,9 @@
     <Content Include="Models\EMMA.edmx.diagram">
       <DependentUpon>EMMA.edmx</DependentUpon>
     </Content>
-    <Content Include="Areas\Staff\Views\HomeStaff\DsCong.cshtml" />
-    <Content Include="Areas\Staff\Views\HomeStaff\ChamCong.cshtml" />
-    <Content Include="Areas\Staff\Views\HomeStaff\ChamCongRa.cshtml" />
+    <Content Include="Areas\Manager\Views\HomeManager\DsCong.cshtml" />
+    <Content Include="Areas\Manager\Views\HomeManager\TongHopCong.cshtml" />
+    <Content Include="Areas\Manager\Views\HomeManager\TongHopLuong.cshtml" />
     <None Include="packages.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
@@ -205,6 +215,7 @@
     <Folder Include="Areas\Manager\Data\" />
     <Folder Include="Areas\Staff\Data\" />
     <Folder Include="Data\" />
+    <Folder Include="Views\Luong\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
