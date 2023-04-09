@@ -17,15 +17,16 @@ namespace EMMA.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public LUONG()
         {
+            this.HOADONLUONG = new HashSet<HOADONLUONG>();
             this.NHANVIEN = new HashSet<NHANVIEN>();
         }
     
         public string BacLuong { get; set; }
         public Nullable<double> LuongCoBan { get; set; }
         public Nullable<double> HSLuong { get; set; }
-        public Nullable<double> HSPhuCap { get; set; }
-        public Nullable<double> SoNgayNghi { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<HOADONLUONG> HOADONLUONG { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NHANVIEN> NHANVIEN { get; set; }
     }
