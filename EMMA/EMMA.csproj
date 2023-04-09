@@ -215,6 +215,7 @@
     <Folder Include="Areas\Manager\Data\" />
     <Folder Include="Areas\Staff\Data\" />
     <Folder Include="Data\" />
+    <Folder Include="face_regision\" />
     <Folder Include="Views\Luong\" />
   </ItemGroup>
   <ItemGroup>
