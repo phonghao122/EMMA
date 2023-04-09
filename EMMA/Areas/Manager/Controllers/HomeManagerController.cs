@@ -198,10 +198,67 @@ namespace EMMA.Areas.Manager.Controllers
                 return View(nv);
             }
         }
-        //public ActionResult PhongBan()
-        //{
+        public ActionResult DanhSachPB()
+        {
+            if (Session["user"] == null)
+            {
+                return Redirect("~/Login/Login");
+            }
+            else
+            {
+                List<PHONGBAN> pb = db.PHONGBAN.ToList();
+                return View(pb);
+            }
+        }
 
-        //}
+        public ActionResult ThemPB()
+        {
+            if (Session["user"] == null)
+            {
+                return Redirect("~/Login/Login");
+            }
+            else
+            {
+                return View();
+            }
+        }
 
+        [HttpPost]
+        public ActionResult ThemPB(PHONGBAN model)
+        {
+            db.PHONGBAN.Add(model);
+            db.SaveChanges();
+            return RedirectToAction("DanhSachPB");
+        }
+
+        public ActionResult EditPB(string id)
+        {
+            if (Session["user"] == null)
+            {
+                return Redirect("~/Login/Login");
+            }
+            else
+            {
+                var pb = db.PHONGBAN.Find(id);
+                return View(pb);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult EditPB(PHONGBAN model, string id)
+        {
+            var pb = db.PHONGBAN.Find(model.MaPB);
+            pb.TenPB = model.TenPB;
+            db.SaveChanges();
+            return RedirectToAction("DanhSachPB");
+        }
+
+        public ActionResult DeletePB(string id)
+        {
+            var pb = db.PHONGBAN.Find(id);
+            db.PHONGBAN.Remove(pb);
+            db.SaveChanges();
+            return RedirectToAction("DanhSachPB");
+        }
     }
 }

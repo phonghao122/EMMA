@@ -12,13 +12,15 @@ namespace EMMA.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class PhanQuyen
+    public partial class ChamCong
     {
         public string MaNV { get; set; }
-        public int IdChucNang { get; set; }
-        public string GhiChu { get; set; }
+        public int Ngay { get; set; }
+        public int Thang { get; set; }
+        public int Nam { get; set; }
+        public string Vao { get; set; }
+        public string Ra { get; set; }
     
-        public virtual CHUCNANG CHUCNANG { get; set; }
         public virtual NHANVIEN NHANVIEN { get; set; }
     }
 }

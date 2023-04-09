@@ -5,27 +5,226 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>ThongTinCaNhan</h2>
+<body class="horizontal-layout horizontal-menu  navbar-floating footer-static" data-open="hover"
+      data-menu="horizontal-menu" data-col="">
+    <nav class="header-navbar navbar-expand-lg navbar navbar-fixed align-items-center navbar-shadow navbar-brand-center"
+         data-nav="brand-center">
+        <div style="margin-top:1px " class="navbar-header d-xl-block d-none">
+            <ul class="nav navbar-nav">
+                <li class="nav-item">
+                    <a class="navbar-brand"
+                       href="/html/ltr/horizontal-menu-template/index.html">
+                        <h2 class="brand-text mb-0">EMMA</h2>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="navbar-container d-flex content">
+            <div class="bookmark-wrapper d-flex align-items-center">
+                <ul class="nav navbar-nav bookmark-icons">
+                    <li class="nav-item d-none d-lg-block">
+                        <a class="nav-link" href="app-email.html"
+                           data-bs-toggle="tooltip" data-bs-placement="bottom" title="Email">
+                            <i class="ficon"
+                               data-feather="mail"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item d-none d-lg-block">
+                        <a class="nav-link" href="app-chat.html"
+                           data-bs-toggle="tooltip" data-bs-placement="bottom" title="Chat">
+                            <i class="ficon"
+                               data-feather="message-square"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item d-none d-lg-block">
+                        <a class="nav-link" href="app-calendar.html"
+                           data-bs-toggle="tooltip" data-bs-placement="bottom" title="Calendar">
+                            <i class="ficon"
+                               data-feather="calendar"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item d-none d-lg-block">
+                        <a class="nav-link" href="app-todo.html"
+                           data-bs-toggle="tooltip" data-bs-placement="bottom" title="Todo">
+                            <i class="ficon"
+                               data-feather="check-square"></i>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav">
+                    <li class="nav-item d-none d-lg-block">
+                        <a class="nav-link bookmark-star">
+                            <i class="ficon text-warning" data-feather="star"></i>
+                        </a>
+
+                    </li>
+                </ul>
+            </div>
+            <ul class="nav navbar-nav align-items-center ms-auto">
+                <li class="nav-item d-none d-lg-block">
+                    <a class="nav-link nav-link-style">
+                        <i class="ficon"
+                           data-feather="moon"></i>
+                    </a>
+                </li>
+                <li class="nav-item dropdown dropdown-user">
+                    <a class="nav-link dropdown-toggle dropdown-user-link"
+                       id="dropdown-user" href="#" data-bs-toggle="dropdown" aria-haspopup="true"
+                       aria-expanded="false">
+                        <div class="user-nav d-sm-flex d-none">
+                            <span class="user-name fw-bolder">John Doe</span><span class="user-status">Admin</span>
+                        </div><span class="avatar">
+                            <img class="round"
+                                 src="~/public/app-assets/images/portrait/small/avatar-s-11.jpg" alt="avatar"
+                                 height="40" width="40">
+                        </span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end">
+                        <a class="dropdown-item" href="~/Login/Logout">
+                            <i class="me-50"
+                               data-feather="power"></i> Logout
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container-fluid">
+        <div class="horizontal-menu-wrapper">
+            <div style="margin-top:0px" class="header-navbar navbar-expand-sm navbar navbar-horizontal floating-nav avbar-light navbar-shadow menu-border "
+                 role="navigation" data-menu="menu-wrapper" data-menu-type="floating-nav">
+                <div class="navbar-header">
+                </div>
+                <div class="shadow-bottom"></div>
+                <div class="navbar-container main-menu-content" data-menu="menu-container">
+                    <ul class="nav navbar-nav" id="main-menu-navigation" data-menu="menu-navigation">
+                        <li data-menu="">
+                            <a class="dropdown-item d-flex align-items-center" href="~/Staff/HomeStaff/Index" data-bs-toggle="" data-i18n="Dashboards">
+                                <span data-i18n="Analytics"><h5>Trang Chủ</h5></span>
+                            </a>
+                        </li>
+
+                        <li data-menu="">
+                            <a class="dropdown-item d-flex align-items-center" href="~/Staff/HomeStaff/ChamCong" data-bs-toggle="" data-i18n="Analytics">
+                                <span data-i18n="Analytics"><h5>Chấm Công</h5></span>
+                            </a>
+                        </li>
+
+                        <li data-menu="">
+                            <a class="dropdown-item d-flex align-items-center" href="~/Staff/HomeStaff/ThongTinCaNhan" data-bs-toggle="" data-i18n="Analytics">
+                                <span data-i18n="Analytics"><h5>Thông Tin Cá Nhân</h5></span>
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+
+    <script src="~/public/app-assets/vendors/js/vendors.min.js"></script>
+    <script src="~/public/app-assets/vendors/js/ui/jquery.sticky.js"></script>
+    <script src="~/public/app-assets/vendors/js/charts/apexcharts.min.js"></script>
+    <script src="~/public/app-assets/js/core/app-menu.js"></script>
+    <script src="~/public/app-assets/js/core/app.js"></script>
+    <script src="~/public/app-assets/js/scripts/pages/dashboard-ecommerce.js"></script>
+
+
+
+</body>
+
+<div class="row">
+    <div class="col-md-1"></div>
+    <div style="margin-top:160px" class="col-md-10">
+        <div class="card">
+            <div class="card-heard" style="background-color:aquamarine">
+                <h3 style="margin-top:25px " class="text-center">Thông Tin Cá Nhân Của Bạn</h3>
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <th> Avata</th>
+                            <th class=" text-center"> <img src="@Model.Avt" style="width:100px;height:100px" />
+</tr>
+                        <tr>
+                            <th> Họ Và Tên</th>
+                            <th>   @Html.DisplayFor(model => model.HoTenNV)</th>
+                        </tr>
+                        <tr>
+                            <th> Giới Tính</th>
+                            <th> @Html.DisplayFor(model => model.GioiTinh)</th>
+                        </tr>
+                        <tr>
+                            <th> Username</th>
+                            <th>  @Html.DisplayFor(model => model.Username)</th>
+                        </tr>
+                        <tr>
+                            <th> Ngày Sinh</th>
+                            <th> @Html.DisplayFor(model => model.NgaySinh)</th>
+                        </tr>
+                        <tr>
+                            <th> Địa Chỉ</th>
+                            <th>  @Html.DisplayFor(model => model.DiaChi)</th>
+                        </tr>
+                        <tr>
+                            <th> Số Điện Thoại</th>
+                            <th> @Html.DisplayFor(model => model.SDT)</th>
+                        </tr>
+                        <tr>
+                            <th> Email </th>
+                            <th> @Html.DisplayFor(model => model.Email)</th>
+                        </tr>
+                        <tr>
+                            <th> Quê Quán </th>
+                            <th>  @Html.DisplayFor(model => model.QueQuan)</th>
+                        </tr>
+                        <tr>
+                            <th>Căng Cước Công Dân </th>
+                            <th> @Html.DisplayFor(model => model.CCCD)</th>
+                        </tr>
+                        <tr>
+                            <th> Trình Độ Học Vấn </th>
+                            <th> @Html.DisplayFor(model => model.TrinhDoHocVan)</th>
+                        </tr>
+                        <tr>
+                            <th> Tên Công Việc </th>
+                            <th> @Html.DisplayFor(model => model.CHUCVU.TenCV)</th>
+                        </tr>
+                        <tr>
+                            <th> Bậc Lương </th>
+                            <th> @Html.DisplayFor(model => model.LUONG.BacLuong)</th>
+                        </tr>
+                        <tr>
+                            <th> Tên Phòng Ban </th>
+                            <th> @Html.DisplayFor(model => model.PHONGBAN.TenPB)</th>
+                        </tr>
+
+                    </tbody>
+                </table>
+                <div class="card-footer">
+                    <div class="text-end">
+                        <button class="btn btn-warning">  @Html.ActionLink("Back to Home", "Index") </button>
+                        <button class="btn btn-info "> @Html.ActionLink("Edit", "CapNhatTTCN", new { id = Model.MaNV })  </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<h2>ThongTinCaNhan</h2>
 
 <div>
     <h4>NHANVIEN</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Avt)
-        </dt>
-
-        <dd>
-            <img src="@Model.Avt" style="width:100px;height:100px" />
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.HoTenNV)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.HoTenNV)
-        </dd>
-
+       
+      
         <dt>
             @Html.DisplayNameFor(model => model.GioiTinh)
         </dt>
@@ -129,4 +328,4 @@
 <p>
     @Html.ActionLink("Edit", "CapNhatTTCN", new { id = Model.MaNV }) |
     @Html.ActionLink("Back to Home", "Index")
-</p>
+</p*@>

@@ -4,7 +4,7 @@
     ViewBag.Title = "DanhSachNV";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<body class="horizontal-layout horizontal-menu  navbar-floating footer-static  " data-open="hover"
+<body class="horizontal-layout horizontal-menu  navbar-floating footer-static" data-open="hover"
       data-menu="horizontal-menu" data-col="">
     <nav class="header-navbar navbar-expand-lg navbar navbar-fixed align-items-center navbar-shadow navbar-brand-center"
          data-nav="brand-center">
@@ -13,21 +13,13 @@
                 <li class="nav-item">
                     <a class="navbar-brand"
                        href="/html/ltr/horizontal-menu-template/index.html">
-                        <h2 class="brand-text mb-0">Vuexy</h2>
+                        <h2 class="brand-text mb-0">EMMA</h2>
                     </a>
                 </li>
             </ul>
         </div>
         <div class="navbar-container d-flex content">
             <div class="bookmark-wrapper d-flex align-items-center">
-                <ul class="nav navbar-nav d-xl-none">
-                    <li class="nav-item">
-                        <a class="nav-link menu-toggle" href="#">
-                            <i class="ficon"
-                               data-feather="menu"></i>
-                        </a>
-                    </li>
-                </ul>
                 <ul class="nav navbar-nav bookmark-icons">
                     <li class="nav-item d-none d-lg-block">
                         <a class="nav-link" href="app-email.html"
@@ -83,13 +75,11 @@
                         </div><span class="avatar">
                             <img class="round"
                                  src="~/public/app-assets/images/portrait/small/avatar-s-11.jpg" alt="avatar"
-                                 height="40" width="40"><span class="avatar-status-online"></span>
+                                 height="40" width="40">
                         </span>
                     </a>
-                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-user">
-                        @*<a class="dropdown-item"
-                               href="page-faq.html"><i class="me-50" data-feather="help-circle"></i> FAQ</a>*@
-                                <a class="dropdown-item" href="~/Login/Logout">
+                    <div class="dropdown-menu dropdown-menu-end">
+                        <a class="dropdown-item" href="~/Login/Logout">
                             <i class="me-50"
                                data-feather="power"></i> Logout
                         </a>
@@ -98,19 +88,9 @@
             </ul>
         </div>
     </nav>
-    <ul class="main-search-list-defaultlist-other-list d-none">
-        <li class="auto-suggestion justify-content-between">
-            <a class="d-flex align-items-center justify-content-between w-100 py-50">
-                <div class="d-flex justify-content-start">
-                    <span class="me-75"
-                          data-feather="alert-circle"></span><span>No results found.</span>
-                </div>
-            </a>
-        </li>
-    </ul>
     <div class="container-fluid">
         <div class="horizontal-menu-wrapper">
-            <div class="header-navbar navbar-expand-sm navbar navbar-horizontal floating-nav avbar-light navbar-shadow menu-border "
+            <div style="margin-top:0px" class="header-navbar navbar-expand-sm navbar navbar-horizontal floating-nav avbar-light navbar-shadow menu-border "
                  role="navigation" data-menu="menu-wrapper" data-menu-type="floating-nav">
                 <div class="navbar-header">
                 </div>
@@ -129,6 +109,12 @@
                             </a>
                         </li>
 
+                        <li data-menu="">
+                            <a class="dropdown-item d-flex align-items-center" href="~/Manager/HomeManager/DanhSachPB" data-bs-toggle="" data-i18n="Analytics">
+                                <span data-i18n="Analytics"><h5>Phòng Ban</h5></span>
+                            </a>
+                        </li>
+
 
                     </ul>
                 </div>
@@ -142,7 +128,6 @@
     <script src="~/public/app-assets/vendors/js/vendors.min.js"></script>
     <script src="~/public/app-assets/vendors/js/ui/jquery.sticky.js"></script>
     <script src="~/public/app-assets/vendors/js/charts/apexcharts.min.js"></script>
-    <script src="~/public/app-assets/vendors/js/extensions/toastr.min.js"></script>
     <script src="~/public/app-assets/js/core/app-menu.js"></script>
     <script src="~/public/app-assets/js/core/app.js"></script>
     <script src="~/public/app-assets/js/scripts/pages/dashboard-ecommerce.js"></script>
@@ -150,52 +135,58 @@
 
 
 </body>
+
 <div class="row">
     <div style="margin-top:150px" class="col-12"
         <div class="card">
-            <div class="card-heard" style="background-color:aquamarine">
-                    <h3 style="margin-top:25px " class="text-center">Danh Sách Nhân Viên</h3>
+            <div class="card-heard" style="background-color:aqua">
+                    <h3 style="margin-top:20px " class="card-title mb-1 text-center">Danh Sách Nhân Viên</h3>
             </div>
             <div class="card-search">
                 <div class="row">
                     <div class="col-md-8">
                         <div class="search-input">
-                            @*<div class="search-input-icon">*@
-                                <i data-feather="search"></i>
-                                <input class="form-control input" type="text" placeholder="Tìm Nhân Viên..."
-                                       tabindex="-1" data-search="search">
-                                <ul class="search-list search-list-main"></ul>
-                            @*</div>*@
+                            <input class="form-control input" type="text" placeholder="Tìm Nhân Viên..."
+                                   tabindex="-1" data-search="search">
+                            <ul class="search-list search-list-main"></ul>
                         </div>
+                    </div>
+                    <div class="col-md-1">
+                        <button class="btn btn-warning"> <i data-feather="search"></i> </button>
+                    </div>
+                    <div class="col-md-1">
                     </div>
                     <div class="col-md-2">
-                        </div>
-                        <div class="col-md-2">
-                            <a class="dropdown-item d-flex align-items-center" href="~/Manager/HomeManager/ThemMoiNV" data-bs-toggle="" data-i18n="Analytics">
-                                    <button style="height:45px" class="btn btn-info"><h5 style="margin-top:3px">Thêm Nhân Viên</h5></button>
-                            </a>
-                        </div>
+                        <a  href="~/Manager/HomeManager/ThemMoiNV" data-bs-toggle="" >
+                            <button style="height:45px" class="btn btn-info"><h5 style="margin-top:1px">Thêm Mới</h5></button>
+                        </a>
+
                     </div>
+                </div>
                 </div>
             <table class="table table-bordered">
                 <thead>
                  @*<th class="text-center">STT</th>*@
-                <th class="text-center text-nowrap">Avata</th>
+                <th style="width:90px" class="text-center text-nowrap">Avata</th>
                 <th class="text-center text-nowrap">Họ Và Tên</th>
-                <th class="text-center text-nowrap">Giới Tính</th>
-                <th class="text-center text-nowrap">Số Điện Thoại</th>
-                <th class="text-center text-nowrap">Email</th>
-                <th class="text-center text-nowrap">Tên Công Việc</th>
-                <th class="text-center text-nowrap">Bậc Lương</th>
-                <th class="text-center text-nowrap">Tên Phòng Ban</th>
-                <th class="text-center text-nowrap">Acction</th>
+                <th style="width:10px" class="text-center text-nowrap">Giới Tính</th>
+                <th style="width:15px" class="text-center text-nowrap">Số Điện Thoại</th>
+                <th style="width:300px" class="text-center text-nowrap">Email</th>
+                <th class="text-center text-nowrap">Chức Vụ</th>
+                <th class="text-center text-nowrap">Phòng Ban</th>
+                <th style="width:100px" class="text-center text-nowrap">Acction</th>
                 </thead>
                 <tbody>
                     @foreach (var item in Model)
                     {
                         <tr>
                             <td>
-                                <img src="@item.Avt" style="width:100px; height:100px" />
+                                <span class="avatar">
+                                    <img class="round"
+                                         src="@item.Avt" alt="avatar"
+                                         height="70" width="70">
+                                </span>
+                                @*<img src="@item.Avt" style="width:100px; height:100px" />*@
                             </td>
                             <td class="text-center text-nowrap">
                                 @Html.DisplayFor(modelItem => item.HoTenNV)
@@ -213,16 +204,13 @@
                                 @Html.DisplayFor(modelItem => item.CHUCVU.TenCV)
                             </td>
                             <td class="text-center text-nowrap">
-                                @Html.DisplayFor(modelItem => item.LUONG.BacLuong)
-                            </td>
-                            <td class="text-center text-nowrap">
                                 @Html.DisplayFor(modelItem => item.PHONGBAN.TenPB)
                             </td>
                             <td class="text-center text-nowrap">
 
-                                <button class="btn btn-success">  @Html.ActionLink("Edit", "CapNhatNV", new { id = item.MaNV })  </button>
-                                <button class="btn btn-info  ">  @Html.ActionLink("Details", "ChiTietNV", new { id = item.MaNV }) </button>
-                                <button class="btn btn-warning  ">  @Html.ActionLink("Delete", "XoaNV", new { id = item.MaNV }) </button>
+                                <button style="width:90px" class="btn btn-success text-center">  @Html.ActionLink("Edit", "CapNhatNV", new { id = item.MaNV })  </button>
+                                <button style="width:90px" class="btn btn-info text-center">  @Html.ActionLink("Details", "ChiTietNV", new { id = item.MaNV }) </button>
+                                <button style="width:90px" class="btn btn-warning text-center">  @Html.ActionLink("Delete", "XoaNV", new { id = item.MaNV }) </button>
 
                             </td>
                         </tr>
