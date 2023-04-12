@@ -130,7 +130,7 @@ namespace EMMA.Areas.Staff.Controllers
             {
                 if (faceid == true)
                 {
-                    model.Vao = "Yes";
+                    model.Vao = DateTime.Now.ToShortTimeString();
                     db.ChamCong.Add(model);
                     db.SaveChanges();
                     return RedirectToAction("DsCong");
@@ -166,19 +166,26 @@ namespace EMMA.Areas.Staff.Controllers
         {
             bool faceid = true;
             var nv = db.ChamCong.FirstOrDefault(m => m.MaNV == model.MaNV && m.Ngay == model.Ngay && m.Thang == model.Thang && m.Nam == model.Nam);
-            if(nv.Ra == null)
+            if (nv.Ra == null)
             {
-                if (faceid == true)
+                if(nv.Ngay == DateTime.Now.Day && nv.Thang == DateTime.Now.Month && nv.Nam == DateTime.Now.Year)
                 {
-                    model.Ra = "Yes";
-                    nv.Ra = model.Ra;
-                    db.SaveChanges();
-                    return RedirectToAction("DsCong");
+                    if (faceid == true)
+                    {
+                        model.Ra = DateTime.Now.ToShortTimeString();
+                        nv.Ra = model.Ra;
+                        db.SaveChanges();
+                        return RedirectToAction("DsCong");
+                    }
+                    else
+                    {
+                        Session["Chua Cham Cong"] = "Yes";
+                        return View(model);
+                    }
                 }
                 else
                 {
-                    Session["Chua Cham Cong"] = "Yes";
-                    return View(model);
+                    return View();
                 }
             }
             else

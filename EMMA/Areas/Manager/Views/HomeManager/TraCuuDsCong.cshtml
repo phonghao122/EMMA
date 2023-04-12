@@ -1,0 +1,121 @@
+﻿@{
+    @model IEnumerable<EMMA.Models.CONG>
+    if (ViewBag.df == "ok")
+    {
+        using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <label>Thang</label>
+                <input type="text" name="thang" />
+                <label>Nam</label>
+                <input type="text" name="nam" />
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Tiếp Tục" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+        }
+
+        <p>
+            @Html.ActionLink("Create New", "Create")
+        </p>
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.NHANVIEN.HoTenNV)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SoNgayCong)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SoNgayNghi)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NHANVIEN.HoTenNV)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SoNgayCong)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SoNgayNghi)
+                    </td>
+                </tr>
+            }
+
+        </table>
+    }
+    else
+    {
+        using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <label>Thang</label>
+                <input type="text" name="thang" />
+                <label>Nam</label>
+                <input type="text" name="nam" />
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Tiếp Tục" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+        }
+
+        if (ViewBag.tc == "ok")
+        {
+
+            <p>
+                @Html.ActionLink("Create New", "Create")
+            </p>
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.NHANVIEN.HoTenNV)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.SoNgayCong)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.SoNgayNghi)
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NHANVIEN.HoTenNV)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SoNgayCong)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SoNgayNghi)
+                        </td>
+                    </tr>
+                }
+
+            </table>
+        }
+        else
+        {
+            <script>alert("không tồn tại")</script>
+        }
+    }
+}
