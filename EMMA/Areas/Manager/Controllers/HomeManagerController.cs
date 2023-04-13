@@ -350,7 +350,7 @@ namespace EMMA.Areas.Manager.Controllers
                     db.CONG.Add(model);
                 }
                 db.SaveChanges();
-                return RedirectToAction("DsCong");
+                return RedirectToAction("TraCuuDsCong");
             }
             else
             {
@@ -363,13 +363,6 @@ namespace EMMA.Areas.Manager.Controllers
         //Luong
         public ActionResult DsLuong()
         {
-            if (Session["not"] != null)
-            {
-                if (Session["not"].ToString() == "ok")
-                {
-                    ViewBag.notfound = "ok";
-                }
-            }    
             if (ViewBag.tc == null)
             {
                 ViewBag.df = "ok";

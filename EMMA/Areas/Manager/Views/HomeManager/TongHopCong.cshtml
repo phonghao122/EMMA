@@ -167,7 +167,7 @@
         <form method="post">
             <div class="card">
                 <div class="card-heard" style="background-color:aqua">
-                    <h3 style="margin-top:20px " class="card-title mb-1 text-center">Tổng Hợp Công</h3>
+                    <h3 style="margin-top:20px " class="card-title mb-1 text-center">Tính Công</h3>
                 </div>
                 <div class="card-body">
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -177,9 +177,8 @@
                     <input class="form-control" type="text" name="nam" />
                 </div>
                 <div class="card-footer">
-                    <div class="col-md-offset-2 col-md-12">
-                        <button class="btn btn-warning">  @Html.ActionLink("Back to List", "Index") </button>
-                        <button type="submit" class="btn btn-info"> Create</button>
+                    <div class="col-md-offset-2 col-md-12 text-center">
+                        <button type="submit" class="btn btn-info">Tiếp Tục</button>
                     </div>
                 </div>
             </div>
