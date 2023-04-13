@@ -10,7 +10,9 @@ namespace EMMA.Areas.Manager.Controllers
     public class HomeManagerController : Controller
     {
         EMMAEntities db = new EMMAEntities();
-
+        int month;
+        int year;
+        
         public ActionResult Index()
         {
             if (Session["user"] == null)
@@ -75,6 +77,14 @@ namespace EMMA.Areas.Manager.Controllers
                     var user = db.NHANVIEN.Find(model.Username);
                     if(user == null)
                     {
+                        if(model.MaCV == "GD" || model.MaCV == "QL")
+                        {
+                            model.Role = 1;
+                        } 
+                        else
+                        {
+                            model.Role = 2;
+                        }    
                         db.NHANVIEN.Add(model);
                         db.SaveChanges();
                         return RedirectToAction("DanhSachNV");
@@ -266,10 +276,49 @@ namespace EMMA.Areas.Manager.Controllers
         }
 
         //Cong
-        public ActionResult DsCong()
+
+        public ActionResult TraCuuDsCong()
+        {
+            if (ViewBag.tc == null)
+            {
+                ViewBag.df = "ok";
+            }
+            else
+            {
+                ViewBag.df = "not";
+            }
+            List<CONG> cong = new List<CONG>();
+            foreach (var item in db.CONG.ToList())
+            {
+                if (item.Thang == DateTime.Now.Month && item.Nam == DateTime.Now.Year)
+                {
+                    cong.Add(item);
+                }
+            }
+            return View(cong);
+        }
+
+        [HttpPost]
+        public ActionResult TraCuuDsCong(int thang, int nam)
         {
             List<CONG> dsCong = db.CONG.ToList();
-            return View(dsCong);
+            List<CONG> congTheoThang = new List<CONG>();
+            foreach (var cong in dsCong)
+            {
+                if (cong.Thang == thang && cong.Nam == nam)
+                {
+                    congTheoThang.Add(cong);
+                }
+            }
+            if(congTheoThang.Count > 0)
+            {
+                ViewBag.tc = "ok";
+                return View(congTheoThang);
+            } 
+            else
+            {
+                return View();
+            }    
         }
 
         public ActionResult TongHopCong()
@@ -288,11 +337,12 @@ namespace EMMA.Areas.Manager.Controllers
                     List<ChamCong> dsCong = new List<ChamCong>();
                     foreach (var item in db.ChamCong.ToList())
                     {
-                        if (item.MaNV == i.MaNV && item.Thang == thang && item.Nam == nam)
+                        if (item.MaNV == i.MaNV && item.Thang == thang && item.Nam == nam && item.Vao != null && item.Ra != null)
                         {
                             dsCong.Add(item);
                         }
                     }
+                    model.MaNV = i.MaNV;
                     model.SoNgayCong = dsCong.Count;
                     model.SoNgayNghi = DateTime.DaysInMonth(nam, thang) - model.SoNgayCong;
                     model.Thang = thang;
@@ -300,7 +350,7 @@ namespace EMMA.Areas.Manager.Controllers
                     db.CONG.Add(model);
                 }
                 db.SaveChanges();
-                return RedirectToAction("DsCong");
+                return RedirectToAction("TraCuuDsCong");
             }
             else
             {
@@ -313,8 +363,46 @@ namespace EMMA.Areas.Manager.Controllers
         //Luong
         public ActionResult DsLuong()
         {
-            List<HOADONLUONG> dsLuong = db.HOADONLUONG.ToList();
+            if (ViewBag.tc == null)
+            {
+                ViewBag.df = "ok";
+            }
+            else
+            {
+                ViewBag.df = "not";
+            }
+            List<HOADONLUONG> dsLuong = new List<HOADONLUONG>();
+            foreach (var item in db.HOADONLUONG.ToList())
+            {
+                if (item.Thang == DateTime.Now.Month && item.Nam == DateTime.Now.Year)
+                {
+                    dsLuong.Add(item);
+                }
+            }
             return View(dsLuong);
+        }
+
+        [HttpPost]
+        public ActionResult DsLuong(int thang, int nam)
+        {
+            List<HOADONLUONG> luongTheoThang = new List<HOADONLUONG>();
+            foreach (var luong in db.HOADONLUONG.ToList())
+            {
+                if (luong.Thang == thang && luong.Nam == nam)
+                {
+                    luongTheoThang.Add(luong);
+                }
+            }
+            if (luongTheoThang.Count > 0)
+            {
+                ViewBag.tc = "ok";
+                return View(luongTheoThang);
+            }
+            else
+            {
+                Session["not"] = "ok";
+                return RedirectToAction("DsLuong");
+            }
         }
 
         public float HsPhuCap(int soNgayCong, int soNgayNghi, int thang, int nam, string id)
@@ -372,8 +460,12 @@ namespace EMMA.Areas.Manager.Controllers
                 }
                 foreach (var item in ds)
                 {
+                    model.BacLuong = item.NHANVIEN.BacLuong;
+                    model.MaNV = item.MaNV;
                     model.HSPhuCap = HsPhuCap((int)item.SoNgayCong, (int)item.SoNgayNghi, item.Thang, item.Nam, item.MaNV);
-                    model.ThucLinh = model.LUONG.LuongCoBan * model.LUONG.HSLuong + model.HSPhuCap * model.LUONG.LuongCoBan;
+                    var luongCB = db.LUONG.Find(model.BacLuong);
+                    var luongThoaThuan = luongCB.LuongCoBan + luongCB.LuongCoBan * model.HSPhuCap;
+                    model.ThucLinh = (luongThoaThuan / 26) * item.SoNgayCong;
                     db.HOADONLUONG.Add(model);
                 }
                 db.SaveChanges();
