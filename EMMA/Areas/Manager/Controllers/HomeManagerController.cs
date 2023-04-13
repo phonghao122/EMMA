@@ -363,6 +363,13 @@ namespace EMMA.Areas.Manager.Controllers
         //Luong
         public ActionResult DsLuong()
         {
+            if (Session["not"] != null)
+            {
+                if (Session["not"].ToString() == "ok")
+                {
+                    ViewBag.notfound = "ok";
+                }
+            }    
             if (ViewBag.tc == null)
             {
                 ViewBag.df = "ok";
@@ -400,6 +407,7 @@ namespace EMMA.Areas.Manager.Controllers
             }
             else
             {
+                Session["not"] = "ok";
                 return RedirectToAction("DsLuong");
             }
         }
