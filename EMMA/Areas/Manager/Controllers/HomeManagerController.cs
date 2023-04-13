@@ -363,8 +363,45 @@ namespace EMMA.Areas.Manager.Controllers
         //Luong
         public ActionResult DsLuong()
         {
-            List<HOADONLUONG> dsLuong = db.HOADONLUONG.ToList();
+            if (ViewBag.tc == null)
+            {
+                ViewBag.df = "ok";
+            }
+            else
+            {
+                ViewBag.df = "not";
+            }
+            List<HOADONLUONG> dsLuong = new List<HOADONLUONG>();
+            foreach (var item in db.HOADONLUONG.ToList())
+            {
+                if (item.Thang == DateTime.Now.Month && item.Nam == DateTime.Now.Year)
+                {
+                    dsLuong.Add(item);
+                }
+            }
             return View(dsLuong);
+        }
+
+        [HttpPost]
+        public ActionResult DsLuong(int thang, int nam)
+        {
+            List<HOADONLUONG> luongTheoThang = new List<HOADONLUONG>();
+            foreach (var luong in db.HOADONLUONG.ToList())
+            {
+                if (luong.Thang == thang && luong.Nam == nam)
+                {
+                    luongTheoThang.Add(luong);
+                }
+            }
+            if (luongTheoThang.Count > 0)
+            {
+                ViewBag.tc = "ok";
+                return View(luongTheoThang);
+            }
+            else
+            {
+                return RedirectToAction("DsLuong");
+            }
         }
 
         public float HsPhuCap(int soNgayCong, int soNgayNghi, int thang, int nam, string id)
