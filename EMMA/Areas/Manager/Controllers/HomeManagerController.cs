@@ -10,8 +10,6 @@ namespace EMMA.Areas.Manager.Controllers
     public class HomeManagerController : Controller
     {
         EMMAEntities db = new EMMAEntities();
-        int month;
-        int year;
         
         public ActionResult Index()
         {
@@ -25,7 +23,7 @@ namespace EMMA.Areas.Manager.Controllers
             }
         }
 
-        //Nhan Vien
+        //Nhân Viên
         public ActionResult DanhSachNV()
         {
             if (Session["user"] == null)
@@ -196,7 +194,7 @@ namespace EMMA.Areas.Manager.Controllers
             }
         }
 
-        //Thong Tin ca Nhan
+        //Thông Tin cá Nhân
         public ActionResult ThongTinCaNhan()
         {
             if (Session["user"] == null)
@@ -211,7 +209,68 @@ namespace EMMA.Areas.Manager.Controllers
             }
         }
 
-        //Phong Ban
+        public ActionResult CapNhatTTCN(string id)
+        {
+            if (Session["user"] == null)
+            {
+                return Redirect("~/Login/Login");
+            }
+            else
+            {
+                var nhanVien = db.NHANVIEN.Find(id);
+                if (nhanVien.Avt != null)
+                {
+                    Session["Avt"] = nhanVien.Avt;
+                }
+                return View(nhanVien);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult CapNhatTTCN(string id, NHANVIEN model, HttpPostedFileBase fileAnh)
+        {
+            if (fileAnh != null)
+            {
+                if (fileAnh.ContentLength > 0)
+                {
+                    string rootFolder = Server.MapPath("/Data/");
+                    string pathImage = rootFolder + fileAnh.FileName;
+                    fileAnh.SaveAs(pathImage);
+                    model.Avt = "/Data/" + fileAnh.FileName;
+                }
+            }
+            else
+            {
+                model.Avt = Session["Avt"].ToString();
+            }
+            var user = db.NHANVIEN.Find(model.Username);
+            if (user == null)
+            {
+                var nhanVien = db.NHANVIEN.Find(model.MaNV);
+                nhanVien.HoTenNV = model.HoTenNV;
+                nhanVien.GioiTinh = model.GioiTinh;
+                nhanVien.Username = model.Username;
+                nhanVien.Password = model.Password;
+                nhanVien.NgaySinh = model.NgaySinh;
+                nhanVien.DiaChi = model.DiaChi;
+                nhanVien.SDT = model.SDT;
+                nhanVien.Email = model.Email;
+                nhanVien.QueQuan = model.QueQuan;
+                nhanVien.CCCD = model.CCCD;
+                nhanVien.TrinhDoHocVan = model.TrinhDoHocVan;
+                nhanVien.Avt = model.Avt;
+                db.SaveChanges();
+                return RedirectToAction("ThongTinCaNhan");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Username Đã Tồn Tại");
+                return View(model);
+            }
+
+        }
+
+        //Phòng Ban
         public ActionResult DanhSachPB()
         {
             if (Session["user"] == null)
@@ -275,27 +334,225 @@ namespace EMMA.Areas.Manager.Controllers
             return RedirectToAction("DanhSachPB");
         }
 
-        //Cong
-
-        public ActionResult TraCuuDsCong()
+        //Chức Vụ
+        public ActionResult DsCV()
         {
-            if (ViewBag.tc == null)
+            if (Session["user"] == null)
             {
-                ViewBag.df = "ok";
+                return Redirect("~/Login/Login");
             }
             else
             {
-                ViewBag.df = "not";
+                List<CHUCVU> cv = db.CHUCVU.ToList();
+                return View(cv);
             }
-            List<CONG> cong = new List<CONG>();
-            foreach (var item in db.CONG.ToList())
+        }
+
+        public ActionResult ThemCV()
+        {
+            if (Session["user"] == null)
             {
-                if (item.Thang == DateTime.Now.Month && item.Nam == DateTime.Now.Year)
+                return Redirect("~/Login/Login");
+            }
+            else
+            {
+                return View();
+            }
+        }
+
+        [HttpPost]
+        public ActionResult ThemCV(CHUCVU model)
+        {
+            var cv = db.CHUCVU.Find(model.MaCV);
+            if(cv != null)
+            {
+                ViewBag.CV = "yes";
+                return View(model);
+            }    
+            else
+            {
+                db.CHUCVU.Add(model);
+                db.SaveChanges();
+                return RedirectToAction("DsCV");
+            }    
+        }
+
+        public ActionResult CapNhatCV(string id)
+        {
+            if (Session["user"] == null)
+            {
+                return Redirect("~/Login/Login");
+            }
+            else
+            {
+                var cv = db.CHUCVU.Find(id);
+                if (cv == null)
                 {
-                    cong.Add(item);
+                    return RedirectToAction("DsCV");
+                }
+                else
+                {
+                    return View(cv);
                 }
             }
-            return View(cong);
+        }
+
+        [HttpPost]
+        public ActionResult CapNhatCV(CHUCVU model)
+        {
+            var cv = db.CHUCVU.Find(model.MaCV);
+            if(cv == null)
+            {
+                return View(model);
+            }    
+            else
+            {
+                cv.TenCV = model.TenCV;
+                db.SaveChanges();
+                return RedirectToAction("DsCV");
+            }    
+        }
+
+        public ActionResult XoaCV(string id)
+        {
+            var cv = db.CHUCVU.Find(id);
+            if(cv == null)
+            {
+                return RedirectToAction("DsCV");
+            }    
+            else
+            {
+                db.CHUCVU.Remove(cv); 
+                db.SaveChanges();
+                return RedirectToAction("DsCV");
+            }    
+        }
+
+        //Hợp Đồng Lao Động
+        public ActionResult DsHD()
+        {
+            if (Session["user"] == null)
+            {
+                return Redirect("~/Login/Login");
+            }
+            else
+            {
+                List<HOPDONGLAODONG> cv = db.HOPDONGLAODONG.ToList();
+                return View(cv);
+            }
+        }
+
+        public ActionResult ThemHD()
+        {
+            if (Session["user"] == null)
+            {
+                return Redirect("~/Login/Login");
+            }
+            else
+            {
+                return View();
+            }
+        }
+
+        [HttpPost]
+        public ActionResult ThemHD(HOPDONGLAODONG model)
+        {
+            var cv = db.HOPDONGLAODONG.Find(model.MaHD);
+            if (cv != null)
+            {
+                ViewBag.HD = "yes";
+                return View(model);
+            }
+            else
+            {
+                db.HOPDONGLAODONG.Add(model);
+                db.SaveChanges();
+                return RedirectToAction("DsHD");
+            }
+        }
+
+        public ActionResult CapNhatHD(string id)
+        {
+            if (Session["user"] == null)
+            {
+                return Redirect("~/Login/Login");
+            }
+            else
+            {
+                var cv = db.HOPDONGLAODONG.Find(id);
+                if (cv == null)
+                {
+                    return RedirectToAction("DsHD");
+                }
+                else
+                {
+                    return View(cv);
+                }
+            }
+        }
+
+        [HttpPost]
+        public ActionResult CapNhatHD(HOPDONGLAODONG model)
+        {
+            var cv = db.HOPDONGLAODONG.Find(model.MaHD);
+            if (cv == null)
+            {
+                return View(model);
+            }
+            else
+            {
+                cv.LoaiHD = model.LoaiHD;
+                cv.MaNV = model.MaNV;
+                cv.NgayKy = model.NgayKy;
+                cv.NgayHetHan = model.NgayHetHan;
+                db.SaveChanges();
+                return RedirectToAction("DsHD");
+            }
+        }
+
+        public ActionResult XoaHD(string id)
+        {
+            var cv = db.HOPDONGLAODONG.Find(id);
+            if (cv == null)
+            {
+                return RedirectToAction("DsHD");
+            }
+            else
+            {
+                db.HOPDONGLAODONG.Remove(cv);
+                db.SaveChanges();
+                return RedirectToAction("DsHD");
+            }
+        }
+
+        //Công
+
+        public ActionResult TraCuuDsCong()
+        {
+            if (Session["user"] == null)
+            {
+                return Redirect("~/Login/Login");
+            }
+            else
+            {
+                if (ViewBag.tc == null)
+                {
+                    ViewBag.df = "ok";
+                }
+                else
+                {
+                    ViewBag.df = "not";
+                }
+                List<CONG> cong = new List<CONG>();
+                foreach (var item in db.CONG.ToList())
+                {
+                    if (item.Thang == DateTime.Now.Month && item.Nam == DateTime.Now.Year)
+                    {
+                        cong.Add(item);
+                    }
+                }
+                return View(cong);
+            }
         }
 
         [HttpPost]
@@ -313,44 +570,21 @@ namespace EMMA.Areas.Manager.Controllers
             if(congTheoThang.Count > 0)
             {
                 ViewBag.tc = "ok";
+                Session["notCong"] = "not";
                 return View(congTheoThang);
             } 
             else
             {
+                Session["notCong"] = "ok";
                 return View();
             }    
         }
 
         public ActionResult TongHopCong()
         {
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult TongHopCong(int thang, int nam, CONG model)
-        {
-            var nv = db.ChamCong.FirstOrDefault(m => m.Thang == thang && m.Nam == nam);
-            if(nv != null)
+            if (Session["user"] == null)
             {
-                foreach(var i in db.NHANVIEN.ToList())
-                {
-                    List<ChamCong> dsCong = new List<ChamCong>();
-                    foreach (var item in db.ChamCong.ToList())
-                    {
-                        if (item.MaNV == i.MaNV && item.Thang == thang && item.Nam == nam && item.Vao != null && item.Ra != null)
-                        {
-                            dsCong.Add(item);
-                        }
-                    }
-                    model.MaNV = i.MaNV;
-                    model.SoNgayCong = dsCong.Count;
-                    model.SoNgayNghi = DateTime.DaysInMonth(nam, thang) - model.SoNgayCong;
-                    model.Thang = thang;
-                    model.Nam = nam;
-                    db.CONG.Add(model);
-                }
-                db.SaveChanges();
-                return RedirectToAction("TraCuuDsCong");
+                return Redirect("~/Login/Login");
             }
             else
             {
@@ -358,28 +592,102 @@ namespace EMMA.Areas.Manager.Controllers
             }
         }
 
+        [HttpPost]
+        public ActionResult TongHopCong(int thang, int nam, CONG model)
+        {
+            var a = db.CONG.FirstOrDefault(m => m.MaNV == model.MaNV && m.Thang == model.Thang && m.Nam == model.Nam);
+            if(a != null)
+            {
+                db.CONG.Remove(a);
+                var nv = db.ChamCong.FirstOrDefault(m => m.Thang == thang && m.Nam == nam);
+                if (nv != null)
+                {
+                    foreach (var i in db.NHANVIEN.ToList())
+                    {
+                        List<ChamCong> dsCong = new List<ChamCong>();
+                        foreach (var item in db.ChamCong.ToList())
+                        {
+                            if (item.MaNV == i.MaNV && item.Thang == thang && item.Nam == nam && item.Vao != null && item.Ra != null)
+                            {
+                                dsCong.Add(item);
+                            }
+                        }
+                        model.MaNV = i.MaNV;
+                        model.SoNgayCong = dsCong.Count;
+                        model.SoNgayNghi = DateTime.DaysInMonth(nam, thang) - model.SoNgayCong;
+                        model.Thang = thang;
+                        model.Nam = nam;
+                        db.CONG.Add(model);
+                    }
+                    db.SaveChanges();
+                    return RedirectToAction("TraCuuDsCong");
+                }
+                else
+                {
+                    return View();
+                }
+            }    
+            else
+            {
+                var nv = db.ChamCong.FirstOrDefault(m => m.Thang == thang && m.Nam == nam);
+                if (nv != null)
+                {
+                    foreach (var i in db.NHANVIEN.ToList())
+                    {
+                        List<ChamCong> dsCong = new List<ChamCong>();
+                        foreach (var item in db.ChamCong.ToList())
+                        {
+                            if (item.MaNV == i.MaNV && item.Thang == thang && item.Nam == nam && item.Vao != null && item.Ra != null)
+                            {
+                                dsCong.Add(item);
+                            }
+                        }
+                        model.MaNV = i.MaNV;
+                        model.SoNgayCong = dsCong.Count;
+                        model.SoNgayNghi = DateTime.DaysInMonth(nam, thang) - model.SoNgayCong;
+                        model.Thang = thang;
+                        model.Nam = nam;
+                        db.CONG.Add(model);
+                    }
+                    db.SaveChanges();
+                    return RedirectToAction("TraCuuDsCong");
+                }
+                else
+                {
+                    return View();
+                }
+            }    
+        }
 
 
-        //Luong
+
+        //Lương
         public ActionResult DsLuong()
         {
-            if (ViewBag.tc == null)
+            if (Session["user"] == null)
             {
-                ViewBag.df = "ok";
+                return Redirect("~/Login/Login");
             }
             else
             {
-                ViewBag.df = "not";
-            }
-            List<HOADONLUONG> dsLuong = new List<HOADONLUONG>();
-            foreach (var item in db.HOADONLUONG.ToList())
-            {
-                if (item.Thang == DateTime.Now.Month && item.Nam == DateTime.Now.Year)
+                if (ViewBag.tc == null)
                 {
-                    dsLuong.Add(item);
+                    ViewBag.df = "ok";
                 }
+                else
+                {
+                    ViewBag.df = "not";
+                }
+                List<HOADONLUONG> dsLuong = new List<HOADONLUONG>();
+                foreach (var item in db.HOADONLUONG.ToList())
+                {
+                    if (item.Thang == DateTime.Now.Month && item.Nam == DateTime.Now.Year)
+                    {
+                        dsLuong.Add(item);
+                    }
+                }
+                return View(dsLuong);
             }
-            return View(dsLuong);
         }
 
         [HttpPost]
@@ -396,11 +704,12 @@ namespace EMMA.Areas.Manager.Controllers
             if (luongTheoThang.Count > 0)
             {
                 ViewBag.tc = "ok";
+                Session["notLuong"] = "not";
                 return View(luongTheoThang);
             }
             else
             {
-                Session["not"] = "ok";
+                Session["notLuong"] = "ok";
                 return RedirectToAction("DsLuong");
             }
         }
@@ -441,40 +750,83 @@ namespace EMMA.Areas.Manager.Controllers
 
         public ActionResult TongHopLuong()
         {
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult TongHopLuong(int thang, int nam, HOADONLUONG model)
-        {
-            var nv = db.CONG.FirstOrDefault(m => m.Thang == thang && m.Nam == nam);
-            if(nv != null)
+            if (Session["user"] == null)
             {
-                List<CONG> ds = new List<CONG>();
-                foreach (var item in db.CONG.ToList())
-                {
-                    if (item.Thang == thang && item.Nam == nam)
-                    {
-                        ds.Add(item);
-                    }
-                }
-                foreach (var item in ds)
-                {
-                    model.BacLuong = item.NHANVIEN.BacLuong;
-                    model.MaNV = item.MaNV;
-                    model.HSPhuCap = HsPhuCap((int)item.SoNgayCong, (int)item.SoNgayNghi, item.Thang, item.Nam, item.MaNV);
-                    var luongCB = db.LUONG.Find(model.BacLuong);
-                    var luongThoaThuan = luongCB.LuongCoBan + luongCB.LuongCoBan * model.HSPhuCap;
-                    model.ThucLinh = (luongThoaThuan / 26) * item.SoNgayCong;
-                    db.HOADONLUONG.Add(model);
-                }
-                db.SaveChanges();
-                return RedirectToAction("DsLuong");
+                return Redirect("~/Login/Login");
             }
             else
             {
                 return View();
             }
+        }
+
+        [HttpPost]
+        public ActionResult TongHopLuong(int thang, int nam, HOADONLUONG model)
+        {
+            var a = db.HOADONLUONG.FirstOrDefault(m => m.MaNV == model.MaNV && m.Thang == model.Thang && m.Nam == model.Nam);
+            if(a != null)
+            {
+                db.HOADONLUONG.Remove(a);
+                var nv = db.CONG.FirstOrDefault(m => m.Thang == thang && m.Nam == nam);
+                if (nv != null)
+                {
+                    List<CONG> ds = new List<CONG>();
+                    foreach (var item in db.CONG.ToList())
+                    {
+                        if (item.Thang == thang && item.Nam == nam)
+                        {
+                            ds.Add(item);
+                        }
+                    }
+                    foreach (var item in ds)
+                    {
+                        model.BacLuong = item.NHANVIEN.BacLuong;
+                        model.MaNV = item.MaNV;
+                        model.HSPhuCap = HsPhuCap((int)item.SoNgayCong, (int)item.SoNgayNghi, item.Thang, item.Nam, item.MaNV);
+                        var luongCB = db.LUONG.Find(model.BacLuong);
+                        var luongThoaThuan = luongCB.LuongCoBan + luongCB.LuongCoBan * model.HSPhuCap;
+                        model.ThucLinh = (luongThoaThuan / 26) * item.SoNgayCong;
+                        db.HOADONLUONG.Add(model);
+                    }
+                    db.SaveChanges();
+                    return RedirectToAction("DsLuong");
+                }
+                else
+                {
+                    return View();
+                }
+            } 
+            else
+            {
+                var nv = db.CONG.FirstOrDefault(m => m.Thang == thang && m.Nam == nam);
+                if (nv != null)
+                {
+                    List<CONG> ds = new List<CONG>();
+                    foreach (var item in db.CONG.ToList())
+                    {
+                        if (item.Thang == thang && item.Nam == nam)
+                        {
+                            ds.Add(item);
+                        }
+                    }
+                    foreach (var item in ds)
+                    {
+                        model.BacLuong = item.NHANVIEN.BacLuong;
+                        model.MaNV = item.MaNV;
+                        model.HSPhuCap = HsPhuCap((int)item.SoNgayCong, (int)item.SoNgayNghi, item.Thang, item.Nam, item.MaNV);
+                        var luongCB = db.LUONG.Find(model.BacLuong);
+                        var luongThoaThuan = luongCB.LuongCoBan + luongCB.LuongCoBan * model.HSPhuCap;
+                        model.ThucLinh = (luongThoaThuan / 26) * item.SoNgayCong;
+                        db.HOADONLUONG.Add(model);
+                    }
+                    db.SaveChanges();
+                    return RedirectToAction("DsLuong");
+                }
+                else
+                {
+                    return View();
+                }
+            }    
         }
     }
 }

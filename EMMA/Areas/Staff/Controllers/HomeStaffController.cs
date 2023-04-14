@@ -14,9 +14,17 @@ namespace EMMA.Areas.Staff.Controllers
         // GET: Staff/HomeStaff
         public ActionResult Index()
         {
-            return View();
+            if (Session["user"] == null)
+            {
+                return Redirect("~/Login/Login");
+            }
+            else
+            {
+                return View();
+            }
         }
 
+        //Thông Tin Cá Nhân
         public ActionResult ThongTinCaNhan()
         {
             if (Session["user"] == null)
@@ -92,6 +100,8 @@ namespace EMMA.Areas.Staff.Controllers
             
         }
 
+
+        //Công
         public ActionResult DsCong()
         {
             if (Session["user"] == null)
@@ -100,7 +110,14 @@ namespace EMMA.Areas.Staff.Controllers
             }
             else
             {
-                List<ChamCong> chamCongs = db.ChamCong.ToList();
+                List<ChamCong> chamCongs = new List<ChamCong>();
+                foreach(var cong in db.ChamCong.ToList())
+                {
+                    if(cong.MaNV == Session["id"].ToString() && cong.Thang == DateTime.Now.Month && cong.Nam == DateTime.Now.Year)
+                    {
+                        chamCongs.Add(cong);
+                    }    
+                }    
                 return View(chamCongs);
             }
         }

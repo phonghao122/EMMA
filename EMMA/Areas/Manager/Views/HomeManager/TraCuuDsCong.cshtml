@@ -3,6 +3,8 @@
     ViewBag.Title = "TraCuuDSCong";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
+
+
     <body class="horizontal-layout horizontal-menu  navbar-floating footer-static" data-open="hover"
           data-menu="horizontal-menu" data-col="">
         <nav class="header-navbar navbar-expand-lg navbar navbar-fixed align-items-center navbar-shadow navbar-brand-center"
@@ -151,90 +153,30 @@
         <script src="~/public/app-assets/js/scripts/pages/dashboard-ecommerce.js"></script>
     </body>
 
-    if (ViewBag.df == "ok")
+    if (Session["notCong"].ToString() == "ok")
     {
-        <div class="row">
-            <div style="margin-top: 150px" class="col-md-4">
-                <form method="post">
-                    <div class="card">
-                        <div class="card-heard" style="background-color:aquamarine">
-                            <h3 style="margin-top:25px " class="text-center"> Tra Cứu Công Nhân Viên </h3>
-                        </div>
-                        <div class="card-body">
-                            <label> <h4>Tháng</h4> </label>
-                            <input class="form-control" type="text" name="thang" placeholder="Nhập Tháng Cần Tra Cứu ...">
-                            <label style="margin-top:10px "><h4>Năm</h4> </label>
-                            <input class="form-control" type="text" name="nam" placeholder="Nhập Năm Cần Tra Cứu ...">
-                        </div>
-                        <div class="card-footer text-end">
-                            <button type="submit" class="btn btn-info"> Tiếp Tục </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div style="margin-top:150px" class="col-md-8">
-                <div class="card">
-                    <div class="card-heard" style="background-color:aquamarine">
-                        <h3 style="margin-top:25px " class="text-center"> Danh Sách Công Nhân Viên </h3>
-                    </div>
-                    <div class="card-body">
-                        <table class="table tabel-bordered">
-                            <thead>
-                            <th class="text-center"> Họ Tên Nhân Viên</th>
-                            <th class="text-center"> Số Ngày Công</th>
-                            <th class="text-center"> Số Ngày Nghĩ</th>
-                            </thead>
-                            <tbody>
-                                @foreach (var item in Model)
-                                {
-                                    <tr>
-                                        <td class="text-center">
-                                            @Html.DisplayFor(modelItem => item.NHANVIEN.HoTenNV)
-                                        </td>
-                                        <td class="text-center">
-                                            @Html.DisplayFor(modelItem => item.SoNgayCong)
-                                        </td>
-                                        <td class="text-center">
-                                            @Html.DisplayFor(modelItem => item.SoNgayNghi)
-                                        </td>
-                                    </tr>
-                                }
-
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    }
-    else
-    {
-      <div class="row">
-            <div class="col-md-4"></div>
-            <div style="margin-top: 150px" class="col-md-4">
-                <form method="post">
-                    <div class="card">
-                        <div class="card-heard" style="background-color:aquamarine">
-                            <h3 style="margin-top:25px " class="text-center"> Tra Cứu Công Nhân Viên </h3>
-                        </div>
-                        <div class="card-body">
-                            <label> <h4>Tháng</h4> </label>
-                            <input class="form-control" type="text" name="thang" placeholder="Nhập Tháng Cần Tra Cứu ...">
-                            <label style="margin-top:10px "><h4>Năm</h4> </label>
-                            <input class="form-control" type="text" name="nam" placeholder="Nhập Năm Cần Tra Cứu ...">
-                        </div>
-                        <div class="card-footer text-end">
-                            <button type="submit" class="btn btn-info"> Tiếp Tục </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-            if (ViewBag.tc == "ok")
-            {
-
+        <script>alert("Không Tìm thấy")</script>
+        if (ViewBag.df == "ok")
+        {
             <div class="row">
-                <div class="col-md-2"></div>
+                <div style="margin-top: 150px" class="col-md-4">
+                    <form method="post">
+                        <div class="card">
+                            <div class="card-heard" style="background-color:aquamarine">
+                                <h3 style="margin-top:25px " class="text-center"> Tra Cứu Công Nhân Viên </h3>
+                            </div>
+                            <div class="card-body">
+                                <label> <h4>Tháng</h4> </label>
+                                <input class="form-control" type="text" name="thang" placeholder="Nhập Tháng Cần Tra Cứu ...">
+                                <label style="margin-top:10px "><h4>Năm</h4> </label>
+                                <input class="form-control" type="text" name="nam" placeholder="Nhập Năm Cần Tra Cứu ...">
+                            </div>
+                            <div class="card-footer text-end">
+                                <button type="submit" class="btn btn-info"> Tiếp Tục </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
                 <div style="margin-top:150px" class="col-md-8">
                     <div class="card">
                         <div class="card-heard" style="background-color:aquamarine">
@@ -269,10 +211,185 @@
                     </div>
                 </div>
             </div>
-            }
-            else
+        }
+        else
+        {
+            if (ViewBag.tc == "ok")
             {
-            <script>alert("không tồn tại")</script>
+
+                <div class="row">
+                    <div style="margin-top: 150px" class="col-md-4">
+                        <form method="post">
+                            <div class="card">
+                                <div class="card-heard" style="background-color:aquamarine">
+                                    <h3 style="margin-top:25px " class="text-center"> Tra Cứu Công Nhân Viên </h3>
+                                </div>
+                                <div class="card-body">
+                                    <label> <h4>Tháng</h4> </label>
+                                    <input class="form-control" type="text" name="thang" placeholder="Nhập Tháng Cần Tra Cứu ...">
+                                    <label style="margin-top:10px "><h4>Năm</h4> </label>
+                                    <input class="form-control" type="text" name="nam" placeholder="Nhập Năm Cần Tra Cứu ...">
+                                </div>
+                                <div class="card-footer text-end">
+                                    <button type="submit" class="btn btn-info"> Tiếp Tục </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div style="margin-top:150px" class="col-md-8">
+                        <div class="card">
+                            <div class="card-heard" style="background-color:aquamarine">
+                                <h3 style="margin-top:25px " class="text-center"> Danh Sách Công Nhân Viên </h3>
+                            </div>
+                            <div class="card-body">
+                                <table class="table tabel-bordered">
+                                    <thead>
+                                    <th class="text-center"> Họ Tên Nhân Viên</th>
+                                    <th class="text-center"> Số Ngày Công</th>
+                                    <th class="text-center"> Số Ngày Nghĩ</th>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                <td class="text-center">
+                                                    @Html.DisplayFor(modelItem => item.NHANVIEN.HoTenNV)
+                                                </td>
+                                                <td class="text-center">
+                                                    @Html.DisplayFor(modelItem => item.SoNgayCong)
+                                                </td>
+                                                <td class="text-center">
+                                                    @Html.DisplayFor(modelItem => item.SoNgayNghi)
+                                                </td>
+                                            </tr>
+                                        }
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             }
+        }
+    }
+    else
+    {
+        if (ViewBag.df == "ok")
+        {
+            <div class="row">
+                <div style="margin-top: 150px" class="col-md-4">
+                    <form method="post">
+                        <div class="card">
+                            <div class="card-heard" style="background-color:aquamarine">
+                                <h3 style="margin-top:25px " class="text-center"> Tra Cứu Công Nhân Viên </h3>
+                            </div>
+                            <div class="card-body">
+                                <label> <h4>Tháng</h4> </label>
+                                <input class="form-control" type="text" name="thang" placeholder="Nhập Tháng Cần Tra Cứu ...">
+                                <label style="margin-top:10px "><h4>Năm</h4> </label>
+                                <input class="form-control" type="text" name="nam" placeholder="Nhập Năm Cần Tra Cứu ...">
+                            </div>
+                            <div class="card-footer text-end">
+                                <button type="submit" class="btn btn-info"> Tiếp Tục </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div style="margin-top:150px" class="col-md-8">
+                    <div class="card">
+                        <div class="card-heard" style="background-color:aquamarine">
+                            <h3 style="margin-top:25px " class="text-center"> Danh Sách Công Nhân Viên </h3>
+                        </div>
+                        <div class="card-body">
+                            <table class="table tabel-bordered">
+                                <thead>
+                                <th class="text-center"> Họ Tên Nhân Viên</th>
+                                <th class="text-center"> Số Ngày Công</th>
+                                <th class="text-center"> Số Ngày Nghĩ</th>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td class="text-center">
+                                                @Html.DisplayFor(modelItem => item.NHANVIEN.HoTenNV)
+                                            </td>
+                                            <td class="text-center">
+                                                @Html.DisplayFor(modelItem => item.SoNgayCong)
+                                            </td>
+                                            <td class="text-center">
+                                                @Html.DisplayFor(modelItem => item.SoNgayNghi)
+                                            </td>
+                                        </tr>
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            if (ViewBag.tc == "ok")
+            {
+
+                <div class="row">
+                    <div style="margin-top: 150px" class="col-md-4">
+                        <form method="post">
+                            <div class="card">
+                                <div class="card-heard" style="background-color:aquamarine">
+                                    <h3 style="margin-top:25px " class="text-center"> Tra Cứu Công Nhân Viên </h3>
+                                </div>
+                                <div class="card-body">
+                                    <label> <h4>Tháng</h4> </label>
+                                    <input class="form-control" type="text" name="thang" placeholder="Nhập Tháng Cần Tra Cứu ...">
+                                    <label style="margin-top:10px "><h4>Năm</h4> </label>
+                                    <input class="form-control" type="text" name="nam" placeholder="Nhập Năm Cần Tra Cứu ...">
+                                </div>
+                                <div class="card-footer text-end">
+                                    <button type="submit" class="btn btn-info"> Tiếp Tục </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div style="margin-top:150px" class="col-md-8">
+                        <div class="card">
+                            <div class="card-heard" style="background-color:aquamarine">
+                                <h3 style="margin-top:25px " class="text-center"> Danh Sách Công Nhân Viên </h3>
+                            </div>
+                            <div class="card-body">
+                                <table class="table tabel-bordered">
+                                    <thead>
+                                    <th class="text-center"> Họ Tên Nhân Viên</th>
+                                    <th class="text-center"> Số Ngày Công</th>
+                                    <th class="text-center"> Số Ngày Nghĩ</th>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                <td class="text-center">
+                                                    @Html.DisplayFor(modelItem => item.NHANVIEN.HoTenNV)
+                                                </td>
+                                                <td class="text-center">
+                                                    @Html.DisplayFor(modelItem => item.SoNgayCong)
+                                                </td>
+                                                <td class="text-center">
+                                                    @Html.DisplayFor(modelItem => item.SoNgayNghi)
+                                                </td>
+                                            </tr>
+                                        }
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             }
-            }
+        }
+    }
+}

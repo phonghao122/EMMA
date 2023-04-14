@@ -1,0 +1,39 @@
+﻿@model IEnumerable<EMMA.Models.CHUCVU>
+
+@{
+    ViewBag.Title = "DsCV";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>DsCV</h2>
+
+<p>
+    @Html.ActionLink("Create New", "ThemCV")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.MaCV)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TenCV)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.MaCV)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TenCV)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "CapNhatCV", new { id = item.MaCV }) |
+            @Html.ActionLink("Delete", "XoaCV", new { id = item.MaCV })
+        </td>
+    </tr>
+}
+
+</table>

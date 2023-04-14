@@ -1,0 +1,52 @@
+﻿@model IEnumerable<EMMA.Models.HOPDONGLAODONG>
+
+@{
+    ViewBag.Title = "DsHD";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>DsHD</h2>
+
+<p>
+    @Html.ActionLink("Create New", "ThemHD")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.LoaiHD)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NgayKy)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NgayHetHan)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NHANVIEN.HoTenNV)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.LoaiHD)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NgayKy)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NgayHetHan)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NHANVIEN.HoTenNV)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "CapNhatHD", new { id=item.MaHD }) |
+            @Html.ActionLink("Details", "Details", new { id=item.MaHD }) |
+            @Html.ActionLink("Delete", "XoaHD", new { id=item.MaHD })
+        </td>
+    </tr>
+}
+
+</table>

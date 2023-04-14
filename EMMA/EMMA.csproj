@@ -199,6 +199,12 @@
     <Content Include="Areas\Manager\Views\HomeManager\TongHopCong.cshtml" />
     <Content Include="Areas\Manager\Views\HomeManager\TongHopLuong.cshtml" />
     <Content Include="Areas\Manager\Views\HomeManager\TraCuuDsCong.cshtml" />
+    <Content Include="Areas\Manager\Views\HomeManager\DsCV.cshtml" />
+    <Content Include="Areas\Manager\Views\HomeManager\ThemCV.cshtml" />
+    <Content Include="Areas\Manager\Views\HomeManager\CapNhatCV.cshtml" />
+    <Content Include="Areas\Manager\Views\HomeManager\DsHD.cshtml" />
+    <Content Include="Areas\Manager\Views\HomeManager\ThemHD.cshtml" />
+    <Content Include="Areas\Manager\Views\HomeManager\CapNhatHD.cshtml" />
     <None Include="packages.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
