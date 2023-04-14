@@ -164,30 +164,32 @@
 
 
         <div class="row">
-            <div class="col-md-1">
-            </div>
-            <div style="margin-top:150px" class="col-md-10">
-                <div class="card">
-                    <div>
-                        @using (Html.BeginForm())
-                        {
-                            @Html.AntiForgeryToken()
-
+            <div class="col-md-3">
+                <form method="post">
+                    <div style="margin-top:150px" class="card">
+                        <div class="card-heard" style="background-color:aqua">
+                            <h3 style="margin-top:20px " class="card-title mb-1 text-center">Tìm Kiếm Lương Theo Tháng</h3>
+                        </div>
+                        <div class="card-body">
                             <div class="form-horizontal">
                                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                                <label>Thang</label>
-                                <input type="text" name="thang" />
-                                <label>Nam</label>
-                                <input type="text" name="nam" />
-
-                                <div class="form-group">
-                                    <div class="col-md-offset-2 col-md-10">
-                                        <input type="submit" value="Tiếp Tục" class="btn btn-default" />
+                                <label>Tháng</label>
+                                <input class="form-control" type="text" name="thang" placeholder="Nhập Tháng ..." />
+                                <label>Năm</label>
+                                <input class="form-control" type="text" name="nam" placeholder="Nhập Năm ..." />
+                                <div style="margin-top:20px" class="text-end">
+                                    <div class="col-md-offset-2 col-md-12">
+                                        <button type="submit" class="btn btn-info">Tiếp Tục</button>
+                                        @*<input type="submit" value="Tiếp Tục" class="btn btn-default" />*@
                                     </div>
                                 </div>
                             </div>
-                        }
+                        </div>
                     </div>
+                </form>
+            </div>
+            <div style="margin-top:150px" class="col-md-9">
+                <div class="card">
                     <div class="card-heard" style="background-color:aqua">
                         <h3 style="margin-top:20px " class="card-title mb-1 text-center">Danh Sách Lương</h3>
                     </div>
