@@ -186,6 +186,7 @@
                     <label class="gt mt-1"> <h4>Giới Tính:</h4> </label>
                     <div class="col-md-12">
                         <select name="GioiTinh" class="form-control">
+                            <option value="">Chọn Giới Tính</option>
                             <option value="Nam">Nam</option>
                             <option value="Nữ">Nữ</option>
                             <option value="Khác">Khác</option>
@@ -199,12 +200,12 @@
                     </div>
                     <label class="mk mt-1"> <h4>Password:</h4> </label>
                     <div class="col-md-12">
-                        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                        <input class = "form-control" name="Password" type="password" />
                         @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
                     </div>
                     <label class="ns mt-1"> <h4>Ngày Sinh:</h4> </label>
                     <div class="col-md-12">
-                        <input class="form-control" name="NgaySinh" type="date" />
+                        @Html.TextBoxFor(m => m.NgaySinh, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
                         @Html.ValidationMessageFor(model => model.NgaySinh, "", new { @class = "text-danger" })
                     </div>
                     <label class="dc mt-1"> <h4>Địa Chỉ:</h4> </label>
@@ -235,6 +236,7 @@
                     <label class="tdhv mt-1"> <h4>Trình Độ Học Vấn:</h4> </label>
                     <div class="col-md-12">
                         <select name="TrinhDoHocVan" class="form-control">
+                            <option value="">Chọn Trình Độ Học Vấn</option>
                             <option value="Tiểu Học">Tiểu Học</option>
                             <option value="Trung Học Cơ Sở">Trung Học Cơ Sở</option>
                             <option value="Trung Học Phổ Thông">Trung Học Phổ Thông</option>
@@ -250,6 +252,7 @@
                     <label class="mapb mt-1"> <h4> Phòng Ban:</h4> </label>
                     <div class="col-md-12">
                         <select class="form-control" name="MaPB">
+                            <option value="">Chọn Phòng Ban</option>
                             @foreach (var item in db.PHONGBAN)
                             {
                                 <option value="@item.MaPB">@item.TenPB</option>
@@ -260,6 +263,7 @@
                     <label class="macv mt-1"> <h4>Chức Vụ:</h4> </label>
                     <div class="col-md-12">
                         <select class="form-control" name="MaCV">
+                            <option value="">Chọn Chức Vụ</option>
                             @foreach (var item in db.CHUCVU)
                             {
                                 <option value="@item.MaCV">@item.TenCV</option>
@@ -270,6 +274,7 @@
                     <label class="bl mt-1"> <h4>Lương Cơ Bản:</h4> </label>
                     <div class="col-md-12">
                         <select class="form-control" name="BacLuong">
+                            <option value="">Chọn mức lương cơ bản</option>
                             @foreach (var item in db.LUONG)
                             {
                                 <option value="@item.BacLuong">@item.LuongCoBan</option>
@@ -288,7 +293,7 @@
                 <div class="card-footer">
                     <div class="form-group">
                         <div class="text-end">
-                            <button class="btn btn-warning"> @Html.ActionLink("Back to List", "Index")</button>
+                            <button class="btn btn-warning"> @Html.ActionLink("Back to List", "DanhSachNV")</button>
                             <input type="submit" value="ThemMoi" class="btn btn-info">
                         </div>
                     </div>

@@ -179,7 +179,6 @@
     <Content Include="Areas\Manager\Views\HomeManager\ThemMoiNV.cshtml" />
     <Content Include="Areas\Manager\Views\HomeManager\CapNhatNV.cshtml" />
     <Content Include="Areas\Staff\Views\HomeStaff\ThongTinCaNhan.cshtml" />
-    <Content Include="Areas\Manager\Views\HomeManager\ThongTinCaNhan.cshtml" />
     <Content Include="Areas\Manager\Views\HomeManager\ChiTietNV.cshtml" />
     <Content Include="Areas\Staff\Views\HomeStaff\CapNhatTTCN.cshtml" />
     <Content Include="Areas\Manager\Views\HomeManager\ThemPB.cshtml" />
@@ -205,6 +204,7 @@
     <Content Include="Areas\Manager\Views\HomeManager\DsHD.cshtml" />
     <Content Include="Areas\Manager\Views\HomeManager\ThemHD.cshtml" />
     <Content Include="Areas\Manager\Views\HomeManager\CapNhatHD.cshtml" />
+    <Content Include="Areas\Manager\Views\HomeManager\TimKiem.cshtml" />
     <None Include="packages.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
@@ -221,7 +221,6 @@
     <Folder Include="Areas\Manager\Data\" />
     <Folder Include="Areas\Staff\Data\" />
     <Folder Include="Data\" />
-    <Folder Include="Views\Luong\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

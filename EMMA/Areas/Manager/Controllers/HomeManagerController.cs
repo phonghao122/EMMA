@@ -72,25 +72,41 @@ namespace EMMA.Areas.Manager.Controllers
                 var nv = db.NHANVIEN.Find(model.MaNV);
                 if (nv == null)
                 {
-                    var user = db.NHANVIEN.Find(model.Username);
-                    if(user == null)
+                    if(model.Username == null || model.Password == null)
                     {
-                        if(model.MaCV == "GD" || model.MaCV == "QL")
-                        {
-                            model.Role = 1;
-                        } 
-                        else
-                        {
-                            model.Role = 2;
-                        }    
-                        db.NHANVIEN.Add(model);
-                        db.SaveChanges();
-                        return RedirectToAction("DanhSachNV");
-                    }   
+                        ModelState.AddModelError("", "Bắt buộc nhập Username và Password");
+                        return View(model);
+                    }    
                     else
                     {
-                        ModelState.AddModelError("", "Username Đã Tồn Tại");
-                        return View(model);
+                        var user = db.NHANVIEN.FirstOrDefault(m => m.Username == model.Username);
+                        if (user == null)
+                        {
+                            if (model.MaCV == null || model.MaPB == null)
+                            {
+                                ModelState.AddModelError("", "Bắt buộc nhập Chức Vụ và Phòng Ban");
+                                return View(model);
+                            }
+                            else
+                            {
+                                if (model.MaCV == "GD" || model.MaCV == "QL")
+                                {
+                                    model.Role = 1;
+                                }
+                                else
+                                {
+                                    model.Role = 2;
+                                }
+                                db.NHANVIEN.Add(model);
+                                db.SaveChanges();
+                                return RedirectToAction("DanhSachNV");
+                            }
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("", "Username Đã Tồn Tại");
+                            return View(model);
+                        }
                     }    
                 }
                 else
@@ -115,6 +131,26 @@ namespace EMMA.Areas.Manager.Controllers
                 {
                     Session["Avt"] = nhanVien.Avt;
                 }
+                if(nhanVien.MaCV != null)
+                {
+                    Session["cv"] = nhanVien.MaCV;
+                }
+                if (nhanVien.MaPB != null)
+                {
+                    Session["pb"] = nhanVien.MaPB;
+                }
+                if (nhanVien.BacLuong != null)
+                {
+                    Session["bl"] = nhanVien.BacLuong;
+                }
+                if (nhanVien.TrinhDoHocVan != null)
+                {
+                    Session["hv"] = nhanVien.TrinhDoHocVan;
+                }
+                if (nhanVien.GioiTinh != null)
+                {
+                    Session["gt"] = nhanVien.GioiTinh;
+                }   
                 return View(nhanVien);
             }
         }
@@ -135,6 +171,26 @@ namespace EMMA.Areas.Manager.Controllers
             else
             {
                 model.Avt = Session["Avt"].ToString();
+            }
+            if(model.MaCV == null)
+            {
+                model.MaCV = Session["cv"].ToString();
+            }
+            if (model.MaPB == null)
+            {
+                model.MaPB = Session["pb"].ToString();
+            }
+            if (model.GioiTinh == null)
+            {
+                model.GioiTinh = Session["gt"].ToString();
+            }
+            if (model.TrinhDoHocVan == null)
+            {
+                model.TrinhDoHocVan = Session["hv"].ToString();
+            }
+            if (model.BacLuong == null)
+            {
+                model.BacLuong = Session["bl"].ToString();
             }
             var user = db.NHANVIEN.Find(model.Username);
             if (user == null)
@@ -192,82 +248,6 @@ namespace EMMA.Areas.Manager.Controllers
                 var nv = db.NHANVIEN.Find(id);
                 return View(nv);
             }
-        }
-
-        //Thông Tin cá Nhân
-        public ActionResult ThongTinCaNhan()
-        {
-            if (Session["user"] == null)
-            {
-                return Redirect("~/Login/Login");
-            }
-            else
-            {
-                var id = Session["id"].ToString();
-                var nv = db.NHANVIEN.Find(id);
-                return View(nv);
-            }
-        }
-
-        public ActionResult CapNhatTTCN(string id)
-        {
-            if (Session["user"] == null)
-            {
-                return Redirect("~/Login/Login");
-            }
-            else
-            {
-                var nhanVien = db.NHANVIEN.Find(id);
-                if (nhanVien.Avt != null)
-                {
-                    Session["Avt"] = nhanVien.Avt;
-                }
-                return View(nhanVien);
-            }
-        }
-
-        [HttpPost]
-        public ActionResult CapNhatTTCN(string id, NHANVIEN model, HttpPostedFileBase fileAnh)
-        {
-            if (fileAnh != null)
-            {
-                if (fileAnh.ContentLength > 0)
-                {
-                    string rootFolder = Server.MapPath("/Data/");
-                    string pathImage = rootFolder + fileAnh.FileName;
-                    fileAnh.SaveAs(pathImage);
-                    model.Avt = "/Data/" + fileAnh.FileName;
-                }
-            }
-            else
-            {
-                model.Avt = Session["Avt"].ToString();
-            }
-            var user = db.NHANVIEN.Find(model.Username);
-            if (user == null)
-            {
-                var nhanVien = db.NHANVIEN.Find(model.MaNV);
-                nhanVien.HoTenNV = model.HoTenNV;
-                nhanVien.GioiTinh = model.GioiTinh;
-                nhanVien.Username = model.Username;
-                nhanVien.Password = model.Password;
-                nhanVien.NgaySinh = model.NgaySinh;
-                nhanVien.DiaChi = model.DiaChi;
-                nhanVien.SDT = model.SDT;
-                nhanVien.Email = model.Email;
-                nhanVien.QueQuan = model.QueQuan;
-                nhanVien.CCCD = model.CCCD;
-                nhanVien.TrinhDoHocVan = model.TrinhDoHocVan;
-                nhanVien.Avt = model.Avt;
-                db.SaveChanges();
-                return RedirectToAction("ThongTinCaNhan");
-            }
-            else
-            {
-                ModelState.AddModelError("", "Username Đã Tồn Tại");
-                return View(model);
-            }
-
         }
 
         //Phòng Ban
@@ -827,6 +807,17 @@ namespace EMMA.Areas.Manager.Controllers
                     return View();
                 }
             }    
+        }
+
+        //Tìm Kiếm
+        public ActionResult TimKiem(string tuKhoa)
+        {
+            List<NHANVIEN> nv = new List<NHANVIEN>();
+            foreach(var item in db.NHANVIEN.ToList())
+            {
+                if(item.HoTenNV.ToLower().Contains(tuKhoa.ToLower())) nv.Add(item);
+            }
+            return View(nv);
         }
     }
 }

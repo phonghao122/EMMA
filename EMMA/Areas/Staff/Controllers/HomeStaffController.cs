@@ -165,7 +165,7 @@ namespace EMMA.Areas.Staff.Controllers
             }
         }
 
-        public ActionResult ChamCongRa(string id)
+        public ActionResult ChamCongRa()
         {
             if (Session["user"] == null)
             {
@@ -173,7 +173,10 @@ namespace EMMA.Areas.Staff.Controllers
             }
             else
             {
-                var nv = db.ChamCong.FirstOrDefault(m => m.MaNV == id && m.Ngay ==(int) DateTime.Now.Day && m.Thang == (int)DateTime.Now.Month && m.Nam == (int)DateTime.Now.Year);
+                var nv = db.ChamCong.FirstOrDefault(m => m.MaNV == Session["id"].ToString() 
+                && m.Ngay == DateTime.Now.Day 
+                && m.Thang == DateTime.Now.Month 
+                && m.Nam == DateTime.Now.Year);
                 return View(nv);
             }
         }
@@ -182,10 +185,15 @@ namespace EMMA.Areas.Staff.Controllers
         public ActionResult ChamCongRa(ChamCong model)
         {
             bool faceid = true;
-            var nv = db.ChamCong.FirstOrDefault(m => m.MaNV == model.MaNV && m.Ngay == model.Ngay && m.Thang == model.Thang && m.Nam == model.Nam);
+            var nv = db.ChamCong.FirstOrDefault(m => m.MaNV == model.MaNV 
+            && m.Ngay == model.Ngay 
+            && m.Thang == model.Thang 
+            && m.Nam == model.Nam);
             if (nv.Ra == null)
             {
-                if(nv.Ngay == DateTime.Now.Day && nv.Thang == DateTime.Now.Month && nv.Nam == DateTime.Now.Year)
+                if(nv.Ngay == DateTime.Now.Day 
+                    && nv.Thang == DateTime.Now.Month 
+                    && nv.Nam == DateTime.Now.Year)
                 {
                     if (faceid == true)
                     {
