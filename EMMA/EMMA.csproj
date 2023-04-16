@@ -205,6 +205,8 @@
     <Content Include="Areas\Manager\Views\HomeManager\ThemHD.cshtml" />
     <Content Include="Areas\Manager\Views\HomeManager\CapNhatHD.cshtml" />
     <Content Include="Areas\Manager\Views\HomeManager\TimKiem.cshtml" />
+    <Content Include="Areas\Manager\Views\HomeManager\TraCuuLuong.cshtml" />
+    <Content Include="Areas\Manager\Views\HomeManager\DsCong.cshtml" />
     <None Include="packages.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />

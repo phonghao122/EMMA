@@ -211,6 +211,10 @@
                     <input class="form-control" type="text" name="thang" placeholder="Nhập Tháng Cần Tra Cứu ...">
                     <label style="margin-top:10px "><h4>Năm</h4> </label>
                     <input class="form-control" type="text" name="nam" placeholder="Nhập Năm Cần Tra Cứu ...">
+                    @if (ViewBag.err != null)
+                    {
+                        <p class="text-warning">@ViewBag.err</p>
+                    }
                 </div>
                 <div class="card-footer text-end">
                     <button type="submit" class="btn btn-info"> Tiếp Tục </button>

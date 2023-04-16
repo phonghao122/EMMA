@@ -506,7 +506,6 @@ namespace EMMA.Areas.Manager.Controllers
         }
 
         //Công
-
         public ActionResult TraCuuDsCong()
         {
             if (Session["user"] == null)
@@ -535,29 +534,49 @@ namespace EMMA.Areas.Manager.Controllers
             }
         }
 
-        [HttpPost]
-        public ActionResult TraCuuDsCong(int thang, int nam)
+        public ActionResult DsCong(int? thang, int? nam)
         {
-            List<CONG> dsCong = db.CONG.ToList();
-            List<CONG> congTheoThang = new List<CONG>();
-            foreach (var cong in dsCong)
+            if (Session["user"] == null)
             {
-                if (cong.Thang == thang && cong.Nam == nam)
-                {
-                    congTheoThang.Add(cong);
-                }
+                return Redirect("~/Login/Login");
             }
-            if(congTheoThang.Count > 0)
-            {
-                ViewBag.tc = "ok";
-                Session["notCong"] = "not";
-                return View(congTheoThang);
-            } 
             else
             {
-                Session["notCong"] = "ok";
-                return View();
-            }    
+                if (thang == null && nam == null)
+                {
+                    return RedirectToAction("TraCuuDsCong");
+                }
+                else
+                {
+                    if (thang == null || nam == null)
+                    {
+                        List<CONG> n = new List<CONG>();
+                        ViewBag.err = "Phải nhập tháng và năm cần tra cứu";
+                        return View(n);
+                    }
+                    else
+                    {
+                        List<CONG> congTheoThang = new List<CONG>();
+                        foreach (var cong in db.CONG.ToList())
+                        {
+                            if (cong.Thang == thang && cong.Nam == nam)
+                            {
+                                congTheoThang.Add(cong);
+                            }
+                        }
+                        ViewBag.err = null;
+                        if (congTheoThang.Count > 0)
+                        {
+                            ViewBag.tc = "ok";
+                        }
+                        else
+                        {
+                            ViewBag.tc = "ok";
+                        }
+                        return View(congTheoThang);
+                    }
+                }
+            }
         }
 
         public ActionResult TongHopCong()
@@ -650,14 +669,6 @@ namespace EMMA.Areas.Manager.Controllers
             }
             else
             {
-                if (ViewBag.tc == null)
-                {
-                    ViewBag.df = "ok";
-                }
-                else
-                {
-                    ViewBag.df = "not";
-                }
                 List<HOADONLUONG> dsLuong = new List<HOADONLUONG>();
                 foreach (var item in db.HOADONLUONG.ToList())
                 {
@@ -670,28 +681,42 @@ namespace EMMA.Areas.Manager.Controllers
             }
         }
 
-        [HttpPost]
-        public ActionResult DsLuong(int thang, int nam)
+        public ActionResult TraCuuLuong(int? thang, int? nam)
         {
-            List<HOADONLUONG> luongTheoThang = new List<HOADONLUONG>();
-            foreach (var luong in db.HOADONLUONG.ToList())
+            if(thang == null && nam == null)
             {
-                if (luong.Thang == thang && luong.Nam == nam)
-                {
-                    luongTheoThang.Add(luong);
-                }
-            }
-            if (luongTheoThang.Count > 0)
-            {
-                ViewBag.tc = "ok";
-                Session["notLuong"] = "not";
-                return View(luongTheoThang);
-            }
+                return RedirectToAction("DsLuong");
+            }    
             else
             {
-                Session["notLuong"] = "ok";
-                return RedirectToAction("DsLuong");
-            }
+                if (thang == null || nam == null)
+                {
+                    List<HOADONLUONG> n = new List<HOADONLUONG>();
+                    ViewBag.er = "Phải nhập tháng và năm cần tra cứu";
+                    return View(n);
+                }
+                else
+                {
+                    List<HOADONLUONG> luongTheoThang = new List<HOADONLUONG>();
+                    foreach (var luong in db.HOADONLUONG.ToList())
+                    {
+                        if (luong.Thang == thang && luong.Nam == nam)
+                        {
+                            luongTheoThang.Add(luong);
+                        }
+                    }
+                    ViewBag.er = null;
+                    if (luongTheoThang.Count > 0)
+                    {
+                        ViewBag.tc = "ok";
+                    }
+                    else
+                    {
+                        ViewBag.tc = "not";
+                    }
+                    return View(luongTheoThang);
+                }
+            }    
         }
 
         public float HsPhuCap(int soNgayCong, int soNgayNghi, int thang, int nam, string id)
@@ -812,12 +837,29 @@ namespace EMMA.Areas.Manager.Controllers
         //Tìm Kiếm
         public ActionResult TimKiem(string tuKhoa)
         {
-            List<NHANVIEN> nv = new List<NHANVIEN>();
-            foreach(var item in db.NHANVIEN.ToList())
+            if (Session["user"] == null)
             {
-                if(item.HoTenNV.ToLower().Contains(tuKhoa.ToLower())) nv.Add(item);
+                return Redirect("~/Login/Login");
             }
-            return View(nv);
+            else
+            {
+                if (tuKhoa == null)
+                {
+                    return RedirectToAction("DanhSachNV");
+                }
+                else
+                {
+                    List<NHANVIEN> nv = new List<NHANVIEN>();
+                    foreach (var item in db.NHANVIEN.ToList())
+                    {
+                        if (item.HoTenNV != null)
+                        {
+                            if (item.HoTenNV.ToLower().Contains(tuKhoa.ToLower())) nv.Add(item);
+                        }
+                    }
+                    return View(nv);
+                }
+            } 
         }
     }
 }
