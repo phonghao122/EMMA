@@ -203,7 +203,7 @@
 <div class="row">
     <div class="col-md-3">
     </div>
-    <div style="margin-top:150px" class="col-md-6">
+    <div style="margin-top:250px" class="col-md-6">
         <form method="post">
             <div class="card">
                 <div class="card-heard" style="background-color:aqua">
@@ -217,7 +217,8 @@
                     <input class="form-control" type="text" name="nam" />
                 </div>
                 <div class="card-footer">
-                    <div class="col-md-offset-2 col-md-12 text-center">
+                    <div class="col-md-offset-2 col-md-12  text-end">
+                        <button class="btn btn-warning"> @Html.ActionLink("Back to List", "Index") </button>
                         <button type="submit" class="btn btn-info">Tiếp Tục</button>
                     </div>
                 </div>
@@ -225,30 +226,3 @@
         </form>
     </div>
 </div>
-
-@*<h2>TongHopCong</h2>
-
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-        <h4>CONG</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <label>Thang</label>
-        <input type="text" name="thang" />
-        <label>Nam</label>
-        <input type="text" name="nam" />
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
-    }
-
-    <div>
-        @Html.ActionLink("Back to List", "Index")
-    </div>*@

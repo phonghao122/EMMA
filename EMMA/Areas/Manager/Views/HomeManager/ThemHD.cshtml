@@ -7,8 +7,6 @@
     EMMA.Models.EMMAEntities db = new EMMA.Models.EMMAEntities();
 }
 
-
-
 <body class="horizontal-layout horizontal-menu  navbar-floating footer-static" data-open="hover"
       data-menu="horizontal-menu" data-col="">
     <nav class="header-navbar navbar-expand-lg navbar navbar-fixed align-items-center navbar-shadow navbar-brand-center"
@@ -201,69 +199,52 @@
 
 
 </body>
-<h2>ThemHD</h2>
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <h4>HOPDONGLAODONG</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.MaHD, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.MaHD, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.MaHD, "", new { @class = "text-danger" })
+<div class="row">
+    <div class="col-md-2"></div>
+    <div style="margin-top:150px" class="col-md-8">
+        <form method="post">
+            <div class="card">
+                <div class="card-heard" style="background-color:aqua">
+                    <h3 style="margin-top:20px " class="card-title mb-1 text-center">Thêm Hợp Đồng Lao Động</h3>
+                </div>
+                <div class="card-body">
+                    <label> Mã Hợp Đồng</label>
+                    <div class="col-md-12">
+                        @Html.EditorFor(model => model.MaHD, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.MaHD, "", new { @class = "text-danger" })
+                    </div>
+                    <label> Mã Nhân Viên</label>
+                    <div class="col-md-12">
+                        <select class="form-control" name="MaNV">
+                            @foreach (var n in db.NHANVIEN.ToList())
+                            {
+                                <option value="@n.MaNV">@n.MaNV : @n.HoTenNV</option>
+                            }
+                        </select>
+                    </div>
+                    <label> Loại Hợp Đồng</label>
+                    <div class="col-md-12">
+                        @Html.EditorFor(model => model.LoaiHD, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.LoaiHD, "", new { @class = "text-danger" })
+                    </div>
+                    <label> Ngày Ký</label>
+                    <div class="col-md-12">
+                        @Html.EditorFor(model => model.NgayKy, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.NgayKy, "", new { @class = "text-danger" })
+                    </div>
+                    <label> Ngày Hết Hạn</label>
+                    <div class="col-md-12">
+                        @Html.EditorFor(model => model.NgayHetHan, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.NgayHetHan, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="card-footer text-end">
+                    <button class="btn btn-warning"> @Html.ActionLink("Back to List", "DsHD")</button>
+                    <button type="submit" class="btn btn-info"> Thêm Mới </button>
+                </div>
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.MaNV, "MaNV", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <select class = "form-control" name="MaNV">
-                    @foreach(var n in db.NHANVIEN.ToList())
-                {
-                    <option value="@n.MaNV">@n.MaNV : @n.HoTenNV</option>
-                }
-                </select>
-                @Html.ValidationMessageFor(model => model.MaNV, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.LoaiHD, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.LoaiHD, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.LoaiHD, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.NgayKy, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.NgayKy, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.NgayKy, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.NgayHetHan, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.NgayHetHan, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.NgayHetHan, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
+        </form>
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "DsHD")
 </div>
