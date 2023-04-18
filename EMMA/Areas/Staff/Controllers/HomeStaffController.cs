@@ -202,7 +202,8 @@ namespace EMMA.Areas.Staff.Controllers
             }
             else
             {
-                var nv = db.ChamCong.FirstOrDefault(m => m.MaNV == Session["id"].ToString()
+                string id = Session["id"].ToString();
+                var nv = db.ChamCong.FirstOrDefault(m => m.MaNV == id
                 && m.Ngay == DateTime.Now.Day
                 && m.Thang == DateTime.Now.Month
                 && m.Nam == DateTime.Now.Year) ;

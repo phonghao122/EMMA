@@ -556,7 +556,7 @@ namespace EMMA.Areas.Manager.Controllers
                 }
                 ViewBag.currentThang = thang;
                 ViewBag.currentNam = nam;
-                int pageSize = 1;
+                int pageSize = 4;
                 int pageNumber = (page ?? 1);
                 dsLuong = dsLuong.OrderByDescending(m => m.MaNV).ToList();
                 return View(dsLuong.ToPagedList(pageNumber, pageSize));
@@ -673,7 +673,7 @@ namespace EMMA.Areas.Manager.Controllers
                 }
                 ViewBag.currentThang = thang;
                 ViewBag.currentNam = nam;
-                int pageSize = 1;
+                int pageSize = 4;
                 int pageNumber = (page ?? 1);
                 dsLuong = dsLuong.OrderByDescending(m => m.MaNV).ToList();
                 return View(dsLuong.ToPagedList(pageNumber, pageSize));
@@ -825,7 +825,7 @@ namespace EMMA.Areas.Manager.Controllers
                 }
                 ViewBag.currentThang = thang;
                 ViewBag.currentNam = nam;
-                int pageSize = 1;
+                int pageSize = 4;
                 int pageNumber = (page ?? 1);
                 dsLuong = dsLuong.OrderByDescending(m => m.MaNV).ToList();
                 return View(dsLuong.ToPagedList(pageNumber, pageSize));
