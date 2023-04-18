@@ -178,7 +178,7 @@
                         <tbody>
                             @{
                                 string id = Session["id"].ToString();
-                                foreach (var item in db.ChamCong.ToList())
+                                foreach (var item in Model)
                                 {
                                     <tr>
                                         <td class="text-center">
