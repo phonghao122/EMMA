@@ -202,10 +202,10 @@ namespace EMMA.Areas.Staff.Controllers
             }
             else
             {
-                var nv = db.ChamCong.FirstOrDefault(m => m.MaNV == Session["id"].ToString() 
-                && m.Ngay == DateTime.Now.Day 
-                && m.Thang == DateTime.Now.Month 
-                && m.Nam == DateTime.Now.Year);
+                var nv = db.ChamCong.FirstOrDefault(m => m.MaNV == Session["id"].ToString()
+                && m.Ngay == DateTime.Now.Day
+                && m.Thang == DateTime.Now.Month
+                && m.Nam == DateTime.Now.Year) ;
                 return View(nv);
             }
         }
