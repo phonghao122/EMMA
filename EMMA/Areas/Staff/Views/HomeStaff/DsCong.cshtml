@@ -1,4 +1,6 @@
-﻿@model IEnumerable<EMMA.Models.ChamCong>
+﻿@model PagedList.IPagedList<EMMA.Models.ChamCong>
+@using PagedList;
+@using PagedList.Mvc;
 
 @{
     ViewBag.Title = "DsCong";
@@ -116,7 +118,12 @@
                                 </li>
                                 <li data-menu="">
                                     <a class="dropdown-item d-flex align-items-center" href="~/Staff/HomeStaff/ChamCong">
-                                        <span data-i18n="Analytics"><h5> Chấm Công Vào </h5></span>
+                                        <span data-i18n="Analytics"><h5> Checkin </h5></span>
+                                    </a>
+                                </li>
+                                <li data-menu="">
+                                    <a class="dropdown-item d-flex align-items-center" href="~/Staff/HomeStaff/ChamCongRa">
+                                        <span data-i18n="Analytics"><h5> Checkout </h5></span>
                                     </a>
                                 </li>
                             </ul>
@@ -145,69 +152,90 @@
 
 </body>
 
-
-    <div class="row">
-        <div class="col-md-1">
+@using (Html.BeginForm("DsCong", "HomeStaff"))
+{
+    @Html.AntiForgeryToken()
+    <div style="margin-top:150px" class="card">
+        <div class="card-heard" style="background-color:aqua">
+            <h3 style="margin-top:20px " class="card-title mb-1 text-center">Tìm Kiếm Lương Theo Tháng</h3>
         </div>
-        <div style="margin-top:150px" class="col-md-10">
-            <div class="card">
-                <div class="card-heard" style="background-color:aqua">
-                    <h3 style="margin-top:20px " class="card-title mb-1 text-center">Danh Sách Chấm Công</h3>
-                </div>
-                <div class="card-body">
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th class="text-center"> Họ Tên Nhân Viên</th>
-                                <th class="text-center"> Ngày</th>
-                                <th class="text-center"> Tháng</th>
-                                <th class="text-center"> Năm</th>
-                                <th class="text-center"> Vào</th>
-                                <th class="text-center"> Ra</th>
-                                <th class="text-center"> Acction </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @{
-                                string id = Session["id"].ToString();
-                                foreach (var item in db.ChamCong.ToList())
-                                {
-                                    if (item.MaNV == id)
-                                    {
-                                        <tr>
-                                            <td class="text-center">
-                                                @Html.DisplayFor(modelItem => item.NHANVIEN.HoTenNV)
-                                            </td>
-                                            <td class="text-center">
-                                                @Html.DisplayFor(modelItem => item.Ngay)
-                                            </td>
-                                            <td class="text-center">
-                                                @Html.DisplayFor(modelItem => item.Thang)
-                                            </td>
-                                            <td class="text-center">
-                                                @Html.DisplayFor(modelItem => item.Nam)
-                                            </td>
-                                            <td class="text-center">
-                                                @Html.DisplayFor(modelItem => item.Vao)
-                                            </td>
-                                            <td class="text-center">
-                                                @Html.DisplayFor(modelItem => item.Ra)
-                                            </td>
-                                            <td class="text-center">                                            
-                                                <a class="text-center" href="/Staff/HomeStaff/ChamCongRa/@id">
-                                                    <img src="~/public/app-assets/images/ico/face_id.jpg" height="30" width="30" />
-                                                </a>
-                                            </td>
-
-                                        </tr>
-                                    }
-                                }
-                            }
-                        </tbody>
-
-                    </table>
+        <div class="card-body">
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <label>Tháng</label>
+                <input class="form-control" type="text" name="thang" placeholder="Nhập Tháng ..." />
+                <label>Năm</label>
+                <input class="form-control" type="text" name="nam" placeholder="Nhập Năm ..." />
+                <div style="margin-top:20px" class="text-end">
+                    <div class="col-md-offset-2 col-md-12">
+                        <button type="submit" class="btn btn-info">Tiếp Tục</button>
+                        @*<input type="submit" value="Tiếp Tục" class="btn btn-default" />*@
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+}
+<div class="row">
+    <div class="col-md-1">
+    </div>
+    <div style="margin-top:150px" class="col-md-10">
+        <div class="card">
+            <div class="card-heard" style="background-color:aqua">
+                <h3 style="margin-top:20px " class="card-title mb-1 text-center">Danh Sách Chấm Công</h3>
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th class="text-center"> Họ Tên Nhân Viên</th>
+                            <th class="text-center"> Ngày</th>
+                            <th class="text-center"> Tháng</th>
+                            <th class="text-center"> Năm</th>
+                            <th class="text-center"> Vào</th>
+                            <th class="text-center"> Ra</th>
+                            @*<th class="text-center"> Acction </th>*@
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            string id = Session["id"].ToString();
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="text-center">
+                                        @Html.DisplayFor(modelItem => item.NHANVIEN.HoTenNV)
+                                    </td>
+                                    <td class="text-center">
+                                        @Html.DisplayFor(modelItem => item.Ngay)
+                                    </td>
+                                    <td class="text-center">
+                                        @Html.DisplayFor(modelItem => item.Thang)
+                                    </td>
+                                    <td class="text-center">
+                                        @Html.DisplayFor(modelItem => item.Nam)
+                                    </td>
+                                    <td class="text-center">
+                                        @Html.DisplayFor(modelItem => item.Vao)
+                                    </td>
+                                    <td class="text-center">
+                                        @Html.DisplayFor(modelItem => item.Ra)
+                                    </td>
+                                    @*<td class="text-center">
+                        <a class="text-center" href="/Staff/HomeStaff/ChamCongRa/@id">
+                            <img src="~/public/app-assets/images/ico/face_id.jpg" height="30" width="30" />
+                        </a>
+                    </td>*@
+
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                    Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+                    @Html.PagedListPager(Model, page => Url.Action("DsCong", new { page, currentThang = ViewBag.currentThang, currentNam = ViewBag.currentNam }))
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 

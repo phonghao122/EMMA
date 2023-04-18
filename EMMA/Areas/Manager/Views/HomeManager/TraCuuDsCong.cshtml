@@ -1,5 +1,8 @@
-﻿@{
-    @model IEnumerable<EMMA.Models.CONG>
+﻿
+@model PagedList.IPagedList<EMMA.Models.CONG>
+@using PagedList;
+@using PagedList.Mvc;
+@{
     ViewBag.Title = "TraCuuDSCong";
     Layout = "~/Views/Shared/_Layout.cshtml";
     EMMA.Models.NHANVIEN nv = (EMMA.Models.NHANVIEN)Session["user"];
@@ -199,7 +202,7 @@
 </body>
 <div class="row">
     <div style="margin-top: 150px" class="col-md-4">
-        @using (Html.BeginForm("DsCong", "HomeManager"))
+        @using (Html.BeginForm("TraCuuDsCong", "HomeManager"))
         {
             @Html.AntiForgeryToken()
             <div class="card">
@@ -247,7 +250,11 @@
                         }
 
                     </tbody>
+                    Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+                    @Html.PagedListPager(Model, page => Url.Action("TraCuuDsCong", new { page, currentThang = ViewBag.currentThang, currentNam = ViewBag.currentNam }))
                 </table>
+                Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+                @Html.PagedListPager(Model, page => Url.Action("TraCuuDsCong", new { page, currentThang = ViewBag.currentThang, currentNam = ViewBag.currentNam }))
             </div>
         </div>
     </div>

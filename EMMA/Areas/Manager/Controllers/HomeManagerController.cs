@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
 using EMMA.Models;
+using PagedList;
 
 namespace EMMA.Areas.Manager.Controllers
 {
@@ -24,7 +26,7 @@ namespace EMMA.Areas.Manager.Controllers
         }
 
         //Nhân Viên
-        public ActionResult DanhSachNV()
+        public ActionResult DanhSachNV(string currentFilter, string tuKhoa, int? page)
         {
             if (Session["user"] == null)
             {
@@ -32,8 +34,28 @@ namespace EMMA.Areas.Manager.Controllers
             }
             else
             {
-                List<NHANVIEN> dsNV = db.NHANVIEN.ToList();
-                return View(dsNV);
+                var dsNV = new List<NHANVIEN>();
+                if (tuKhoa != null)
+                {
+                    page = 1;
+                }
+                else
+                {
+                    tuKhoa = currentFilter;
+                }
+                if (string.IsNullOrEmpty(tuKhoa))
+                {
+                    dsNV = db.NHANVIEN.ToList();
+                }
+                else
+                {
+                    dsNV = db.NHANVIEN.Where(m => m.HoTenNV.ToLower().Contains(tuKhoa.ToLower())).ToList();
+                }
+                ViewBag.currentFilter = tuKhoa;
+                int pageSize = 4;
+                int pageNumber = (page ?? 1);
+                dsNV = dsNV.OrderByDescending(m => m.MaNV).ToList();
+                return View(dsNV.ToPagedList(pageNumber, pageSize));
             }
         }
 
@@ -506,7 +528,7 @@ namespace EMMA.Areas.Manager.Controllers
         }
 
         //Công
-        public ActionResult TraCuuDsCong()
+        public ActionResult TraCuuDsCong(int? currentNam, int? currentThang, int? nam, int? thang, int? page)
         {
             if (Session["user"] == null)
             {
@@ -514,68 +536,30 @@ namespace EMMA.Areas.Manager.Controllers
             }
             else
             {
-                if (ViewBag.tc == null)
+                var dsLuong = new List<CONG>();
+                if (thang != null && nam != null)
                 {
-                    ViewBag.df = "ok";
+                    page = 1;
                 }
                 else
                 {
-                    ViewBag.df = "not";
+                    thang = currentThang;
+                    nam = currentNam;
                 }
-                List<CONG> cong = new List<CONG>();
-                foreach (var item in db.CONG.ToList())
+                if (string.IsNullOrEmpty(thang.ToString()) || string.IsNullOrEmpty(nam.ToString()))
                 {
-                    if (item.Thang == DateTime.Now.Month && item.Nam == DateTime.Now.Year)
-                    {
-                        cong.Add(item);
-                    }
-                }
-                return View(cong);
-            }
-        }
-
-        public ActionResult DsCong(int? thang, int? nam)
-        {
-            if (Session["user"] == null)
-            {
-                return Redirect("~/Login/Login");
-            }
-            else
-            {
-                if (thang == null && nam == null)
-                {
-                    return RedirectToAction("TraCuuDsCong");
+                    dsLuong = db.CONG.ToList();
                 }
                 else
                 {
-                    if (thang == null || nam == null)
-                    {
-                        List<CONG> n = new List<CONG>();
-                        ViewBag.err = "Phải nhập tháng và năm cần tra cứu";
-                        return View(n);
-                    }
-                    else
-                    {
-                        List<CONG> congTheoThang = new List<CONG>();
-                        foreach (var cong in db.CONG.ToList())
-                        {
-                            if (cong.Thang == thang && cong.Nam == nam)
-                            {
-                                congTheoThang.Add(cong);
-                            }
-                        }
-                        ViewBag.err = null;
-                        if (congTheoThang.Count > 0)
-                        {
-                            ViewBag.tc = "ok";
-                        }
-                        else
-                        {
-                            ViewBag.tc = "ok";
-                        }
-                        return View(congTheoThang);
-                    }
+                    dsLuong = db.CONG.Where(m => m.Thang == thang && m.Nam == nam).ToList();
                 }
+                ViewBag.currentThang = thang;
+                ViewBag.currentNam = nam;
+                int pageSize = 1;
+                int pageNumber = (page ?? 1);
+                dsLuong = dsLuong.OrderByDescending(m => m.MaNV).ToList();
+                return View(dsLuong.ToPagedList(pageNumber, pageSize));
             }
         }
 
@@ -661,7 +645,7 @@ namespace EMMA.Areas.Manager.Controllers
 
 
         //Lương
-        public ActionResult DsLuong()
+        public ActionResult DsLuong(int? currentNam, int? currentThang, int? nam, int? thang, int? page)
         {
             if (Session["user"] == null)
             {
@@ -669,54 +653,31 @@ namespace EMMA.Areas.Manager.Controllers
             }
             else
             {
-                List<HOADONLUONG> dsLuong = new List<HOADONLUONG>();
-                foreach (var item in db.HOADONLUONG.ToList())
+                var dsLuong = new List<HOADONLUONG>();
+                if (thang != null && nam != null)
                 {
-                    if (item.Thang == DateTime.Now.Month && item.Nam == DateTime.Now.Year)
-                    {
-                        dsLuong.Add(item);
-                    }
-                }
-                return View(dsLuong);
-            }
-        }
-
-        public ActionResult TraCuuLuong(int? thang, int? nam)
-        {
-            if(thang == null && nam == null)
-            {
-                return RedirectToAction("DsLuong");
-            }    
-            else
-            {
-                if (thang == null || nam == null)
-                {
-                    List<HOADONLUONG> n = new List<HOADONLUONG>();
-                    ViewBag.er = "Phải nhập tháng và năm cần tra cứu";
-                    return View(n);
+                    page = 1;
                 }
                 else
                 {
-                    List<HOADONLUONG> luongTheoThang = new List<HOADONLUONG>();
-                    foreach (var luong in db.HOADONLUONG.ToList())
-                    {
-                        if (luong.Thang == thang && luong.Nam == nam)
-                        {
-                            luongTheoThang.Add(luong);
-                        }
-                    }
-                    ViewBag.er = null;
-                    if (luongTheoThang.Count > 0)
-                    {
-                        ViewBag.tc = "ok";
-                    }
-                    else
-                    {
-                        ViewBag.tc = "not";
-                    }
-                    return View(luongTheoThang);
+                    thang = currentThang;
+                    nam = currentNam;
                 }
-            }    
+                if (string.IsNullOrEmpty(thang.ToString()) || string.IsNullOrEmpty(nam.ToString()))
+                {
+                    dsLuong = db.HOADONLUONG.ToList();
+                }
+                else
+                {
+                    dsLuong = db.HOADONLUONG.Where(m => m.Thang == thang && m.Nam == nam).ToList();
+                }
+                ViewBag.currentThang = thang;
+                ViewBag.currentNam = nam;
+                int pageSize = 1;
+                int pageNumber = (page ?? 1);
+                dsLuong = dsLuong.OrderByDescending(m => m.MaNV).ToList();
+                return View(dsLuong.ToPagedList(pageNumber, pageSize));
+            }
         }
 
         public float HsPhuCap(int soNgayCong, int soNgayNghi, int thang, int nam, string id)
@@ -834,8 +795,9 @@ namespace EMMA.Areas.Manager.Controllers
             }    
         }
 
-        //Tìm Kiếm
-        public ActionResult TimKiem(string tuKhoa)
+        //Tìm Kiếm và Phân Trang
+
+        public ActionResult PhanTrang(int? currentNam, int? currentThang, int? nam, int? thang, int? page)
         {
             if (Session["user"] == null)
             {
@@ -843,23 +805,31 @@ namespace EMMA.Areas.Manager.Controllers
             }
             else
             {
-                if (tuKhoa == null)
+                var dsLuong = new List<CONG>();
+                if (thang != null && nam != null)
                 {
-                    return RedirectToAction("DanhSachNV");
+                    page = 1;
                 }
                 else
                 {
-                    List<NHANVIEN> nv = new List<NHANVIEN>();
-                    foreach (var item in db.NHANVIEN.ToList())
-                    {
-                        if (item.HoTenNV != null)
-                        {
-                            if (item.HoTenNV.ToLower().Contains(tuKhoa.ToLower())) nv.Add(item);
-                        }
-                    }
-                    return View(nv);
+                    thang = currentThang;
+                    nam = currentNam;
                 }
-            } 
+                if (string.IsNullOrEmpty(thang.ToString()) || string.IsNullOrEmpty(nam.ToString()))
+                {
+                    dsLuong = db.CONG.ToList();
+                }
+                else
+                {
+                    dsLuong = db.CONG.Where(m => m.Thang == thang && m.Nam == nam).ToList();
+                }
+                ViewBag.currentThang = thang;
+                ViewBag.currentNam = nam;
+                int pageSize = 1;
+                int pageNumber = (page ?? 1);
+                dsLuong = dsLuong.OrderByDescending(m => m.MaNV).ToList();
+                return View(dsLuong.ToPagedList(pageNumber, pageSize));
+            }
         }
     }
 }

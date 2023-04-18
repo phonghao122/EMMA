@@ -1,4 +1,6 @@
-﻿@model IEnumerable<EMMA.Models.HOADONLUONG>
+﻿@model PagedList.IPagedList<EMMA.Models.HOADONLUONG>
+@using PagedList;
+@using PagedList.Mvc;
 
 @{
     ViewBag.Title = "DsLuong";
@@ -203,8 +205,9 @@
 
 <div class="row">
     <div class="col-md-3">
-        @using (Html.BeginForm("TraCuuLuong", "HomeManager"))
+        @using (Html.BeginForm("DsLuong", "HomeManager"))
         {
+            @Html.AntiForgeryToken()
             <div style="margin-top:150px" class="card">
                 <div class="card-heard" style="background-color:aqua">
                     <h3 style="margin-top:20px " class="card-title mb-1 text-center">Tìm Kiếm Lương Theo Tháng</h3>
@@ -261,8 +264,12 @@
                             </tr>
                         }
                     </tbody>
+                    Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+                    @Html.PagedListPager(Model, page => Url.Action("DsLuong", new { page, currentThang = ViewBag.currentThang, currentNam = ViewBag.currentNam }))
 
                 </table>
+                Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+                @Html.PagedListPager(Model, page => Url.Action("DsLuong", new { page, currentThang = ViewBag.currentThang, currentNam = ViewBag.currentNam }))
             </div>
         </div>
     </div>

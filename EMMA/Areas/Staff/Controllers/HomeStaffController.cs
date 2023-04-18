@@ -4,7 +4,9 @@ using System.Data.Entity.Core.Metadata.Edm;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
 using EMMA.Models;
+using PagedList;
 
 namespace EMMA.Areas.Staff.Controllers
 {
@@ -102,7 +104,7 @@ namespace EMMA.Areas.Staff.Controllers
 
 
         //Công
-        public ActionResult DsCong()
+        public ActionResult DsCong(int? currentNam, int? currentThang, int? nam, int? thang, int? page)
         {
             if (Session["user"] == null)
             {
@@ -110,15 +112,42 @@ namespace EMMA.Areas.Staff.Controllers
             }
             else
             {
-                List<ChamCong> chamCongs = new List<ChamCong>();
-                foreach(var cong in db.ChamCong.ToList())
+                var dsLuong = new List<ChamCong>();
+                if (thang != null && nam != null)
                 {
-                    if(cong.MaNV == Session["id"].ToString() && cong.Thang == DateTime.Now.Month && cong.Nam == DateTime.Now.Year)
+                    page = 1;
+                }
+                else
+                {
+                    thang = currentThang;
+                    nam = currentNam;
+                }
+                string id = Session["id"].ToString();
+                if (string.IsNullOrEmpty(thang.ToString()) || string.IsNullOrEmpty(nam.ToString()))
+                {
+                    foreach(var cong in db.ChamCong.ToList())
                     {
-                        chamCongs.Add(cong);
+                        if(cong.MaNV == id && cong.Thang == DateTime.Now.Month && cong.Nam == DateTime.Now.Year)
+                        {
+                            dsLuong.Add(cong);
+                        }    
                     }    
-                }    
-                return View(chamCongs);
+                }
+                else
+                {
+                    foreach (var cong in db.ChamCong.ToList())
+                    {
+                        if (cong.MaNV == id && cong.Thang == thang && cong.Nam == nam)
+                        {
+                            dsLuong.Add(cong);
+                        }
+                    }
+                }
+                ViewBag.currentThang = thang;
+                ViewBag.currentNam = nam;
+                int pageSize = 4;
+                int pageNumber = (page ?? 1);
+                return View(dsLuong.ToPagedList(pageNumber, pageSize));
             }
         }
 
