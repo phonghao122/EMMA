@@ -120,12 +120,12 @@
                                 </li>
                                 <li data-menu="">
                                     <a class="dropdown-item d-flex align-items-center" href="~/Staff/HomeStaff/ChamCong">
-                                        <span data-i18n="Analytics"><h5> Checkin </h5></span>
+                                        <span data-i18n="Analytics"><h5> Check in </h5></span>
                                     </a>
                                 </li>
                                 <li data-menu="">
                                     <a class="dropdown-item d-flex align-items-center" href="~/Staff/HomeStaff/ChamCongRa">
-                                        <span data-i18n="Analytics"><h5> Checkout </h5></span>
+                                        <span data-i18n="Analytics"><h5> Check out </h5></span>
                                     </a>
                                 </li>
                             </ul>
@@ -180,38 +180,39 @@
                                 string id = Session["id"].ToString();
                                 foreach (var item in db.ChamCong.ToList())
                                 {
-                            <tr>
-                                            <td class="text-center">
-                                                @Html.DisplayFor(modelItem => item.NHANVIEN.HoTenNV)
-                                            </td>
-                                            <td class="text-center">
-                                                @Html.DisplayFor(modelItem => item.Ngay)
-                                            </td>
-                                            <td class="text-center">
-                                                @Html.DisplayFor(modelItem => item.Thang)
-                                            </td>
-                                            <td class="text-center">
-                                                @Html.DisplayFor(modelItem => item.Nam)
-                                            </td>
-                                            <td class="text-center">
-                                                @Html.DisplayFor(modelItem => item.Vao)
-                                            </td>
-                                            <td class="text-center">
-                                                @Html.DisplayFor(modelItem => item.Ra)
-                                            </td>
-                                            <td class="text-center">                                            
-                                                <a class="text-center" href="/Staff/HomeStaff/ChamCongRa/@id">
-                                                    <img src="~/public/app-assets/images/ico/face_id.jpg" height="30" width="30" />
-                                                </a>
-                                            </td>
+                                    <tr>
+                                        <td class="text-center">
+                                            @Html.DisplayFor(modelItem => item.NHANVIEN.HoTenNV)
+                                        </td>
+                                        <td class="text-center">
+                                            @Html.DisplayFor(modelItem => item.Ngay)
+                                        </td>
+                                        <td class="text-center">
+                                            @Html.DisplayFor(modelItem => item.Thang)
+                                        </td>
+                                        <td class="text-center">
+                                            @Html.DisplayFor(modelItem => item.Nam)
+                                        </td>
+                                        <td class="text-center">
+                                            @Html.DisplayFor(modelItem => item.Vao)
+                                        </td>
+                                        <td class="text-center">
+                                            @Html.DisplayFor(modelItem => item.Ra)
+                                        </td>
+                                        <td class="text-center">
+                                            <a class="text-center" href="/Staff/HomeStaff/ChamCongRa/@id">
+                                                <img src="~/public/app-assets/images/ico/face_id.jpg" height="30" width="30" />
+                                            </a>
+                                        </td>
 
-                                        </tr>
-                                        
-                                    
+                                    </tr>
+
+
                                 }
                             }
                         </tbody>
-
+                        Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+                        @Html.PagedListPager(Model, page => Url.Action("DsCong", new { page, currentThang = ViewBag.currentThang, currentNam = ViewBag.currentNam }))
                     </table>
                 </div>
             </div>
