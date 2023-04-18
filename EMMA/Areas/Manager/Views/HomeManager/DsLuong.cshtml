@@ -172,7 +172,7 @@
 
                         <li data-menu="">
                             <a class="dropdown-item d-flex align-items-center" href="~/Manager/HomeManager/DsCV" data-bs-toggle="" data-i18n="Analytics">
-                                <span data-i18n="Analytics"><h5> Công Việc</h5></span>
+                                <span data-i18n="Analytics"><h5> Chức Vụ</h5></span>
                             </a>
                         </li>
 
@@ -204,74 +204,83 @@
 
 
 <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
         @using (Html.BeginForm("DsLuong", "HomeManager"))
         {
             @Html.AntiForgeryToken()
             <div style="margin-top:150px" class="card">
                 <div class="card-heard" style="background-color:aqua">
-                    <h3 style="margin-top:20px " class="card-title mb-1 text-center">Tìm Kiếm Lương Theo Tháng</h3>
+                    <h3 style="margin-top:20px " class="card-title mb-1 text-center">Danh Sách Lương</h3>
                 </div>
                 <div class="card-body">
-                    <div class="form-horizontal">
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                        <label>Tháng</label>
-                        <input class="form-control" type="text" name="thang" placeholder="Nhập Tháng ..." />
-                        <label>Năm</label>
-                        <input class="form-control" type="text" name="nam" placeholder="Nhập Năm ..." />
-                        <div style="margin-top:20px" class="text-end">
-                            <div class="col-md-offset-2 col-md-12">
-                                <button type="submit" class="btn btn-info">Tiếp Tục</button>
-                                @*<input type="submit" value="Tiếp Tục" class="btn btn-default" />*@
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Tháng</label>
+                            <select class="form-control">
+                                <option value="0"></option>
+                                @for (int i = 1; i < 13; i++)
+                                {
+                                    <option value="@i">@i</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Năm</label>
+                            <select class="form-control">
+                                <option value="0"> </option>
+                                @for (int i = 1992; i < DateTime.Now.Year + 1; i++)
+                                {
+                                    <option value="@i"> @i </option>
+                                }
+                            </select>
+                        </div>
+                        <div style="margin-top:10px">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center"> Họ Tên Nhân Viên</th>
+                                        <th class="text-center"> Lương Cơ Bản</th>
+                                        <th class="text-center"> Hệ Số Lương</th>
+                                        <th class="text-center"> Thực Lĩnh</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.NHANVIEN.HoTenNV)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.LUONG.LuongCoBan)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.LUONG.HSLuong)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.ThucLinh)
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                            <div style="margin-top:10px">
+                                Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+                                @Html.PagedListPager(Model, page => Url.Action("DsLuong", new { page, currentThang = ViewBag.currentThang, currentNam = ViewBag.currentNam }))
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div style="margin-top:1px" class="text-end">
+                            <button type="submit" class="btn btn-info">Tiếp Tục</button>
                     </div>
                 </div>
             </div>
         }
     </div>
-    <div style="margin-top:150px" class="col-md-9">
-        <div class="card">
-            <div class="card-heard" style="background-color:aqua">
-                <h3 style="margin-top:20px " class="card-title mb-1 text-center">Danh Sách Lương</h3>
-            </div>
-            <div class="card-body">
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th class="text-center"> Họ Tên Nhân Viên</th>
-                            <th class="text-center"> Lương Cơ Bản</th>
-                            <th class="text-center"> Hệ Số Lương</th>
-                            <th class="text-center"> Thực Lĩnh</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model)
-                        {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.NHANVIEN.HoTenNV)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.LUONG.LuongCoBan)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.LUONG.HSLuong)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.ThucLinh)
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                    Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-                    @Html.PagedListPager(Model, page => Url.Action("DsLuong", new { page, currentThang = ViewBag.currentThang, currentNam = ViewBag.currentNam }))
-
-                </table>
-                Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-                @Html.PagedListPager(Model, page => Url.Action("DsLuong", new { page, currentThang = ViewBag.currentThang, currentNam = ViewBag.currentNam }))
-            </div>
-        </div>
-    </div>
 </div>
+
 

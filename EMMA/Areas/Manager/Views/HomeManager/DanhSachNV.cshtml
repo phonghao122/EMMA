@@ -8,8 +8,6 @@
     EMMA.Models.NHANVIEN nv = (EMMA.Models.NHANVIEN)Session["user"];
 }
 
-
-
 <body class="horizontal-layout horizontal-menu  navbar-floating footer-static" data-open="hover"
       data-menu="horizontal-menu" data-col="">
     <nav class="header-navbar navbar-expand-lg navbar navbar-fixed align-items-center navbar-shadow navbar-brand-center"
@@ -174,7 +172,7 @@
 
                         <li data-menu="">
                             <a class="dropdown-item d-flex align-items-center" href="~/Manager/HomeManager/DsCV" data-bs-toggle="" data-i18n="Analytics">
-                                <span data-i18n="Analytics"><h5> Công Việc</h5></span>
+                                <span data-i18n="Analytics"><h5> Chức Vụ</h5></span>
                             </a>
                         </li>
 
@@ -207,7 +205,7 @@
     <div style="margin-top:150px" class="col-12"
         <div class="card">
             <div class="card-heard" style="background-color:aqua">
-                    <h3 style="margin-top:20px " class="card-title mb-1 text-center">Danh Sách Nhân Viên</h3>
+                <h3 style="margin-top:20px " class="card-title mb-1 text-center">Danh Sách Nhân Viên</h3>
             </div>
             <div class="card-search">
                 @using (Html.BeginForm("DanhSachNV", "HomeManager"))
@@ -229,7 +227,7 @@
                         </div>
                     </div>
                 }
-                </div>
+            </div>
             <table class="table table-bordered">
                 <thead>
                     @*<th class="text-center">STT</th>*@
@@ -283,8 +281,15 @@
                     }
                 </tbody>
             </table>
+            <div class="card-footer">
+                <div class="text-center">
+                    @Html.PagedListPager(Model, page => Url.Action("DanhSachNV", new { page, currentFilter = ViewBag.currentFilter }))
+                </div>
+                <div>
+                    Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+                </div>
+            </div>
+        </div>      
+   </div>
+    
 
-        </div>
-    </div>
-    Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-    @Html.PagedListPager(Model, page => Url.Action("DanhSachNV", new { page, currentFilter = ViewBag.currentFilter }))
