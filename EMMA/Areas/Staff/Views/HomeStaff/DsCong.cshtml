@@ -211,9 +211,11 @@
                                 }
                             }
                         </tbody>
-                        Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-                        @Html.PagedListPager(Model, page => Url.Action("DsCong", new { page, currentThang = ViewBag.currentThang, currentNam = ViewBag.currentNam }))
                     </table>
+                </div>
+                <div style="margin-left:20px">
+                    Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+                    @Html.PagedListPager(Model, page => Url.Action("DsCong", new { page, currentThang = ViewBag.currentThang, currentNam = ViewBag.currentNam }))
                 </div>
             </div>
         </div>

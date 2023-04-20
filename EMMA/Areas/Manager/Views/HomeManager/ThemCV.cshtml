@@ -14,7 +14,7 @@
             <ul class="nav navbar-nav">
                 <li class="nav-item">
                     <a class="navbar-brand"
-                       href="/html/ltr/horizontal-menu-template/index.html">
+                       href="~/Manager/HomeManager/Index">
                         <h2 class="brand-text mb-0">EMMA</h2>
                     </a>
                 </li>
@@ -208,12 +208,12 @@
                     <h3 style="margin-top:20px " class="card-title mb-1 text-center">Thêm Chức Vụ</h3>
                 </div>
                 <div class="card-body">
-                    <label> Mã Công Việc</label>
+                    <label> Mã Chức Vụ</label>
                     <div class="col-md-12">
                         @Html.EditorFor(model => model.MaCV, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.MaCV, "", new { @class = "text-danger" })
                     </div>
-                    <label> Tên Công Việc</label>
+                    <label> Tên Chức Vụ</label>
                     <div class="col-md-12">
                         @Html.EditorFor(model => model.TenCV, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.TenCV, "", new { @class = "text-danger" })

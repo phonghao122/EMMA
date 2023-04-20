@@ -14,7 +14,7 @@
             <ul class="nav navbar-nav">
                 <li class="nav-item">
                     <a class="navbar-brand"
-                       href="/html/ltr/horizontal-menu-template/index.html">
+                       href="~/Manager/HomeManager/Index">
                         <h2 class="brand-text mb-0">EMMA</h2>
                     </a>
                 </li>
@@ -212,9 +212,21 @@
                 <div class="card-body">
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     <label>Tháng</label>
-                    <input class="form-control" type="text" name="thang" />
+                    <select name="thang" class="form-control">
+                        <option value="0"> </option>
+                        @for (int i = 1; i <= 12; i++)
+                        {
+                            <option value="@i"> @i</option>
+                        }
+                    </select>
                     <label style="margin-top:10px">Năm</label>
-                    <input class="form-control" type="text" name="nam" />
+                    <select name="nam" class="form-control">
+                        <option value="0"> </option>
+                        @for (int i = 1992; i < DateTime.Now.Year + 1; i++)
+                        {
+                            <option value="@i"> @i </option>
+                        }
+                    </select>
                 </div>
                 <div class="card-footer">
                     <div class="col-md-offset-2 col-md-12  text-end">

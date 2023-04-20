@@ -145,7 +145,7 @@ namespace EMMA.Areas.Staff.Controllers
                 }
                 ViewBag.currentThang = thang;
                 ViewBag.currentNam = nam;
-                int pageSize = 4;
+                int pageSize = 10;
                 int pageNumber = (page ?? 1);
                 return View(dsLuong.ToPagedList(pageNumber, pageSize));
             }

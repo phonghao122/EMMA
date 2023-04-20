@@ -556,7 +556,7 @@ namespace EMMA.Areas.Manager.Controllers
                 }
                 ViewBag.currentThang = thang;
                 ViewBag.currentNam = nam;
-                int pageSize = 4;
+                int pageSize = 7;
                 int pageNumber = (page ?? 1);
                 dsLuong = dsLuong.OrderByDescending(m => m.MaNV).ToList();
                 return View(dsLuong.ToPagedList(pageNumber, pageSize));

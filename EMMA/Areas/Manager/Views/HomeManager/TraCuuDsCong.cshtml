@@ -16,7 +16,7 @@
             <ul class="nav navbar-nav">
                 <li class="nav-item">
                     <a class="navbar-brand"
-                       href="/html/ltr/horizontal-menu-template/index.html">
+                       href="~/Manager/HomeManager/Index">
                         <h2 class="brand-text mb-0">EMMA</h2>
                     </a>
                 </li>
@@ -172,7 +172,7 @@
 
                         <li data-menu="">
                             <a class="dropdown-item d-flex align-items-center" href="~/Manager/HomeManager/DsCV" data-bs-toggle="" data-i18n="Analytics">
-                                <span data-i18n="Analytics"><h5> Công Việc</h5></span>
+                                <span data-i18n="Analytics"><h5> Chức Vụ</h5></span>
                             </a>
                         </li>
 
@@ -260,9 +260,15 @@
                                 </tbody>
                             </table>
                             <div style="margin-top:10px">
-                                Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-                                @Html.PagedListPager(Model, page => Url.Action("TraCuuDsCong", new { page, currentThang = ViewBag.currentThang, currentNam = ViewBag.currentNam }))
-                            </div>
+                                <div class="chinhsua">
+                                    Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+                                </div>
+                                <div>
+                                    <button style="height:36px; width:60px" class="btn btn-info">                                      
+                                                @Html.PagedListPager(Model, page => Url.Action("TraCuuDsCong", new { page, currentThang = ViewBag.currentThang, currentNam = ViewBag.currentNam }))
+                                             </button>
+                                </div>
+                                </div>
                         </div>
                     </div>
                     <div class="card-footer">
