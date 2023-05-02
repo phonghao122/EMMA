@@ -1,8 +1,7 @@
-﻿@model IEnumerable<EMMA.Models.PHONGBAN>
-
+﻿@model IEnumerable<EMMA.Models.HOPDONGLAODONG>
 
 @{
-    ViewBag.Title = "DanhSachPB";
+    ViewBag.Title = "DsHD";
     Layout = "~/Views/Shared/_Layout.cshtml";
     EMMA.Models.NHANVIEN nv = (EMMA.Models.NHANVIEN)Session["user"];
 }
@@ -202,40 +201,50 @@
 
 
 <div class="row">
-    <div class="col-md-2">
-
+    <div class="col-md-1">
     </div>
-    <div style="margin-top: 150px" class="col-md-8">
+    <div style="margin-top:150px" class="col-md-10">
         <div class="card">
-            <div class="card-heard" style="background-color:aquamarine ">
-                <h3 style="margin-top:25px" class="text-center"> Danh Sách Phòng Ban</h3>
+            <div class="card-heard" style="background-color:aqua">
+                <h3 style="margin-top:20px " class="card-title mb-1 text-center">Danh Sách Hợp Đồng</h3>
             </div>
             <div class="card-body">
-                <table class="table tabel-bordered">
+                <div class="text-end">
+                    <a href="~/Manager/HomeManager/ThemHD"> <button class="btn btn-info"> Thêm Hợp Đồng</button></a>
+                </div>
+                <table style="margin-top:10px" class=" table table-bordered">
                     <thead>
-                    <th class="text-center text-nowrap">Mã Phòng Ban</th>
-                    <th class="text-center text-nowrap">Tên Phòng Ban</th>
-                    <th class="text-center text-nowrap">Acction</th>
+                    <th class="text-center">Họ Tên Nhân Viên</th>
+                    <th class="text-center">Loại Hợp Đồng</th>
+                    <th class="text-center"> Ngày Ký</th>
+                    <th class="text-center"> Ngày Hết Hạn </th>
+                    <th class="text-center"> Acction </th>
                     </thead>
                     <tbody>
                         @foreach (var item in Model)
                         {
                             <tr>
-                                <td class="text-center text-nowrap">@Html.DisplayFor(modelItem => item.MaPB)</td>
-                                <td class="text-center text-nowrap">@Html.DisplayFor(modelItem => item.TenPB)</td>
+                                <td class="text-nowrap">
+                                    @Html.DisplayFor(modelItem => item.NHANVIEN.HoTenNV)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.LoaiHD)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.NgayKy)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.NgayHetHan)
+                                </td>
+
                                 <td class="text-center text-nowrap">
-                                    <button class="btn btn-success">@Html.ActionLink("Edit", "EditPB", new { id = item.MaPB })</button>
-                                    <button class="btn btn-warning">@Html.ActionLink("Delete", "DeletePB", new { id = item.MaPB })</button>
+                                    <button style="width:90px" class="btn btn-info">   @Html.ActionLink("Edit", "CapNhatHD", new { id = item.MaHD }) </button>
+                                    <button style="width:90px" class="btn btn-success">  @Html.ActionLink("Details", "Details", new { id = item.MaHD })</button>
+                                    <button style="width:90px" class="btn btn-warning"> @Html.ActionLink("Delete", "XoaHD", new { id = item.MaHD }) </button>
                                 </td>
                             </tr>
                         }
                     </tbody>
                 </table>
             </div>
-            <div class="card-footer text-end">
-                <a href="~/Manager/HomeManager/ThemPB">
-                    <button class="btn btn-info"> Thêm Mới Phòng Ban</button>
-                </a>
-            </div>
         </div>
-    </div>

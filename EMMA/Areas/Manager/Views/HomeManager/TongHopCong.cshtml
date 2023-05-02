@@ -3,7 +3,9 @@
 @{
     ViewBag.Title = "TongHopCong";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    EMMA.Models.NHANVIEN nv = (EMMA.Models.NHANVIEN)Session["user"];
 }
+
 <body class="horizontal-layout horizontal-menu  navbar-floating footer-static" data-open="hover"
       data-menu="horizontal-menu" data-col="">
     <nav class="header-navbar navbar-expand-lg navbar navbar-fixed align-items-center navbar-shadow navbar-brand-center"
@@ -71,10 +73,10 @@
                        id="dropdown-user" href="#" data-bs-toggle="dropdown" aria-haspopup="true"
                        aria-expanded="false">
                         <div class="user-nav d-sm-flex d-none">
-                            <span class="user-name fw-bolder">John Doe</span><span class="user-status">Admin</span>
+                            <span class="user-name fw-bolder">@nv.HoTenNV</span><span class="user-status">@nv.CHUCVU.TenCV</span>
                         </div><span class="avatar">
                             <img class="round"
-                                 src="~/public/app-assets/images/portrait/small/avatar-s-11.jpg" alt="avatar"
+                                 src="@nv.Avt" alt="avatar"
                                  height="40" width="40">
                         </span>
                     </a>
@@ -103,10 +105,23 @@
                             </a>
                         </li>
 
-                        <li data-menu="">
-                            <a class="dropdown-item d-flex align-items-center" href="~/Manager/HomeManager/DanhSachNV" data-bs-toggle="" data-i18n="Analytics">
-                                <span data-i18n="Analytics"><h5>Danh Sách Nhân Viên</h5></span>
+                        <li class="dropdown dropdown-submenu" data-menu="dropdown-submenu">
+                            <a class="dropdown-item d-flex align-items-center dropdown-toggle"
+                               href="#" data-bs-toggle="dropdown" data-i18n="Invoice">
+                                <span data-i18n="Invoice"><h5> Nhân Viên</h5></span>
                             </a>
+                            <ul class="dropdown-menu" data-bs-popper="none">
+                                <li data-menu="">
+                                    <a class="dropdown-item d-flex align-items-center" href="~/Manager/HomeManager/DanhSachNV">
+                                        <span data-i18n="Analytics"><h5> Danh Sách Nhân Viên</h5></span>
+                                    </a>
+                                </li>
+                                <li data-menu="">
+                                    <a class="dropdown-item d-flex align-items-center" href="~/Manager/HomeManager/ThemMoiNV">
+                                        <span data-i18n="Analytics"><h5>Thêm Nhân Viên </h5></span>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
 
                         <li data-menu="">
@@ -115,30 +130,55 @@
                             </a>
                         </li>
 
+                        <li class="dropdown dropdown-submenu" data-menu="dropdown-submenu">
+                            <a class="dropdown-item d-flex align-items-center dropdown-toggle"
+                               href="#" data-bs-toggle="dropdown" data-i18n="Invoice">
+                                <span data-i18n="Invoice"><h5> Lương</h5></span>
+                            </a>
+                            <ul class="dropdown-menu" data-bs-popper="none">
+                                <li data-menu="">
+                                    <a class="dropdown-item d-flex align-items-center" href="~/Manager/HomeManager/DsLuong">
+                                        <span data-i18n="Analytics"><h5> Danh Sách Lương</h5></span>
+                                    </a>
+                                </li>
+                                <li data-menu="">
+                                    <a class="dropdown-item d-flex align-items-center" href="~/Manager/HomeManager/TongHopLuong">
+                                        <span data-i18n="Analytics"><h5>Tổng Hợp Lương </h5></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="dropdown dropdown-submenu" data-menu="dropdown-submenu">
+                            <a class="dropdown-item d-flex align-items-center dropdown-toggle"
+                               href="#" data-bs-toggle="dropdown" data-i18n="Invoice">
+                                <span data-i18n="Invoice"><h5> Công</h5></span>
+                            </a>
+                            <ul class="dropdown-menu" data-bs-popper="none">
+                                <li data-menu="">
+                                    <a class="dropdown-item d-flex align-items-center" href="~/Manager/HomeManager/TraCuuDsCong">
+                                        <span data-i18n="Analytics"><h5> Danh Sách Công</h5></span>
+                                    </a>
+                                </li>
+                                <li data-menu="">
+                                    <a class="dropdown-item d-flex align-items-center" href="~/Manager/HomeManager/TongHopCong">
+                                        <span data-i18n="Analytics"><h5>Tổng Hợp Công </h5></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
                         <li data-menu="">
-                            <a class="dropdown-item d-flex align-items-center" href="~/Manager/HomeManager/DsLuong" data-bs-toggle="" data-i18n="Analytics">
-                                <span data-i18n="Analytics"><h5>Danh Sách Lương</h5></span>
+                            <a class="dropdown-item d-flex align-items-center" href="~/Manager/HomeManager/DsCV" data-bs-toggle="" data-i18n="Analytics">
+                                <span data-i18n="Analytics"><h5> Chức Vụ</h5></span>
                             </a>
                         </li>
 
                         <li data-menu="">
-                            <a class="dropdown-item d-flex align-items-center" href="~/Manager/HomeManager/TongHopLuong" data-bs-toggle="" data-i18n="Analytics">
-                                <span data-i18n="Analytics"><h5>Tổng Hợp Lương</h5></span>
+                            <a class="dropdown-item d-flex align-items-center" href="~/Manager/HomeManager/DsHD" data-bs-toggle="" data-i18n="Analytics">
+                                <span data-i18n="Analytics"><h5> Hợp Đồng</h5></span>
                             </a>
                         </li>
-
-                        <li data-menu="">
-                            <a class="dropdown-item d-flex align-items-center" href="/Manager/HomeManager/TraCuuDsCong" data-bs-toggle="" data-i18n="Analytics">
-                                <span data-i18n="Analytics"><h5>Danh Sách Công</h5></span>
-                            </a>
-                        </li>
-
-                        <li data-menu="">
-                            <a class="dropdown-item d-flex align-items-center" href="~/Manager/HomeManager/TongHopCong" data-bs-toggle="" data-i18n="Analytics">
-                                <span data-i18n="Analytics"><h5>Tổng Hợp Công</h5></span>
-                            </a>
-                        </li>
-
                     </ul>
                 </div>
             </div>
@@ -163,7 +203,7 @@
 <div class="row">
     <div class="col-md-3">
     </div>
-    <div style="margin-top:150px" class="col-md-6">
+    <div style="margin-top:250px" class="col-md-6">
         <form method="post">
             <div class="card">
                 <div class="card-heard" style="background-color:aqua">
@@ -177,7 +217,8 @@
                     <input class="form-control" type="text" name="nam" />
                 </div>
                 <div class="card-footer">
-                    <div class="col-md-offset-2 col-md-12 text-center">
+                    <div class="col-md-offset-2 col-md-12  text-end">
+                        <button class="btn btn-warning"> @Html.ActionLink("Back to List", "Index") </button>
                         <button type="submit" class="btn btn-info">Tiếp Tục</button>
                     </div>
                 </div>
@@ -185,30 +226,3 @@
         </form>
     </div>
 </div>
-
-@*<h2>TongHopCong</h2>
-
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-        <h4>CONG</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <label>Thang</label>
-        <input type="text" name="thang" />
-        <label>Nam</label>
-        <input type="text" name="nam" />
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
-    }
-
-    <div>
-        @Html.ActionLink("Back to List", "Index")
-    </div>*@

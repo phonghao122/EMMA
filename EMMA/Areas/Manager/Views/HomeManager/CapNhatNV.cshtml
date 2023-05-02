@@ -4,7 +4,9 @@
     ViewBag.Title = "ThemMoiNV";
     Layout = "~/Views/Shared/_Layout.cshtml";
     EMMA.Models.EMMAEntities db = new EMMA.Models.EMMAEntities();
+    EMMA.Models.NHANVIEN nv = (EMMA.Models.NHANVIEN)Session["user"];
 }
+
 <body class="horizontal-layout horizontal-menu  navbar-floating footer-static" data-open="hover"
       data-menu="horizontal-menu" data-col="">
     <nav class="header-navbar navbar-expand-lg navbar navbar-fixed align-items-center navbar-shadow navbar-brand-center"
@@ -72,10 +74,10 @@
                        id="dropdown-user" href="#" data-bs-toggle="dropdown" aria-haspopup="true"
                        aria-expanded="false">
                         <div class="user-nav d-sm-flex d-none">
-                            <span class="user-name fw-bolder">John Doe</span><span class="user-status">Admin</span>
+                            <span class="user-name fw-bolder">@nv.HoTenNV</span><span class="user-status">@nv.CHUCVU.TenCV</span>
                         </div><span class="avatar">
                             <img class="round"
-                                 src="~/public/app-assets/images/portrait/small/avatar-s-11.jpg" alt="avatar"
+                                 src="@nv.Avt" alt="avatar"
                                  height="40" width="40">
                         </span>
                     </a>
@@ -104,10 +106,23 @@
                             </a>
                         </li>
 
-                        <li data-menu="">
-                            <a class="dropdown-item d-flex align-items-center" href="~/Manager/HomeManager/DanhSachNV" data-bs-toggle="" data-i18n="Analytics">
-                                <span data-i18n="Analytics"><h5>Danh Sách Nhân Viên</h5></span>
+                        <li class="dropdown dropdown-submenu" data-menu="dropdown-submenu">
+                            <a class="dropdown-item d-flex align-items-center dropdown-toggle"
+                               href="#" data-bs-toggle="dropdown" data-i18n="Invoice">
+                                <span data-i18n="Invoice"><h5> Nhân Viên</h5></span>
                             </a>
+                            <ul class="dropdown-menu" data-bs-popper="none">
+                                <li data-menu="">
+                                    <a class="dropdown-item d-flex align-items-center" href="~/Manager/HomeManager/DanhSachNV">
+                                        <span data-i18n="Analytics"><h5> Danh Sách Nhân Viên</h5></span>
+                                    </a>
+                                </li>
+                                <li data-menu="">
+                                    <a class="dropdown-item d-flex align-items-center" href="~/Manager/HomeManager/ThemMoiNV">
+                                        <span data-i18n="Analytics"><h5>Thêm Nhân Viên </h5></span>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
 
                         <li data-menu="">
@@ -116,30 +131,55 @@
                             </a>
                         </li>
 
+                        <li class="dropdown dropdown-submenu" data-menu="dropdown-submenu">
+                            <a class="dropdown-item d-flex align-items-center dropdown-toggle"
+                               href="#" data-bs-toggle="dropdown" data-i18n="Invoice">
+                                <span data-i18n="Invoice"><h5> Lương</h5></span>
+                            </a>
+                            <ul class="dropdown-menu" data-bs-popper="none">
+                                <li data-menu="">
+                                    <a class="dropdown-item d-flex align-items-center" href="~/Manager/HomeManager/DsLuong">
+                                        <span data-i18n="Analytics"><h5> Danh Sách Lương</h5></span>
+                                    </a>
+                                </li>
+                                <li data-menu="">
+                                    <a class="dropdown-item d-flex align-items-center" href="~/Manager/HomeManager/TongHopLuong">
+                                        <span data-i18n="Analytics"><h5>Tổng Hợp Lương </h5></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="dropdown dropdown-submenu" data-menu="dropdown-submenu">
+                            <a class="dropdown-item d-flex align-items-center dropdown-toggle"
+                               href="#" data-bs-toggle="dropdown" data-i18n="Invoice">
+                                <span data-i18n="Invoice"><h5> Công</h5></span>
+                            </a>
+                            <ul class="dropdown-menu" data-bs-popper="none">
+                                <li data-menu="">
+                                    <a class="dropdown-item d-flex align-items-center" href="~/Manager/HomeManager/TraCuuDsCong">
+                                        <span data-i18n="Analytics"><h5> Danh Sách Công</h5></span>
+                                    </a>
+                                </li>
+                                <li data-menu="">
+                                    <a class="dropdown-item d-flex align-items-center" href="~/Manager/HomeManager/TongHopCong">
+                                        <span data-i18n="Analytics"><h5>Tổng Hợp Công </h5></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
                         <li data-menu="">
-                            <a class="dropdown-item d-flex align-items-center" href="~/Manager/HomeManager/DsLuong" data-bs-toggle="" data-i18n="Analytics">
-                                <span data-i18n="Analytics"><h5>Danh Sách Lương</h5></span>
+                            <a class="dropdown-item d-flex align-items-center" href="~/Manager/HomeManager/DsCV" data-bs-toggle="" data-i18n="Analytics">
+                                <span data-i18n="Analytics"><h5> Chức Vụ</h5></span>
                             </a>
                         </li>
 
                         <li data-menu="">
-                            <a class="dropdown-item d-flex align-items-center" href="~/Manager/HomeManager/TongHopLuong" data-bs-toggle="" data-i18n="Analytics">
-                                <span data-i18n="Analytics"><h5>Tổng Hợp Lương</h5></span>
+                            <a class="dropdown-item d-flex align-items-center" href="~/Manager/HomeManager/DsHD" data-bs-toggle="" data-i18n="Analytics">
+                                <span data-i18n="Analytics"><h5> Hợp Đồng</h5></span>
                             </a>
                         </li>
-
-                        <li data-menu="">
-                            <a class="dropdown-item d-flex align-items-center" href="/Manager/HomeManager/TraCuuDsCong" data-bs-toggle="" data-i18n="Analytics">
-                                <span data-i18n="Analytics"><h5>Danh Sách Công</h5></span>
-                            </a>
-                        </li>
-
-                        <li data-menu="">
-                            <a class="dropdown-item d-flex align-items-center" href="~/Manager/HomeManager/TongHopCong" data-bs-toggle="" data-i18n="Analytics">
-                                <span data-i18n="Analytics"><h5>Tổng Hợp Công</h5></span>
-                            </a>
-                        </li>
-
                     </ul>
                 </div>
             </div>
@@ -181,6 +221,7 @@
                     <label class="gt mt-1"> <h4>Giới Tính:</h4> </label>
                     <div class="col-md-12">
                         <select name="GioiTinh" class="form-control">
+                            <option value="">Chọn Giới Tính</option>
                             <option value="Nam">Nam</option>
                             <option value="Nữ">Nữ</option>
                             <option value="Khác">Khác</option>
@@ -194,12 +235,12 @@
                     </div>
                     <label class="mk mt-1"> <h4>Password:</h4> </label>
                     <div class="col-md-12">
-                        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.TextBoxFor(m => m.Password, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "password" })
                         @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
                     </div>
                     <label class="ns mt-1"> <h4>Ngày Sinh:</h4> </label>
                     <div class="col-md-12">
-                        <input class="form-control" name="NgaySinh" type="date" />
+                        @Html.TextBoxFor(m => m.NgaySinh, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
                         @Html.ValidationMessageFor(model => model.NgaySinh, "", new { @class = "text-danger" })
                     </div>
                     <label class="dc mt-1"> <h4>Địa Chỉ:</h4> </label>
@@ -214,7 +255,7 @@
                     </div>
                     <label class="email mt-1"> <h4>Email:</h4> </label>
                     <div class="col-md-12">
-                        <input class="form-control" type="email" name="Email" />
+                        @Html.TextBoxFor(m => m.Email, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "email" })
                         @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                     </div>
                     <label class="qq mt-1"> <h4>Quê Quán:</h4> </label>
@@ -230,6 +271,7 @@
                     <label class="tdhv mt-1"> <h4>Trình Độ Học Vấn:</h4> </label>
                     <div class="col-md-12">
                         <select name="TrinhDoHocVan" class="form-control">
+                            <option value="">Chọn Trình Độ Học Vấn</option>
                             <option value="Tiểu Học">Tiểu Học</option>
                             <option value="Trung Học Cơ Sở">Trung Học Cơ Sở</option>
                             <option value="Trung Học Phổ Thông">Trung Học Phổ Thông</option>
@@ -245,6 +287,8 @@
                     <label class="mapb mt-1"> <h4> Phòng Ban:</h4> </label>
                     <div class="col-md-12">
                         <select class="form-control" name="MaPB">
+
+                            <option value="">Chọn Phòng Ban</option>
                             @foreach (var item in db.PHONGBAN)
                             {
                                 <option value="@item.MaPB">@item.TenPB</option>
@@ -255,6 +299,8 @@
                     <label class="macv mt-1"> <h4>Chức Vụ:</h4> </label>
                     <div class="col-md-12">
                         <select class="form-control" name="MaCV">
+
+                            <option value="">Chọn Chức Vụ</option>
                             @foreach (var item in db.CHUCVU)
                             {
                                 <option value="@item.MaCV">@item.TenCV</option>
@@ -265,6 +311,8 @@
                     <label class="bl mt-1"> <h4>Lương Cơ Bản:</h4> </label>
                     <div class="col-md-12">
                         <select class="form-control" name="BacLuong">
+
+                            <option value="">Chọn mức Lương cơ bản</option>
                             @foreach (var item in db.LUONG)
                             {
                                 <option value="@item.BacLuong">@item.LuongCoBan</option>
@@ -290,7 +338,7 @@
                     </div>
                 </div>
             </div>
+        </form>
     </div>
-    </form>
 </div>
 

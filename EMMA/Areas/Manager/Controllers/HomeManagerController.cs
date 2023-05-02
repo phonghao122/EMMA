@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
 using EMMA.Models;
+using PagedList;
 
 namespace EMMA.Areas.Manager.Controllers
 {
     public class HomeManagerController : Controller
     {
         EMMAEntities db = new EMMAEntities();
-        int month;
-        int year;
         
         public ActionResult Index()
         {
@@ -25,8 +25,8 @@ namespace EMMA.Areas.Manager.Controllers
             }
         }
 
-        //Nhan Vien
-        public ActionResult DanhSachNV()
+        //Nhân Viên
+        public ActionResult DanhSachNV(string currentFilter, string tuKhoa, int? page)
         {
             if (Session["user"] == null)
             {
@@ -34,8 +34,28 @@ namespace EMMA.Areas.Manager.Controllers
             }
             else
             {
-                List<NHANVIEN> dsNV = db.NHANVIEN.ToList();
-                return View(dsNV);
+                var dsNV = new List<NHANVIEN>();
+                if (tuKhoa != null)
+                {
+                    page = 1;
+                }
+                else
+                {
+                    tuKhoa = currentFilter;
+                }
+                if (string.IsNullOrEmpty(tuKhoa))
+                {
+                    dsNV = db.NHANVIEN.ToList();
+                }
+                else
+                {
+                    dsNV = db.NHANVIEN.Where(m => m.HoTenNV.ToLower().Contains(tuKhoa.ToLower())).ToList();
+                }
+                ViewBag.currentFilter = tuKhoa;
+                int pageSize = 4;
+                int pageNumber = (page ?? 1);
+                dsNV = dsNV.OrderByDescending(m => m.MaNV).ToList();
+                return View(dsNV.ToPagedList(pageNumber, pageSize));
             }
         }
 
@@ -74,25 +94,41 @@ namespace EMMA.Areas.Manager.Controllers
                 var nv = db.NHANVIEN.Find(model.MaNV);
                 if (nv == null)
                 {
-                    var user = db.NHANVIEN.Find(model.Username);
-                    if(user == null)
+                    if(model.Username == null || model.Password == null)
                     {
-                        if(model.MaCV == "GD" || model.MaCV == "QL")
-                        {
-                            model.Role = 1;
-                        } 
-                        else
-                        {
-                            model.Role = 2;
-                        }    
-                        db.NHANVIEN.Add(model);
-                        db.SaveChanges();
-                        return RedirectToAction("DanhSachNV");
-                    }   
+                        ModelState.AddModelError("", "Bắt buộc nhập Username và Password");
+                        return View(model);
+                    }    
                     else
                     {
-                        ModelState.AddModelError("", "Username Đã Tồn Tại");
-                        return View(model);
+                        var user = db.NHANVIEN.FirstOrDefault(m => m.Username == model.Username);
+                        if (user == null)
+                        {
+                            if (model.MaCV == null || model.MaPB == null)
+                            {
+                                ModelState.AddModelError("", "Bắt buộc nhập Chức Vụ và Phòng Ban");
+                                return View(model);
+                            }
+                            else
+                            {
+                                if (model.MaCV == "GD" || model.MaCV == "QL")
+                                {
+                                    model.Role = 1;
+                                }
+                                else
+                                {
+                                    model.Role = 2;
+                                }
+                                db.NHANVIEN.Add(model);
+                                db.SaveChanges();
+                                return RedirectToAction("DanhSachNV");
+                            }
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("", "Username Đã Tồn Tại");
+                            return View(model);
+                        }
                     }    
                 }
                 else
@@ -117,6 +153,26 @@ namespace EMMA.Areas.Manager.Controllers
                 {
                     Session["Avt"] = nhanVien.Avt;
                 }
+                if(nhanVien.MaCV != null)
+                {
+                    Session["cv"] = nhanVien.MaCV;
+                }
+                if (nhanVien.MaPB != null)
+                {
+                    Session["pb"] = nhanVien.MaPB;
+                }
+                if (nhanVien.BacLuong != null)
+                {
+                    Session["bl"] = nhanVien.BacLuong;
+                }
+                if (nhanVien.TrinhDoHocVan != null)
+                {
+                    Session["hv"] = nhanVien.TrinhDoHocVan;
+                }
+                if (nhanVien.GioiTinh != null)
+                {
+                    Session["gt"] = nhanVien.GioiTinh;
+                }   
                 return View(nhanVien);
             }
         }
@@ -137,6 +193,26 @@ namespace EMMA.Areas.Manager.Controllers
             else
             {
                 model.Avt = Session["Avt"].ToString();
+            }
+            if(model.MaCV == null)
+            {
+                model.MaCV = Session["cv"].ToString();
+            }
+            if (model.MaPB == null)
+            {
+                model.MaPB = Session["pb"].ToString();
+            }
+            if (model.GioiTinh == null)
+            {
+                model.GioiTinh = Session["gt"].ToString();
+            }
+            if (model.TrinhDoHocVan == null)
+            {
+                model.TrinhDoHocVan = Session["hv"].ToString();
+            }
+            if (model.BacLuong == null)
+            {
+                model.BacLuong = Session["bl"].ToString();
             }
             var user = db.NHANVIEN.Find(model.Username);
             if (user == null)
@@ -196,22 +272,7 @@ namespace EMMA.Areas.Manager.Controllers
             }
         }
 
-        //Thong Tin ca Nhan
-        public ActionResult ThongTinCaNhan()
-        {
-            if (Session["user"] == null)
-            {
-                return Redirect("~/Login/Login");
-            }
-            else
-            {
-                var id = Session["id"].ToString();
-                var nv = db.NHANVIEN.Find(id);
-                return View(nv);
-            }
-        }
-
-        //Phong Ban
+        //Phòng Ban
         public ActionResult DanhSachPB()
         {
             if (Session["user"] == null)
@@ -275,133 +336,347 @@ namespace EMMA.Areas.Manager.Controllers
             return RedirectToAction("DanhSachPB");
         }
 
-        //Cong
-
-        public ActionResult TraCuuDsCong()
+        //Chức Vụ
+        public ActionResult DsCV()
         {
-            if (ViewBag.tc == null)
+            if (Session["user"] == null)
             {
-                ViewBag.df = "ok";
+                return Redirect("~/Login/Login");
             }
             else
             {
-                ViewBag.df = "not";
+                List<CHUCVU> cv = db.CHUCVU.ToList();
+                return View(cv);
             }
-            List<CONG> cong = new List<CONG>();
-            foreach (var item in db.CONG.ToList())
-            {
-                if (item.Thang == DateTime.Now.Month && item.Nam == DateTime.Now.Year)
-                {
-                    cong.Add(item);
-                }
-            }
-            return View(cong);
         }
 
-        [HttpPost]
-        public ActionResult TraCuuDsCong(int thang, int nam)
+        public ActionResult ThemCV()
         {
-            List<CONG> dsCong = db.CONG.ToList();
-            List<CONG> congTheoThang = new List<CONG>();
-            foreach (var cong in dsCong)
+            if (Session["user"] == null)
             {
-                if (cong.Thang == thang && cong.Nam == nam)
-                {
-                    congTheoThang.Add(cong);
-                }
+                return Redirect("~/Login/Login");
             }
-            if(congTheoThang.Count > 0)
-            {
-                ViewBag.tc = "ok";
-                return View(congTheoThang);
-            } 
             else
             {
                 return View();
+            }
+        }
+
+        [HttpPost]
+        public ActionResult ThemCV(CHUCVU model)
+        {
+            var cv = db.CHUCVU.Find(model.MaCV);
+            if(cv != null)
+            {
+                ViewBag.CV = "yes";
+                return View(model);
             }    
+            else
+            {
+                db.CHUCVU.Add(model);
+                db.SaveChanges();
+                return RedirectToAction("DsCV");
+            }    
+        }
+
+        public ActionResult CapNhatCV(string id)
+        {
+            if (Session["user"] == null)
+            {
+                return Redirect("~/Login/Login");
+            }
+            else
+            {
+                var cv = db.CHUCVU.Find(id);
+                if (cv == null)
+                {
+                    return RedirectToAction("DsCV");
+                }
+                else
+                {
+                    return View(cv);
+                }
+            }
+        }
+
+        [HttpPost]
+        public ActionResult CapNhatCV(CHUCVU model)
+        {
+            var cv = db.CHUCVU.Find(model.MaCV);
+            if(cv == null)
+            {
+                return View(model);
+            }    
+            else
+            {
+                cv.TenCV = model.TenCV;
+                db.SaveChanges();
+                return RedirectToAction("DsCV");
+            }    
+        }
+
+        public ActionResult XoaCV(string id)
+        {
+            var cv = db.CHUCVU.Find(id);
+            if(cv == null)
+            {
+                return RedirectToAction("DsCV");
+            }    
+            else
+            {
+                db.CHUCVU.Remove(cv); 
+                db.SaveChanges();
+                return RedirectToAction("DsCV");
+            }    
+        }
+
+        //Hợp Đồng Lao Động
+        public ActionResult DsHD()
+        {
+            if (Session["user"] == null)
+            {
+                return Redirect("~/Login/Login");
+            }
+            else
+            {
+                List<HOPDONGLAODONG> cv = db.HOPDONGLAODONG.ToList();
+                return View(cv);
+            }
+        }
+
+        public ActionResult ThemHD()
+        {
+            if (Session["user"] == null)
+            {
+                return Redirect("~/Login/Login");
+            }
+            else
+            {
+                return View();
+            }
+        }
+
+        [HttpPost]
+        public ActionResult ThemHD(HOPDONGLAODONG model)
+        {
+            var cv = db.HOPDONGLAODONG.Find(model.MaHD);
+            if (cv != null)
+            {
+                ViewBag.HD = "yes";
+                return View(model);
+            }
+            else
+            {
+                db.HOPDONGLAODONG.Add(model);
+                db.SaveChanges();
+                return RedirectToAction("DsHD");
+            }
+        }
+
+        public ActionResult CapNhatHD(string id)
+        {
+            if (Session["user"] == null)
+            {
+                return Redirect("~/Login/Login");
+            }
+            else
+            {
+                var cv = db.HOPDONGLAODONG.Find(id);
+                if (cv == null)
+                {
+                    return RedirectToAction("DsHD");
+                }
+                else
+                {
+                    return View(cv);
+                }
+            }
+        }
+
+        [HttpPost]
+        public ActionResult CapNhatHD(HOPDONGLAODONG model)
+        {
+            var cv = db.HOPDONGLAODONG.Find(model.MaHD);
+            if (cv == null)
+            {
+                return View(model);
+            }
+            else
+            {
+                cv.LoaiHD = model.LoaiHD;
+                cv.MaNV = model.MaNV;
+                cv.NgayKy = model.NgayKy;
+                cv.NgayHetHan = model.NgayHetHan;
+                db.SaveChanges();
+                return RedirectToAction("DsHD");
+            }
+        }
+
+        public ActionResult XoaHD(string id)
+        {
+            var cv = db.HOPDONGLAODONG.Find(id);
+            if (cv == null)
+            {
+                return RedirectToAction("DsHD");
+            }
+            else
+            {
+                db.HOPDONGLAODONG.Remove(cv);
+                db.SaveChanges();
+                return RedirectToAction("DsHD");
+            }
+        }
+
+        //Công
+        public ActionResult TraCuuDsCong(int? currentNam, int? currentThang, int? nam, int? thang, int? page)
+        {
+            if (Session["user"] == null)
+            {
+                return Redirect("~/Login/Login");
+            }
+            else
+            {
+                var dsLuong = new List<CONG>();
+                if (thang != null && nam != null)
+                {
+                    page = 1;
+                }
+                else
+                {
+                    thang = currentThang;
+                    nam = currentNam;
+                }
+                if (string.IsNullOrEmpty(thang.ToString()) || string.IsNullOrEmpty(nam.ToString()))
+                {
+                    dsLuong = db.CONG.ToList();
+                }
+                else
+                {
+                    dsLuong = db.CONG.Where(m => m.Thang == thang && m.Nam == nam).ToList();
+                }
+                ViewBag.currentThang = thang;
+                ViewBag.currentNam = nam;
+                int pageSize = 4;
+                int pageNumber = (page ?? 1);
+                dsLuong = dsLuong.OrderByDescending(m => m.MaNV).ToList();
+                return View(dsLuong.ToPagedList(pageNumber, pageSize));
+            }
         }
 
         public ActionResult TongHopCong()
         {
-            return View();
+            if (Session["user"] == null)
+            {
+                return Redirect("~/Login/Login");
+            }
+            else
+            {
+                return View();
+            }
         }
 
         [HttpPost]
         public ActionResult TongHopCong(int thang, int nam, CONG model)
         {
-            var nv = db.ChamCong.FirstOrDefault(m => m.Thang == thang && m.Nam == nam);
-            if(nv != null)
+            var a = db.CONG.FirstOrDefault(m => m.MaNV == model.MaNV && m.Thang == model.Thang && m.Nam == model.Nam);
+            if(a != null)
             {
-                foreach(var i in db.NHANVIEN.ToList())
+                db.CONG.Remove(a);
+                var nv = db.ChamCong.FirstOrDefault(m => m.Thang == thang && m.Nam == nam);
+                if (nv != null)
                 {
-                    List<ChamCong> dsCong = new List<ChamCong>();
-                    foreach (var item in db.ChamCong.ToList())
+                    foreach (var i in db.NHANVIEN.ToList())
                     {
-                        if (item.MaNV == i.MaNV && item.Thang == thang && item.Nam == nam && item.Vao != null && item.Ra != null)
+                        List<ChamCong> dsCong = new List<ChamCong>();
+                        foreach (var item in db.ChamCong.ToList())
                         {
-                            dsCong.Add(item);
+                            if (item.MaNV == i.MaNV && item.Thang == thang && item.Nam == nam && item.Vao != null && item.Ra != null)
+                            {
+                                dsCong.Add(item);
+                            }
                         }
+                        model.MaNV = i.MaNV;
+                        model.SoNgayCong = dsCong.Count;
+                        model.SoNgayNghi = DateTime.DaysInMonth(nam, thang) - model.SoNgayCong;
+                        model.Thang = thang;
+                        model.Nam = nam;
+                        db.CONG.Add(model);
                     }
-                    model.MaNV = i.MaNV;
-                    model.SoNgayCong = dsCong.Count;
-                    model.SoNgayNghi = DateTime.DaysInMonth(nam, thang) - model.SoNgayCong;
-                    model.Thang = thang;
-                    model.Nam = nam;
-                    db.CONG.Add(model);
+                    db.SaveChanges();
+                    return RedirectToAction("TraCuuDsCong");
                 }
-                db.SaveChanges();
-                return RedirectToAction("TraCuuDsCong");
-            }
+                else
+                {
+                    return View();
+                }
+            }    
             else
             {
-                return View();
-            }
+                var nv = db.ChamCong.FirstOrDefault(m => m.Thang == thang && m.Nam == nam);
+                if (nv != null)
+                {
+                    foreach (var i in db.NHANVIEN.ToList())
+                    {
+                        List<ChamCong> dsCong = new List<ChamCong>();
+                        foreach (var item in db.ChamCong.ToList())
+                        {
+                            if (item.MaNV == i.MaNV && item.Thang == thang && item.Nam == nam && item.Vao != null && item.Ra != null)
+                            {
+                                dsCong.Add(item);
+                            }
+                        }
+                        model.MaNV = i.MaNV;
+                        model.SoNgayCong = dsCong.Count;
+                        model.SoNgayNghi = DateTime.DaysInMonth(nam, thang) - model.SoNgayCong;
+                        model.Thang = thang;
+                        model.Nam = nam;
+                        db.CONG.Add(model);
+                    }
+                    db.SaveChanges();
+                    return RedirectToAction("TraCuuDsCong");
+                }
+                else
+                {
+                    return View();
+                }
+            }    
         }
 
 
 
-        //Luong
-        public ActionResult DsLuong()
+        //Lương
+        public ActionResult DsLuong(int? currentNam, int? currentThang, int? nam, int? thang, int? page)
         {
-            if (ViewBag.tc == null)
+            if (Session["user"] == null)
             {
-                ViewBag.df = "ok";
+                return Redirect("~/Login/Login");
             }
             else
             {
-                ViewBag.df = "not";
-            }
-            List<HOADONLUONG> dsLuong = new List<HOADONLUONG>();
-            foreach (var item in db.HOADONLUONG.ToList())
-            {
-                if (item.Thang == DateTime.Now.Month && item.Nam == DateTime.Now.Year)
+                var dsLuong = new List<HOADONLUONG>();
+                if (thang != null && nam != null)
                 {
-                    dsLuong.Add(item);
+                    page = 1;
                 }
-            }
-            return View(dsLuong);
-        }
-
-        [HttpPost]
-        public ActionResult DsLuong(int thang, int nam)
-        {
-            List<HOADONLUONG> luongTheoThang = new List<HOADONLUONG>();
-            foreach (var luong in db.HOADONLUONG.ToList())
-            {
-                if (luong.Thang == thang && luong.Nam == nam)
+                else
                 {
-                    luongTheoThang.Add(luong);
+                    thang = currentThang;
+                    nam = currentNam;
                 }
-            }
-            if (luongTheoThang.Count > 0)
-            {
-                ViewBag.tc = "ok";
-                return View(luongTheoThang);
-            }
-            else
-            {
-                Session["not"] = "ok";
-                return RedirectToAction("DsLuong");
+                if (string.IsNullOrEmpty(thang.ToString()) || string.IsNullOrEmpty(nam.ToString()))
+                {
+                    dsLuong = db.HOADONLUONG.ToList();
+                }
+                else
+                {
+                    dsLuong = db.HOADONLUONG.Where(m => m.Thang == thang && m.Nam == nam).ToList();
+                }
+                ViewBag.currentThang = thang;
+                ViewBag.currentNam = nam;
+                int pageSize = 4;
+                int pageNumber = (page ?? 1);
+                dsLuong = dsLuong.OrderByDescending(m => m.MaNV).ToList();
+                return View(dsLuong.ToPagedList(pageNumber, pageSize));
             }
         }
 
@@ -441,39 +716,119 @@ namespace EMMA.Areas.Manager.Controllers
 
         public ActionResult TongHopLuong()
         {
-            return View();
+            if (Session["user"] == null)
+            {
+                return Redirect("~/Login/Login");
+            }
+            else
+            {
+                return View();
+            }
         }
 
         [HttpPost]
         public ActionResult TongHopLuong(int thang, int nam, HOADONLUONG model)
         {
-            var nv = db.CONG.FirstOrDefault(m => m.Thang == thang && m.Nam == nam);
-            if(nv != null)
+            var a = db.HOADONLUONG.FirstOrDefault(m => m.MaNV == model.MaNV && m.Thang == model.Thang && m.Nam == model.Nam);
+            if(a != null)
             {
-                List<CONG> ds = new List<CONG>();
-                foreach (var item in db.CONG.ToList())
+                db.HOADONLUONG.Remove(a);
+                var nv = db.CONG.FirstOrDefault(m => m.Thang == thang && m.Nam == nam);
+                if (nv != null)
                 {
-                    if (item.Thang == thang && item.Nam == nam)
+                    List<CONG> ds = new List<CONG>();
+                    foreach (var item in db.CONG.ToList())
                     {
-                        ds.Add(item);
+                        if (item.Thang == thang && item.Nam == nam)
+                        {
+                            ds.Add(item);
+                        }
                     }
+                    foreach (var item in ds)
+                    {
+                        model.BacLuong = item.NHANVIEN.BacLuong;
+                        model.MaNV = item.MaNV;
+                        model.HSPhuCap = HsPhuCap((int)item.SoNgayCong, (int)item.SoNgayNghi, item.Thang, item.Nam, item.MaNV);
+                        var luongCB = db.LUONG.Find(model.BacLuong);
+                        var luongThoaThuan = luongCB.LuongCoBan + luongCB.LuongCoBan * model.HSPhuCap;
+                        model.ThucLinh = (luongThoaThuan / 26) * item.SoNgayCong;
+                        db.HOADONLUONG.Add(model);
+                    }
+                    db.SaveChanges();
+                    return RedirectToAction("DsLuong");
                 }
-                foreach (var item in ds)
+                else
                 {
-                    model.BacLuong = item.NHANVIEN.BacLuong;
-                    model.MaNV = item.MaNV;
-                    model.HSPhuCap = HsPhuCap((int)item.SoNgayCong, (int)item.SoNgayNghi, item.Thang, item.Nam, item.MaNV);
-                    var luongCB = db.LUONG.Find(model.BacLuong);
-                    var luongThoaThuan = luongCB.LuongCoBan + luongCB.LuongCoBan * model.HSPhuCap;
-                    model.ThucLinh = (luongThoaThuan / 26) * item.SoNgayCong;
-                    db.HOADONLUONG.Add(model);
+                    return View();
                 }
-                db.SaveChanges();
-                return RedirectToAction("DsLuong");
+            } 
+            else
+            {
+                var nv = db.CONG.FirstOrDefault(m => m.Thang == thang && m.Nam == nam);
+                if (nv != null)
+                {
+                    List<CONG> ds = new List<CONG>();
+                    foreach (var item in db.CONG.ToList())
+                    {
+                        if (item.Thang == thang && item.Nam == nam)
+                        {
+                            ds.Add(item);
+                        }
+                    }
+                    foreach (var item in ds)
+                    {
+                        model.BacLuong = item.NHANVIEN.BacLuong;
+                        model.MaNV = item.MaNV;
+                        model.HSPhuCap = HsPhuCap((int)item.SoNgayCong, (int)item.SoNgayNghi, item.Thang, item.Nam, item.MaNV);
+                        var luongCB = db.LUONG.Find(model.BacLuong);
+                        var luongThoaThuan = luongCB.LuongCoBan + luongCB.LuongCoBan * model.HSPhuCap;
+                        model.ThucLinh = (luongThoaThuan / 26) * item.SoNgayCong;
+                        db.HOADONLUONG.Add(model);
+                    }
+                    db.SaveChanges();
+                    return RedirectToAction("DsLuong");
+                }
+                else
+                {
+                    return View();
+                }
+            }    
+        }
+
+        //Tìm Kiếm và Phân Trang
+
+        public ActionResult PhanTrang(int? currentNam, int? currentThang, int? nam, int? thang, int? page)
+        {
+            if (Session["user"] == null)
+            {
+                return Redirect("~/Login/Login");
             }
             else
             {
-                return View();
+                var dsLuong = new List<CONG>();
+                if (thang != null && nam != null)
+                {
+                    page = 1;
+                }
+                else
+                {
+                    thang = currentThang;
+                    nam = currentNam;
+                }
+                if (string.IsNullOrEmpty(thang.ToString()) || string.IsNullOrEmpty(nam.ToString()))
+                {
+                    dsLuong = db.CONG.ToList();
+                }
+                else
+                {
+                    dsLuong = db.CONG.Where(m => m.Thang == thang && m.Nam == nam).ToList();
+                }
+                ViewBag.currentThang = thang;
+                ViewBag.currentNam = nam;
+                int pageSize = 4;
+                int pageNumber = (page ?? 1);
+                dsLuong = dsLuong.OrderByDescending(m => m.MaNV).ToList();
+                return View(dsLuong.ToPagedList(pageNumber, pageSize));
             }
         }
     }

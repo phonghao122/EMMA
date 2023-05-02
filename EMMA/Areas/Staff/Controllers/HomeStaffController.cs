@@ -4,7 +4,9 @@ using System.Data.Entity.Core.Metadata.Edm;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
 using EMMA.Models;
+using PagedList;
 
 namespace EMMA.Areas.Staff.Controllers
 {
@@ -14,9 +16,17 @@ namespace EMMA.Areas.Staff.Controllers
         // GET: Staff/HomeStaff
         public ActionResult Index()
         {
-            return View();
+            if (Session["user"] == null)
+            {
+                return Redirect("~/Login/Login");
+            }
+            else
+            {
+                return View();
+            }
         }
 
+        //Thông Tin Cá Nhân
         public ActionResult ThongTinCaNhan()
         {
             if (Session["user"] == null)
@@ -92,7 +102,9 @@ namespace EMMA.Areas.Staff.Controllers
             
         }
 
-        public ActionResult DsCong()
+
+        //Công
+        public ActionResult DsCong(int? currentNam, int? currentThang, int? nam, int? thang, int? page)
         {
             if (Session["user"] == null)
             {
@@ -100,8 +112,42 @@ namespace EMMA.Areas.Staff.Controllers
             }
             else
             {
-                List<ChamCong> chamCongs = db.ChamCong.ToList();
-                return View(chamCongs);
+                var dsLuong = new List<ChamCong>();
+                if (thang != null && nam != null)
+                {
+                    page = 1;
+                }
+                else
+                {
+                    thang = currentThang;
+                    nam = currentNam;
+                }
+                string id = Session["id"].ToString();
+                if (string.IsNullOrEmpty(thang.ToString()) || string.IsNullOrEmpty(nam.ToString()))
+                {
+                    foreach(var cong in db.ChamCong.ToList())
+                    {
+                        if(cong.MaNV == id && cong.Thang == DateTime.Now.Month && cong.Nam == DateTime.Now.Year)
+                        {
+                            dsLuong.Add(cong);
+                        }    
+                    }    
+                }
+                else
+                {
+                    foreach (var cong in db.ChamCong.ToList())
+                    {
+                        if (cong.MaNV == id && cong.Thang == thang && cong.Nam == nam)
+                        {
+                            dsLuong.Add(cong);
+                        }
+                    }
+                }
+                ViewBag.currentThang = thang;
+                ViewBag.currentNam = nam;
+                int pageSize = 4;
+                int pageNumber = (page ?? 1);
+                return View(dsLuong.ToPagedList(pageNumber, pageSize));
             }
         }
 
@@ -148,7 +194,7 @@ namespace EMMA.Areas.Staff.Controllers
             }
         }
 
-        public ActionResult ChamCongRa(string id)
+        public ActionResult ChamCongRa()
         {
             if (Session["user"] == null)
             {
@@ -156,7 +202,11 @@ namespace EMMA.Areas.Staff.Controllers
             }
             else
             {
-                var nv = db.ChamCong.FirstOrDefault(m => m.MaNV == id && m.Ngay ==(int) DateTime.Now.Day && m.Thang == (int)DateTime.Now.Month && m.Nam == (int)DateTime.Now.Year);
+                string id = Session["id"].ToString();
+                var nv = db.ChamCong.FirstOrDefault(m => m.MaNV == id
+                && m.Ngay == DateTime.Now.Day
+                && m.Thang == DateTime.Now.Month
+                && m.Nam == DateTime.Now.Year) ;
                 return View(nv);
             }
         }
@@ -165,10 +215,15 @@ namespace EMMA.Areas.Staff.Controllers
         public ActionResult ChamCongRa(ChamCong model)
         {
             bool faceid = true;
-            var nv = db.ChamCong.FirstOrDefault(m => m.MaNV == model.MaNV && m.Ngay == model.Ngay && m.Thang == model.Thang && m.Nam == model.Nam);
+            var nv = db.ChamCong.FirstOrDefault(m => m.MaNV == model.MaNV 
+            && m.Ngay == model.Ngay 
+            && m.Thang == model.Thang 
+            && m.Nam == model.Nam);
             if (nv.Ra == null)
             {
-                if(nv.Ngay == DateTime.Now.Day && nv.Thang == DateTime.Now.Month && nv.Nam == DateTime.Now.Year)
+                if(nv.Ngay == DateTime.Now.Day 
+                    && nv.Thang == DateTime.Now.Month 
+                    && nv.Nam == DateTime.Now.Year)
                 {
                     if (faceid == true)
                     {

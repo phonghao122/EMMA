@@ -1,10 +1,10 @@
-﻿@model IEnumerable<EMMA.Models.PHONGBAN>
-
+﻿@model EMMA.Models.HOPDONGLAODONG
 
 @{
-    ViewBag.Title = "DanhSachPB";
+    ViewBag.Title = "ThemHD";
     Layout = "~/Views/Shared/_Layout.cshtml";
     EMMA.Models.NHANVIEN nv = (EMMA.Models.NHANVIEN)Session["user"];
+    EMMA.Models.EMMAEntities db = new EMMA.Models.EMMAEntities();
 }
 
 <body class="horizontal-layout horizontal-menu  navbar-floating footer-static" data-open="hover"
@@ -202,40 +202,49 @@
 
 
 <div class="row">
-    <div class="col-md-2">
-
+    <div class="col-md-2"></div>
+    <div style="margin-top:150px" class="col-md-8">
+        <form method="post">
+            <div class="card">
+                <div class="card-heard" style="background-color:aqua">
+                    <h3 style="margin-top:20px " class="card-title mb-1 text-center">Thêm Hợp Đồng Lao Động</h3>
+                </div>
+                <div class="card-body">
+                    <label> Mã Hợp Đồng</label>
+                    <div class="col-md-12">
+                        @Html.EditorFor(model => model.MaHD, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.MaHD, "", new { @class = "text-danger" })
+                    </div>
+                    <label> Mã Nhân Viên</label>
+                    <div class="col-md-12">
+                        <select class="form-control" name="MaNV">
+                            @foreach (var n in db.NHANVIEN.ToList())
+                            {
+                                <option value="@n.MaNV">@n.MaNV : @n.HoTenNV</option>
+                            }
+                        </select>
+                    </div>
+                    <label> Loại Hợp Đồng</label>
+                    <div class="col-md-12">
+                        @Html.EditorFor(model => model.LoaiHD, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.LoaiHD, "", new { @class = "text-danger" })
+                    </div>
+                    <label> Ngày Ký</label>
+                    <div class="col-md-12">
+                        @Html.EditorFor(model => model.NgayKy, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.NgayKy, "", new { @class = "text-danger" })
+                    </div>
+                    <label> Ngày Hết Hạn</label>
+                    <div class="col-md-12">
+                        @Html.EditorFor(model => model.NgayHetHan, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.NgayHetHan, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="card-footer text-end">
+                    <button class="btn btn-warning"> @Html.ActionLink("Back to List", "DsHD")</button>
+                    <button type="submit" class="btn btn-info"> Thêm Mới </button>
+                </div>
+            </div>
+        </form>
     </div>
-    <div style="margin-top: 150px" class="col-md-8">
-        <div class="card">
-            <div class="card-heard" style="background-color:aquamarine ">
-                <h3 style="margin-top:25px" class="text-center"> Danh Sách Phòng Ban</h3>
-            </div>
-            <div class="card-body">
-                <table class="table tabel-bordered">
-                    <thead>
-                    <th class="text-center text-nowrap">Mã Phòng Ban</th>
-                    <th class="text-center text-nowrap">Tên Phòng Ban</th>
-                    <th class="text-center text-nowrap">Acction</th>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model)
-                        {
-                            <tr>
-                                <td class="text-center text-nowrap">@Html.DisplayFor(modelItem => item.MaPB)</td>
-                                <td class="text-center text-nowrap">@Html.DisplayFor(modelItem => item.TenPB)</td>
-                                <td class="text-center text-nowrap">
-                                    <button class="btn btn-success">@Html.ActionLink("Edit", "EditPB", new { id = item.MaPB })</button>
-                                    <button class="btn btn-warning">@Html.ActionLink("Delete", "DeletePB", new { id = item.MaPB })</button>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-            <div class="card-footer text-end">
-                <a href="~/Manager/HomeManager/ThemPB">
-                    <button class="btn btn-info"> Thêm Mới Phòng Ban</button>
-                </a>
-            </div>
-        </div>
-    </div>
+</div>
