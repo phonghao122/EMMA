@@ -107,6 +107,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="css\giaodien.css" />
     <Content Include="Global.asax" />
+    <Content Include="image\hinhnen.jpg" />
     <Content Include="Models\EMMA.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>EMMA.edmx</DependentUpon>
@@ -228,7 +229,6 @@
     <Folder Include="Areas\Manager\Data\" />
     <Folder Include="Areas\Staff\Data\" />
     <Folder Include="Data\" />
-    <Folder Include="image\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
