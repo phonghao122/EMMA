@@ -9,6 +9,7 @@
     EMMA.Models.NHANVIEN nv = (EMMA.Models.NHANVIEN)Session["user"];
 }
 
+
 <body class="horizontal-layout horizontal-menu  navbar-floating footer-static" data-open="hover"
       data-menu="horizontal-menu" data-col="">
     <nav class="header-navbar navbar-expand-lg navbar navbar-fixed align-items-center navbar-shadow navbar-brand-center"
@@ -109,30 +110,35 @@
                         </li>
                         <li class="dropdown dropdown-submenu" data-menu="dropdown-submenu">
                             @*<a class="dropdown-item d-flex align-items-center dropdown-toggle"
-                               href="#" data-bs-toggle="dropdown" data-i18n="Invoice">
-                                <span data-i18n="Invoice"><h5>Chấm Công</h5></span>
-                            </a>*@
+                                   href="#" data-bs-toggle="dropdown" data-i18n="Invoice">
+                                    <span data-i18n="Invoice"><h5>Chấm Công</h5></span>
+                                </a>*@
                             @*<ul class="dropdown-menu" data-bs-popper="none">*@
-                                <li data-menu="">
-                                    <a class="dropdown-item d-flex align-items-center" href="~/Staff/HomeStaff/DsCong">
-                                        <span data-i18n="Analytics"><h5> Danh Sách Công</h5></span>
-                                    </a>
-                                </li>
-                                @*<li data-menu="">
-                                    <a class="dropdown-item d-flex align-items-center" href="~/Staff/HomeStaff/ChamCong">
-                                        <span data-i18n="Analytics"><h5> Check in </h5></span>
-                                    </a>
-                                </li>
-                                <li data-menu="">
-                                    <a class="dropdown-item d-flex align-items-center" href="~/Staff/HomeStaff/ChamCongRa">
-                                        <span data-i18n="Analytics"><h5> Check out </h5></span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>*@
+                        <li data-menu="">
+                            <a class="dropdown-item d-flex align-items-center" href="~/Staff/HomeStaff/DsCong">
+                                <span data-i18n="Analytics"><h5> Danh Sách Công</h5></span>
+                            </a>
+                        </li>
+                        @*<li data-menu="">
+                                <a class="dropdown-item d-flex align-items-center" href="~/Staff/HomeStaff/ChamCong">
+                                    <span data-i18n="Analytics"><h5> Check in </h5></span>
+                                </a>
+                            </li>
+                            <li data-menu="">
+                                <a class="dropdown-item d-flex align-items-center" href="~/Staff/HomeStaff/ChamCongRa">
+                                    <span data-i18n="Analytics"><h5> Check out </h5></span>
+                                </a>
+                            </li>*@
+                        @*</ul>
+                            </li>*@
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" href="~/Manager/HomeManager/TongHopCong">
+                                <span data-i18n="Analytics"><h5>Tổng Hợp Công </h5></span>
+                            </a>
+                        </li>
                         <li data-menu="">
                             <a class="dropdown-item d-flex align-items-center" href="~/Staff/HomeStaff/ThongTinCaNhan" data-bs-toggle="" data-i18n="Analytics">
-                                <span data-i18n="Analytics"><h5>Thông Tin Cá Nhân</h5></span>
+                                <span data-i18n="Analytics"><h5> Quản Lý Thông Tin </h5></span>
                             </a>
                         </li>
 
@@ -151,72 +157,72 @@
     <script src="~/public/app-assets/js/core/app-menu.js"></script>
     <script src="~/public/app-assets/js/core/app.js"></script>
     <script src="~/public/app-assets/js/scripts/pages/dashboard-ecommerce.js"></script>
+    <link rel="stylesheet" type="text/css" href="~/css/giaodien.css">
 </body>
 
-
-    <div class="row">
-        <div class="col-md-1">
-        </div>
-        <div style="margin-top:150px" class="col-md-10">
-            <div class="card">
-                <div class="card-heard" style="background-color:aqua">
-                    <h3 style="margin-top:20px " class="card-title mb-1 text-center">Danh Sách Chấm Công</h3>
-                </div>
-                <div class="card-body">
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th class="text-center"> Họ Tên Nhân Viên</th>
-                                <th class="text-center"> Ngày</th>
-                                <th class="text-center"> Tháng</th>
-                                <th class="text-center"> Năm</th>
-                                <th class="text-center"> Vào</th>
-                                <th class="text-center"> Ra</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @{
-                                string id = Session["id"].ToString();
-                                foreach (var item in Model)
-                                {
-                                    <tr>
-                                        <td class="text-center">
-                                            @Html.DisplayFor(modelItem => item.NHANVIEN.HoTenNV)
-                                        </td>
-                                        <td class="text-center">
-                                            @Html.DisplayFor(modelItem => item.Ngay)
-                                        </td>
-                                        <td class="text-center">
-                                            @Html.DisplayFor(modelItem => item.Thang)
-                                        </td>
-                                        <td class="text-center">
-                                            @Html.DisplayFor(modelItem => item.Nam)
-                                        </td>
-                                        <td class="text-center">
-                                            @Html.DisplayFor(modelItem => item.Vao)
-                                        </td>
-                                        <td class="text-center">
-                                            @Html.DisplayFor(modelItem => item.Ra)
-                                        </td>
-                                        @*<td class="text-center">
+<div class="row">
+    <div class="col-md-1">
+    </div>
+    <div style="margin-top:150px" class="col-md-10">
+        <div class="card">
+            <div class="card-heard" style="background-color:aqua">
+                <h3 style="margin-top:20px " class="card-title mb-1 text-center">Danh Sách Chấm Công</h3>
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th class="text-center"> Họ Tên Nhân Viên</th>
+                            <th class="text-center"> Ngày</th>
+                            <th class="text-center"> Tháng</th>
+                            <th class="text-center"> Năm</th>
+                            <th class="text-center"> Vào</th>
+                            <th class="text-center"> Ra</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            string id = Session["id"].ToString();
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="text-center">
+                                        @Html.DisplayFor(modelItem => item.NHANVIEN.HoTenNV)
+                                    </td>
+                                    <td class="text-center">
+                                        @Html.DisplayFor(modelItem => item.Ngay)
+                                    </td>
+                                    <td class="text-center">
+                                        @Html.DisplayFor(modelItem => item.Thang)
+                                    </td>
+                                    <td class="text-center">
+                                        @Html.DisplayFor(modelItem => item.Nam)
+                                    </td>
+                                    <td class="text-center">
+                                        @Html.DisplayFor(modelItem => item.Vao)
+                                    </td>
+                                    <td class="text-center">
+                                        @Html.DisplayFor(modelItem => item.Ra)
+                                    </td>
+                                    @*<td class="text-center">
                                             <a class="text-center" href="/Staff/HomeStaff/ChamCongRa/@id">
                                                 <img src="~/public/app-assets/images/ico/face_id.jpg" height="30" width="30" />
                                             </a>
                                         </td>*@
 
-                                    </tr>
+                                </tr>
 
 
-                                }
                             }
-                        </tbody>
-                    </table>
-                </div>
-                <div style="margin-left:20px">
-                    Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-                    @Html.PagedListPager(Model, page => Url.Action("DsCong", new { page, currentThang = ViewBag.currentThang, currentNam = ViewBag.currentNam }))
-                </div>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div style="margin-left:20px">
+                Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+                @Html.PagedListPager(Model, page => Url.Action("DsCong", new { page, currentThang = ViewBag.currentThang, currentNam = ViewBag.currentNam }))
             </div>
         </div>
     </div>
+</div>
 

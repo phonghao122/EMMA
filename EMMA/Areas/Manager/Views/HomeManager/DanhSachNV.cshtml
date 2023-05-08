@@ -148,24 +148,17 @@
                                 </li>
                             </ul>
                         </li>
-
-                        <li class="dropdown dropdown-submenu" data-menu="dropdown-submenu">
-                            <a class="dropdown-item d-flex align-items-center dropdown-toggle">
-                                <span data-i18n="Invoice"><h5> Công</h5></span>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" href="~/Manager/HomeManager/TraCuuDsCong">
+                                <span data-i18n="Analytics"><h5> Danh Sách Công</h5></span>
                             </a>
-                            <ul class="dropdown-menu" data-bs-popper="none">
-                                <li>
-                                    <a class="dropdown-item d-flex align-items-center" href="~/Manager/HomeManager/TraCuuDsCong">
-                                        <span data-i18n="Analytics"><h5> Danh Sách Công</h5></span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item d-flex align-items-center" href="~/Manager/HomeManager/TongHopCong">
-                                        <span data-i18n="Analytics"><h5>Tổng Hợp Công </h5></span>
-                                    </a>
-                                </li>
-                            </ul>
                         </li>
+                        @*<li>
+                                <a class="dropdown-item d-flex align-items-center" href="~/Manager/HomeManager/TongHopCong">
+                                    <span data-i18n="Analytics"><h5>Tổng Hợp Công </h5></span>
+                                </a>
+                            </li>*@
+
 
                         <li>
                             <a class="dropdown-item d-flex align-items-center" href="~/Manager/HomeManager/DsCV">
@@ -190,13 +183,12 @@
     <script src="~/public/app-assets/js/core/app-menu.js"></script>
     <script src="~/public/app-assets/js/core/app.js"></script>
     <script src="~/public/app-assets/js/scripts/pages/dashboard-ecommerce.js"></script>
-
-
+    <link rel="stylesheet" type="text/css" href="~/css/giaodien.css">
 
 </body>
 
 <div class="row">
-    <div style="margin-top:150px" class="col-12"
+    <div style="margin-top:150px" class="col-12">
         <div class="card">
             <div class="card-heard" style="background-color:aqua">
                 <h3 style="margin-top:20px " class="card-title mb-1 text-center">Danh Sách Nhân Viên</h3>
@@ -207,13 +199,13 @@
                     @Html.AntiForgeryToken()
                     <div class="row">
                         <div class="col-md-8">
-                            <div class="search-input">
+                            <div style="margin-top:2px" class="search-input">
                                 <input class="form-control input" name="tuKhoa" type="text" placeholder="Tìm Nhân Viên..."
                                        tabindex="-1" data-search="search">
                                 <ul class="search-list search-list-main"></ul>
                             </div>
                         </div>
-                        <div class="col-md-1">
+                        <div style="margin-top:2px" class="col-md-1">
                             <button type="submit" class="btn btn-warning"> <i data-feather="search"></i> </button>
                         </div>
 
@@ -288,5 +280,8 @@
                 </div>
         </div>      
    </div>
+    </div>
+    </div>
+
     
 
