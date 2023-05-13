@@ -108,6 +108,7 @@
     <Content Include="css\giaodien.css" />
     <Content Include="Global.asax" />
     <Content Include="image\hinhnen.jpg" />
+    <Content Include="image\hinhnen1.jpg" />
     <Content Include="Models\EMMA.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>EMMA.edmx</DependentUpon>
