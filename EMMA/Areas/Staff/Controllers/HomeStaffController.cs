@@ -249,5 +249,56 @@ namespace EMMA.Areas.Staff.Controllers
                 return RedirectToAction("DsCong");
             }
         }
+
+        //Tong Hop Cong
+        public ActionResult TongHopCong()
+        {
+            if (Session["user"] == null)
+            {
+                return Redirect("~/Login/Login");
+            }
+            else
+            {
+                return View();
+            }
+        }
+
+        [HttpPost]
+        public ActionResult TongHopCong(int thang, int nam)
+        {
+            CONG model = new CONG();
+            foreach (var a in db.CONG.ToList())
+            {
+                if (a.Thang == thang && a.Nam == nam)
+                {
+                    db.CONG.Remove(a);
+                }
+            }
+            var nv = db.ChamCong.FirstOrDefault(m => m.Thang == thang && m.Nam == nam);
+            if (nv != null)
+            {
+                string maNV = Session["id"].ToString();
+                List<ChamCong> dsCong = new List<ChamCong>();
+                foreach (var item in db.ChamCong.ToList())
+                {
+                    if (item.MaNV == maNV && item.Thang == thang && item.Nam == nam && item.Vao != null && item.Ra != null)
+                    {
+                        dsCong.Add(item);
+                    }
+                }
+                model.MaNV = maNV;
+                model.SoNgayCong = dsCong.Count;
+                model.SoNgayNghi = DateTime.DaysInMonth(nam, thang) - model.SoNgayCong;
+                model.Thang = thang;
+                model.Nam = nam;
+                db.CONG.Add(model);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return View();
+            }
+        }
     }
 }

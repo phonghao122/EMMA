@@ -215,6 +215,7 @@
     <Content Include="Areas\Manager\Views\HomeManager\DsHD.cshtml" />
     <Content Include="Areas\Manager\Views\HomeManager\ThemHD.cshtml" />
     <Content Include="Areas\Manager\Views\HomeManager\CapNhatHD.cshtml" />
+    <Content Include="Areas\Staff\Views\HomeStaff\TongHopCong.cshtml" />
     <None Include="packages.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
