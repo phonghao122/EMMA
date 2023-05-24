@@ -93,7 +93,7 @@
     </nav>
     <div class="container-fluid">
         <div class="horizontal-menu-wrapper">
-            <div style="margin-top:0px" class="header-navbar navbar-expand-sm navbar navbar-horizontal floating-nav avbar-light navbar-shadow menu-border "
+            <div class="header-navbar navbar-expand-sm navbar navbar-horizontal floating-nav avbar-light navbar-shadow menu-border "
                  role="navigation" data-menu="menu-wrapper" data-menu-type="floating-nav">
                 <div class="navbar-header">
                 </div>
@@ -152,11 +152,6 @@
                                 <span data-i18n="Analytics"><h5> Danh Sách Công</h5></span>
                             </a>
                         </li>
-                        @*<li>
-                                <a class="dropdown-item d-flex align-items-center" href="~/Manager/HomeManager/TongHopCong">
-                                    <span data-i18n="Analytics"><h5>Tổng Hợp Công </h5></span>
-                                </a>
-                            </li>*@
 
 
                         <li>
@@ -169,6 +164,23 @@
                             <a class="dropdown-item d-flex align-items-center" href="~/Manager/HomeManager/DsHD">
                                 <span data-i18n="Analytics"><h5> Hợp Đồng</h5></span>
                             </a>
+                        </li>
+                        <li class="dropdown dropdown-submenu" data-menu="dropdown-submenu">
+                            <a class="dropdown-item d-flex align-items-center dropdown-toggle">
+                                <span data-i18n="Invoice"><h5> Chấm Công</h5></span>
+                            </a>
+                            <ul class="dropdown-menu" data-bs-popper="none">
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center" href="~/Manager/HomeManager/DsCong">
+                                        <span data-i18n="Analytics"><h5> Danh Sách Chấm Công</h5></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center" href="~/Manager/HomeManager/TongHopCong">
+                                        <span data-i18n="Analytics"><h5>Tổng Hợp Công </h5></span>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                     </ul>
                 </div>
@@ -184,7 +196,6 @@
     <script src="~/public/app-assets/js/scripts/pages/dashboard-ecommerce.js"></script>
     <link rel="stylesheet" type="text/css" href="~/css/giaodien.css">
 
-
 </body>
 
 
@@ -192,7 +203,7 @@
     <div class="col-md-2">
 
     </div>
-    <div style="margin-top: 150px" class="col-md-8">
+    <div style="margin-top: 160px" class="col-md-8">
         <div class="card">
             <div class="card-heard" style="background-color: darkblue ">
                 <h3 style="margin-top: 25px; color: aliceblue" class="text-center"> Danh Sách Phòng Ban</h3>
@@ -221,7 +232,7 @@
             </div>
             <div class="card-footer text-end">
                 <a href="~/Manager/HomeManager/ThemPB">
-                    <button class="btn btn-info"> Thêm Mới Phòng Ban</button>
+                    <button class="btn btn-primary"> Thêm Mới Phòng Ban</button>
                 </a>
             </div>
         </div>

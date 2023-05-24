@@ -94,7 +94,7 @@
     </nav>
     <div class="container-fluid">
         <div class="horizontal-menu-wrapper">
-            <div style="margin-top:0px" class="header-navbar navbar-expand-sm navbar navbar-horizontal floating-nav avbar-light navbar-shadow menu-border "
+            <div class="header-navbar navbar-expand-sm navbar navbar-horizontal floating-nav avbar-light navbar-shadow menu-border "
                  role="navigation" data-menu="menu-wrapper" data-menu-type="floating-nav">
                 <div class="navbar-header">
                 </div>
@@ -153,11 +153,6 @@
                                 <span data-i18n="Analytics"><h5> Danh Sách Công</h5></span>
                             </a>
                         </li>
-                        @*<li>
-                                <a class="dropdown-item d-flex align-items-center" href="~/Manager/HomeManager/TongHopCong">
-                                    <span data-i18n="Analytics"><h5>Tổng Hợp Công </h5></span>
-                                </a>
-                            </li>*@
 
 
                         <li>
@@ -170,6 +165,23 @@
                             <a class="dropdown-item d-flex align-items-center" href="~/Manager/HomeManager/DsHD">
                                 <span data-i18n="Analytics"><h5> Hợp Đồng</h5></span>
                             </a>
+                        </li>
+                        <li class="dropdown dropdown-submenu" data-menu="dropdown-submenu">
+                            <a class="dropdown-item d-flex align-items-center dropdown-toggle">
+                                <span data-i18n="Invoice"><h5> Chấm Công</h5></span>
+                            </a>
+                            <ul class="dropdown-menu" data-bs-popper="none">
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center" href="~/Manager/HomeManager/DsCong">
+                                        <span data-i18n="Analytics"><h5> Danh Sách Chấm Công</h5></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center" href="~/Manager/HomeManager/TongHopCong">
+                                        <span data-i18n="Analytics"><h5>Tổng Hợp Công </h5></span>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                     </ul>
                 </div>
@@ -188,7 +200,7 @@
 </body>
 
 <div class="row">
-    <div style="margin-top:150px" class="col-12">
+    <div style="margin-top: 160px" class="col-12">
         <div class="card">
             <div class="card-heard" style="background-color:darkblue">
                 <h3 style="margin-top:20px;color:aliceblue " class="card-title mb-1 text-center">Danh Sách Nhân Viên</h3>

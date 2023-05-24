@@ -92,7 +92,7 @@
     </nav>
     <div class="container-fluid">
         <div class="horizontal-menu-wrapper">
-            <div style="margin-top:0px" class="header-navbar navbar-expand-sm navbar navbar-horizontal floating-nav avbar-light navbar-shadow menu-border "
+            <div class="header-navbar navbar-expand-sm navbar navbar-horizontal floating-nav avbar-light navbar-shadow menu-border "
                  role="navigation" data-menu="menu-wrapper" data-menu-type="floating-nav">
                 <div class="navbar-header">
                 </div>
@@ -151,11 +151,6 @@
                                 <span data-i18n="Analytics"><h5> Danh Sách Công</h5></span>
                             </a>
                         </li>
-                        @*<li>
-                                <a class="dropdown-item d-flex align-items-center" href="~/Manager/HomeManager/TongHopCong">
-                                    <span data-i18n="Analytics"><h5>Tổng Hợp Công </h5></span>
-                                </a>
-                            </li>*@
 
 
                         <li>
@@ -168,6 +163,23 @@
                             <a class="dropdown-item d-flex align-items-center" href="~/Manager/HomeManager/DsHD">
                                 <span data-i18n="Analytics"><h5> Hợp Đồng</h5></span>
                             </a>
+                        </li>
+                        <li class="dropdown dropdown-submenu" data-menu="dropdown-submenu">
+                            <a class="dropdown-item d-flex align-items-center dropdown-toggle">
+                                <span data-i18n="Invoice"><h5> Chấm Công</h5></span>
+                            </a>
+                            <ul class="dropdown-menu" data-bs-popper="none">
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center" href="~/Manager/HomeManager/DsCong">
+                                        <span data-i18n="Analytics"><h5> Danh Sách Chấm Công</h5></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center" href="~/Manager/HomeManager/TongHopCong">
+                                        <span data-i18n="Analytics"><h5>Tổng Hợp Công </h5></span>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                     </ul>
                 </div>
@@ -183,20 +195,19 @@
     <script src="~/public/app-assets/js/scripts/pages/dashboard-ecommerce.js"></script>
     <link rel="stylesheet" type="text/css" href="~/css/giaodien.css">
 
-
 </body>
 
 <div class="row">
     <div class="col-md-2">
     </div>
-    <div style="margin-top:150px" class="col-md-8">
+    <div style="margin-top: 160px" class="col-md-8">
         <div class="card">
             <div class="card-heard" style="background-color: darkblue">
                 <h3 style="margin-top: 20px; color: aliceblue " class="card-title mb-1 text-center">Danh Sách Chức Vụ</h3>
             </div>
             <div class="card-body">
                 <div class="text-end">
-                    <a href="~/Manager/HomeManager/ThemCV"> <button class="btn btn-info"> Thêm Chức Vụ</button></a>
+                    <a href="~/Manager/HomeManager/ThemCV"> <button class="btn btn-primary"> Thêm Chức Vụ</button></a>
                 </div>
                 <table style="margin-top:10px" class=" table table-bordered">
                     <thead>
@@ -215,7 +226,7 @@
                                     @Html.DisplayFor(modelItem => item.TenCV)
                                 </td>
                                 <td class="text-center">
-                                    <button style="width:100px" class="btn btn-info">   @Html.ActionLink("Edit", "CapNhatCV", new { id = item.MaCV })  </button>
+                                    <button style="width:100px" class="btn btn-primary">   @Html.ActionLink("Edit", "CapNhatCV", new { id = item.MaCV })  </button>
                                     <button style="width:100px" class="btn btn-warning">   @Html.ActionLink("Delete", "XoaCV", new { id = item.MaCV })  </button>
                                 </td>
                             </tr>
