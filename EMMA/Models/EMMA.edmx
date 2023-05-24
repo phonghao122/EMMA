@@ -109,7 +109,9 @@
           <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <Association Name="FK_CONG_NHANVIEN">
-          <End Role="NHANVIEN" Type="Self.NHANVIEN" Multiplicity="1" />
+          <End Role="NHANVIEN" Type="Self.NHANVIEN" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="CONG" Type="Self.CONG" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="NHANVIEN">
@@ -121,7 +123,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ChamCong_NHANVIEN">
-          <End Role="NHANVIEN" Type="Self.NHANVIEN" Multiplicity="1" />
+          <End Role="NHANVIEN" Type="Self.NHANVIEN" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="ChamCong" Type="Self.ChamCong" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="NHANVIEN">
@@ -145,7 +149,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_HOADONLUONG_NHANVIEN">
-          <End Role="NHANVIEN" Type="Self.NHANVIEN" Multiplicity="1" />
+          <End Role="NHANVIEN" Type="Self.NHANVIEN" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="HOADONLUONG" Type="Self.HOADONLUONG" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="NHANVIEN">
@@ -157,7 +163,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_HOPDONGLAODONG_NHANVIEN">
-          <End Role="NHANVIEN" Type="Self.NHANVIEN" Multiplicity="1" />
+          <End Role="NHANVIEN" Type="Self.NHANVIEN" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="HOPDONGLAODONG" Type="Self.HOPDONGLAODONG" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="NHANVIEN">
