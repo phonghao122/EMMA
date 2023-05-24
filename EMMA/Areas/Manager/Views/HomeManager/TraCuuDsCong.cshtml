@@ -214,50 +214,50 @@
                             <label>Năm</label>
                             <select name="nam" class="form-control">
                                 <option value="0"> </option>
-                               @for(int i=1992; i  <  DateTime.Now.Year +1; i++)
+                                @for (int i = 1992; i < DateTime.Now.Year + 1; i++)
                                 {
-                                   <option value="@i"> @i </option>
+                                    <option value="@i"> @i </option>
                                 }
                             </select>
                         </div>
                     </div>
-                        <div style="margin-top:20px" class="col-md-12">
-                            <table class="table tabel-bordered">
-                                <thead>
-                                <th class="text-center"> Họ Tên Nhân Viên</th>
-                                <th class="text-center"> Số Ngày Công</th>
-                                <th class="text-center"> Số Ngày Nghĩ</th>
-                                </thead>
-                                <tbody>
-                                    @foreach (var item in Model)
-                                    {
-                                        <tr>
-                                            <td class="text-center">
-                                                @Html.DisplayFor(modelItem => item.NHANVIEN.HoTenNV)
-                                            </td>
-                                            <td class="text-center">
-                                                @Html.DisplayFor(modelItem => item.SoNgayCong)
-                                            </td>
-                                            <td class="text-center">
-                                                @Html.DisplayFor(modelItem => item.SoNgayNghi)
-                                            </td>
-                                        </tr>
-                                    }
+                    <div style="margin-top:20px" class="col-md-12">
+                        <table class="table tabel-bordered">
+                            <thead>
+                            <th class="text-center"> Họ Tên Nhân Viên</th>
+                            <th class="text-center"> Số Ngày Công</th>
+                            <th class="text-center"> Số Ngày Nghĩ</th>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td class="text-center">
+                                            @Html.DisplayFor(modelItem => item.NHANVIEN.HoTenNV)
+                                        </td>
+                                        <td class="text-center">
+                                            @Html.DisplayFor(modelItem => item.SoNgayCong)
+                                        </td>
+                                        <td class="text-center">
+                                            @Html.DisplayFor(modelItem => item.SoNgayNghi)
+                                        </td>
+                                    </tr>
+                                }
 
-                                </tbody>
-                            </table>
-                            <div style="margin-top:10px">
-                                <div class="chinhsua">
-                                    Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-                                </div>
-                                <div>
-                                    <button style="height:36px; width:60px" class="btn btn-info">                                      
-                                                @Html.PagedListPager(Model, page => Url.Action("TraCuuDsCong", new { page, currentThang = ViewBag.currentThang, currentNam = ViewBag.currentNam }))
-                                             </button>
-                                </div>
-                                </div>
+                            </tbody>
+                        </table>
+                        <div style="margin-top:10px">
+                            <div class="chinhsua">
+                                Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+                            </div>
+                            <div>
+                                <button style="height:36px; width:60px" class="btn btn-info">
+                                    @Html.PagedListPager(Model, page => Url.Action("TraCuuDsCong", new { page, currentThang = ViewBag.currentThang, currentNam = ViewBag.currentNam }))
+                                </button>
+                            </div>
                         </div>
                     </div>
+                </div>
                     <div class="card-footer">
                         <div style="margin-top:1px" class="text-end">
                             <button type="submit" class="btn btn-info">Tiếp Tục</button>

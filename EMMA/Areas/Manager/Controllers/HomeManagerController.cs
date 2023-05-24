@@ -576,70 +576,41 @@ namespace EMMA.Areas.Manager.Controllers
         }
 
         [HttpPost]
-        public ActionResult TongHopCong(int thang, int nam, CONG model)
+        public ActionResult TongHopCong(int thang, int nam)
         {
-            var a = db.CONG.FirstOrDefault(m => m.MaNV == model.MaNV && m.Thang == model.Thang && m.Nam == model.Nam);
-            if(a != null)
+            CONG model = new CONG();
+            foreach (var a in db.CONG.ToList())
             {
-                db.CONG.Remove(a);
-                var nv = db.ChamCong.FirstOrDefault(m => m.Thang == thang && m.Nam == nam);
-                if (nv != null)
+                if(a.Thang == thang && a.Nam == nam)
                 {
-                    foreach (var i in db.NHANVIEN.ToList())
+                    db.CONG.Remove(a);
+                }
+            }
+            var nv = db.ChamCong.FirstOrDefault(m => m.Thang == thang && m.Nam == nam);
+            if (nv != null)
+            {
+                string maNV = Session["id"].ToString();
+                List<ChamCong> dsCong = new List<ChamCong>();
+                foreach (var item in db.ChamCong.ToList())
+                {
+                    if (item.MaNV == maNV && item.Thang == thang && item.Nam == nam && item.Vao != null && item.Ra != null)
                     {
-                        List<ChamCong> dsCong = new List<ChamCong>();
-                        foreach (var item in db.ChamCong.ToList())
-                        {
-                            if (item.MaNV == i.MaNV && item.Thang == thang && item.Nam == nam && item.Vao != null && item.Ra != null)
-                            {
-                                dsCong.Add(item);
-                            }
-                        }
-                        model.MaNV = i.MaNV;
-                        model.SoNgayCong = dsCong.Count;
-                        model.SoNgayNghi = DateTime.DaysInMonth(nam, thang) - model.SoNgayCong;
-                        model.Thang = thang;
-                        model.Nam = nam;
-                        db.CONG.Add(model);
+                        dsCong.Add(item);
                     }
-                    db.SaveChanges();
-                    return RedirectToAction("TraCuuDsCong");
                 }
-                else
-                {
-                    return View();
-                }
-            }    
+                model.MaNV = maNV;
+                model.SoNgayCong = dsCong.Count;
+                model.SoNgayNghi = DateTime.DaysInMonth(nam, thang) - model.SoNgayCong;
+                model.Thang = thang;
+                model.Nam = nam;
+                db.CONG.Add(model);
+                db.SaveChanges();
+                return RedirectToRoute(new {controller ="HomeStaff", action = "Index"});
+            }
             else
             {
-                var nv = db.ChamCong.FirstOrDefault(m => m.Thang == thang && m.Nam == nam);
-                if (nv != null)
-                {
-                    foreach (var i in db.NHANVIEN.ToList())
-                    {
-                        List<ChamCong> dsCong = new List<ChamCong>();
-                        foreach (var item in db.ChamCong.ToList())
-                        {
-                            if (item.MaNV == i.MaNV && item.Thang == thang && item.Nam == nam && item.Vao != null && item.Ra != null)
-                            {
-                                dsCong.Add(item);
-                            }
-                        }
-                        model.MaNV = i.MaNV;
-                        model.SoNgayCong = dsCong.Count;
-                        model.SoNgayNghi = DateTime.DaysInMonth(nam, thang) - model.SoNgayCong;
-                        model.Thang = thang;
-                        model.Nam = nam;
-                        db.CONG.Add(model);
-                    }
-                    db.SaveChanges();
-                    return RedirectToAction("TraCuuDsCong");
-                }
-                else
-                {
-                    return View();
-                }
-            }    
+                return View();
+            }
         }
 
 
@@ -729,70 +700,41 @@ namespace EMMA.Areas.Manager.Controllers
         [HttpPost]
         public ActionResult TongHopLuong(int thang, int nam, HOADONLUONG model)
         {
-            var a = db.HOADONLUONG.FirstOrDefault(m => m.MaNV == model.MaNV && m.Thang == model.Thang && m.Nam == model.Nam);
-            if(a != null)
+            foreach (var a in db.HOADONLUONG.ToList())
             {
-                db.HOADONLUONG.Remove(a);
-                var nv = db.CONG.FirstOrDefault(m => m.Thang == thang && m.Nam == nam);
-                if (nv != null)
+                if (a.Thang == thang && a.Nam == nam)
                 {
-                    List<CONG> ds = new List<CONG>();
-                    foreach (var item in db.CONG.ToList())
-                    {
-                        if (item.Thang == thang && item.Nam == nam)
-                        {
-                            ds.Add(item);
-                        }
-                    }
-                    foreach (var item in ds)
-                    {
-                        model.BacLuong = item.NHANVIEN.BacLuong;
-                        model.MaNV = item.MaNV;
-                        model.HSPhuCap = HsPhuCap((int)item.SoNgayCong, (int)item.SoNgayNghi, item.Thang, item.Nam, item.MaNV);
-                        var luongCB = db.LUONG.Find(model.BacLuong);
-                        var luongThoaThuan = luongCB.LuongCoBan + luongCB.LuongCoBan * model.HSPhuCap;
-                        model.ThucLinh = (luongThoaThuan / 26) * item.SoNgayCong;
-                        db.HOADONLUONG.Add(model);
-                    }
-                    db.SaveChanges();
-                    return RedirectToAction("DsLuong");
+                    db.HOADONLUONG.Remove(a);
                 }
-                else
+            }
+            var nv = db.CONG.FirstOrDefault(m => m.Thang == thang && m.Nam == nam);
+            if (nv != null)
+            {
+                List<CONG> ds = new List<CONG>();
+                foreach (var item in db.CONG.ToList())
                 {
-                    return View();
+                    if (item.Thang == thang && item.Nam == nam)
+                    {
+                        ds.Add(item);
+                    }
                 }
-            } 
+                foreach (var item in ds)
+                {
+                    model.BacLuong = item.NHANVIEN.BacLuong;
+                    model.MaNV = item.MaNV;
+                    model.HSPhuCap = HsPhuCap((int)item.SoNgayCong, (int)item.SoNgayNghi, item.Thang, item.Nam, item.MaNV);
+                    var luongCB = db.LUONG.Find(model.BacLuong);
+                    var luongThoaThuan = luongCB.LuongCoBan + luongCB.LuongCoBan * model.HSPhuCap;
+                    model.ThucLinh = (luongThoaThuan / 26) * item.SoNgayCong;
+                    db.HOADONLUONG.Add(model);
+                }
+                db.SaveChanges();
+                return RedirectToAction("DsLuong");
+            }
             else
             {
-                var nv = db.CONG.FirstOrDefault(m => m.Thang == thang && m.Nam == nam);
-                if (nv != null)
-                {
-                    List<CONG> ds = new List<CONG>();
-                    foreach (var item in db.CONG.ToList())
-                    {
-                        if (item.Thang == thang && item.Nam == nam)
-                        {
-                            ds.Add(item);
-                        }
-                    }
-                    foreach (var item in ds)
-                    {
-                        model.BacLuong = item.NHANVIEN.BacLuong;
-                        model.MaNV = item.MaNV;
-                        model.HSPhuCap = HsPhuCap((int)item.SoNgayCong, (int)item.SoNgayNghi, item.Thang, item.Nam, item.MaNV);
-                        var luongCB = db.LUONG.Find(model.BacLuong);
-                        var luongThoaThuan = luongCB.LuongCoBan + luongCB.LuongCoBan * model.HSPhuCap;
-                        model.ThucLinh = (luongThoaThuan / 26) * item.SoNgayCong;
-                        db.HOADONLUONG.Add(model);
-                    }
-                    db.SaveChanges();
-                    return RedirectToAction("DsLuong");
-                }
-                else
-                {
-                    return View();
-                }
-            }    
+                return View();
+            }
         }
 
         //Tìm Kiếm và Phân Trang
