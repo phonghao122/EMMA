@@ -206,7 +206,6 @@
     <Content Include="Models\EMMA.edmx.diagram">
       <DependentUpon>EMMA.edmx</DependentUpon>
     </Content>
-    <Content Include="Areas\Manager\Views\HomeManager\TongHopCong.cshtml" />
     <Content Include="Areas\Manager\Views\HomeManager\TongHopLuong.cshtml" />
     <Content Include="Areas\Manager\Views\HomeManager\TraCuuDsCong.cshtml" />
     <Content Include="Areas\Manager\Views\HomeManager\DsCV.cshtml" />
@@ -216,6 +215,8 @@
     <Content Include="Areas\Manager\Views\HomeManager\ThemHD.cshtml" />
     <Content Include="Areas\Manager\Views\HomeManager\CapNhatHD.cshtml" />
     <Content Include="Areas\Staff\Views\HomeStaff\TongHopCong.cshtml" />
+    <Content Include="Areas\Manager\Views\HomeManager\TongHopCong.cshtml" />
+    <Content Include="Areas\Manager\Views\HomeManager\DsCong.cshtml" />
     <None Include="packages.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />

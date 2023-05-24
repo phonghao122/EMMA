@@ -605,7 +605,7 @@ namespace EMMA.Areas.Manager.Controllers
                 model.Nam = nam;
                 db.CONG.Add(model);
                 db.SaveChanges();
-                return RedirectToRoute(new {controller ="HomeStaff", action = "Index"});
+                return RedirectToAction("Index");
             }
             else
             {
@@ -613,7 +613,52 @@ namespace EMMA.Areas.Manager.Controllers
             }
         }
 
-
+        public ActionResult DsCong(int? currentNam, int? currentThang, int? nam, int? thang, int? page)
+        {
+            if (Session["user"] == null)
+            {
+                return Redirect("~/Login/Login");
+            }
+            else
+            {
+                var dsLuong = new List<ChamCong>();
+                if (thang != null && nam != null)
+                {
+                    page = 1;
+                }
+                else
+                {
+                    thang = currentThang;
+                    nam = currentNam;
+                }
+                string id = Session["id"].ToString();
+                if (string.IsNullOrEmpty(thang.ToString()) || string.IsNullOrEmpty(nam.ToString()))
+                {
+                    foreach (var cong in db.ChamCong.ToList())
+                    {
+                        if (cong.MaNV == id && cong.Thang == DateTime.Now.Month && cong.Nam == DateTime.Now.Year)
+                        {
+                            dsLuong.Add(cong);
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (var cong in db.ChamCong.ToList())
+                    {
+                        if (cong.MaNV == id && cong.Thang == thang && cong.Nam == nam)
+                        {
+                            dsLuong.Add(cong);
+                        }
+                    }
+                }
+                ViewBag.currentThang = thang;
+                ViewBag.currentNam = nam;
+                int pageSize = 10;
+                int pageNumber = (page ?? 1);
+                return View(dsLuong.ToPagedList(pageNumber, pageSize));
+            }
+        }
 
         //Lương
         public ActionResult DsLuong(int? currentNam, int? currentThang, int? nam, int? thang, int? page)
