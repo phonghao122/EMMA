@@ -12,7 +12,7 @@ namespace EMMA.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class HOADONLUONG
+    public partial class CHITIETLUONG
     {
         public string MaNV { get; set; }
         public int Thang { get; set; }

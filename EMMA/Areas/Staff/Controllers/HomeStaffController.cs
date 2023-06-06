@@ -4,7 +4,9 @@ using System.Data.Entity.Core.Metadata.Edm;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
 using EMMA.Models;
+using PagedList;
 
 namespace EMMA.Areas.Staff.Controllers
 {
@@ -14,9 +16,17 @@ namespace EMMA.Areas.Staff.Controllers
         // GET: Staff/HomeStaff
         public ActionResult Index()
         {
-            return View();
+            if (Session["user"] == null)
+            {
+                return Redirect("~/Login/Login");
+            }
+            else
+            {
+                return View();
+            }
         }
 
+        //Thông Tin Cá Nhân
         public ActionResult ThongTinCaNhan()
         {
             if (Session["user"] == null)
@@ -92,7 +102,9 @@ namespace EMMA.Areas.Staff.Controllers
             
         }
 
-        public ActionResult DsCong()
+
+        //Công
+        public ActionResult DsCong(int? currentNam, int? currentThang, int? nam, int? thang, int? page)
         {
             if (Session["user"] == null)
             {
@@ -100,12 +112,49 @@ namespace EMMA.Areas.Staff.Controllers
             }
             else
             {
-                List<ChamCong> chamCongs = db.ChamCong.ToList();
-                return View(chamCongs);
+                var dsLuong = new List<ChamCong>();
+                if (thang != null && nam != null)
+                {
+                    page = 1;
+                }
+                else
+                {
+                    thang = currentThang;
+                    nam = currentNam;
+                }
+                string id = Session["id"].ToString();
+                if (string.IsNullOrEmpty(thang.ToString()) || string.IsNullOrEmpty(nam.ToString()))
+                {
+                    foreach(var cong in db.ChamCong.ToList())
+                    {
+                        if(cong.MaNV == id && cong.Thang == DateTime.Now.Month && cong.Nam == DateTime.Now.Year)
+                        {
+                            dsLuong.Add(cong);
+                        }    
+                    }    
+                }
+                else
+                {
+                    foreach (var cong in db.ChamCong.ToList())
+                    {
+                        if (cong.MaNV == id && cong.Thang == thang && cong.Nam == nam)
+                        {
+                            dsLuong.Add(cong);
+                        }
+                    }
+                }
+                ViewBag.currentThang = thang;
+                ViewBag.currentNam = nam;
+                int pageSize = 10;
+                int pageNumber = (page ?? 1);
+                return View(dsLuong.ToPagedList(pageNumber, pageSize));
             }
         }
 
-        public ActionResult ChamCong()
+
+
+        //Tong Hop Cong
+        public ActionResult TongHopCong()
         {
             if (Session["user"] == null)
             {
@@ -118,80 +167,40 @@ namespace EMMA.Areas.Staff.Controllers
         }
 
         [HttpPost]
-        public ActionResult ChamCong(ChamCong model)
+        public ActionResult TongHopCong(int thang, int nam)
         {
-
-            bool faceid = true;
-            model.Ngay = (int)DateTime.Now.Day;
-            model.Thang = (int)DateTime.Now.Month;
-            model.Nam = (int)DateTime.Now.Year;
-            model.MaNV = Session["id"].ToString();
-            if(model.Vao == null)
+            CONG model = new CONG();
+            foreach (var a in db.CONG.ToList())
             {
-                if (faceid == true)
+                if (a.Thang == thang && a.Nam == nam)
                 {
-                    model.Vao = DateTime.Now.ToShortTimeString();
-                    db.ChamCong.Add(model);
-                    db.SaveChanges();
-                    return RedirectToAction("DsCong");
-                }
-                else
-                {
-                    Session["Chua Cham Cong"] = "Yes";
-                    return View(model);
+                    db.CONG.Remove(a);
                 }
             }
-            else
+            var nv = db.ChamCong.FirstOrDefault(m => m.Thang == thang && m.Nam == nam);
+            if (nv != null)
             {
-                Session["Da Cham Cong"] = "Yes";
-                return RedirectToAction("DsCong");
-            }
-        }
-
-        public ActionResult ChamCongRa(string id)
-        {
-            if (Session["user"] == null)
-            {
-                return Redirect("~/Login/Login");
-            }
-            else
-            {
-                var nv = db.ChamCong.FirstOrDefault(m => m.MaNV == id && m.Ngay ==(int) DateTime.Now.Day && m.Thang == (int)DateTime.Now.Month && m.Nam == (int)DateTime.Now.Year);
-                return View(nv);
-            }
-        }
-
-        [HttpPost]
-        public ActionResult ChamCongRa(ChamCong model)
-        {
-            bool faceid = true;
-            var nv = db.ChamCong.FirstOrDefault(m => m.MaNV == model.MaNV && m.Ngay == model.Ngay && m.Thang == model.Thang && m.Nam == model.Nam);
-            if (nv.Ra == null)
-            {
-                if(nv.Ngay == DateTime.Now.Day && nv.Thang == DateTime.Now.Month && nv.Nam == DateTime.Now.Year)
+                string maNV = Session["id"].ToString();
+                List<ChamCong> dsCong = new List<ChamCong>();
+                foreach (var item in db.ChamCong.ToList())
                 {
-                    if (faceid == true)
+                    if (item.MaNV == maNV && item.Thang == thang && item.Nam == nam && item.Vao != null && item.Ra != null)
                     {
-                        model.Ra = DateTime.Now.ToShortTimeString();
-                        nv.Ra = model.Ra;
-                        db.SaveChanges();
-                        return RedirectToAction("DsCong");
-                    }
-                    else
-                    {
-                        Session["Chua Cham Cong"] = "Yes";
-                        return View(model);
+                        dsCong.Add(item);
                     }
                 }
-                else
-                {
-                    return View();
-                }
+                model.MaNV = maNV;
+                model.SoNgayCong = dsCong.Count;
+                model.SoNgayNghi = DateTime.DaysInMonth(nam, thang) - model.SoNgayCong;
+                model.Thang = thang;
+                model.Nam = nam;
+                db.CONG.Add(model);
+                db.SaveChanges();
+                return RedirectToAction("Index");
             }
             else
             {
-                Session["Da Cham Cong"] = "Yes";
-                return RedirectToAction("DsCong");
+                return View();
             }
         }
     }

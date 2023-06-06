@@ -1,7 +1,7 @@
-﻿@model EMMA.Models.NHANVIEN
+﻿@model IEnumerable<EMMA.Models.CHUCVU>
 
 @{
-    ViewBag.Title = "ChiTietNV";
+    ViewBag.Title = "DsCV";
     Layout = "~/Views/Shared/_Layout.cshtml";
     EMMA.Models.NHANVIEN nv = (EMMA.Models.NHANVIEN)Session["user"];
 }
@@ -193,88 +193,46 @@
     <script src="~/public/app-assets/js/core/app-menu.js"></script>
     <script src="~/public/app-assets/js/core/app.js"></script>
     <script src="~/public/app-assets/js/scripts/pages/dashboard-ecommerce.js"></script>
-    
+    <link rel="stylesheet" type="text/css" href="~/css/giaodien.css">
 
 </body>
 
-
 <div class="row">
-    <div class="col-md-2"></div>
+    <div class="col-md-2">
+    </div>
     <div style="margin-top: 160px" class="col-md-8">
         <div class="card">
             <div class="card-heard" style="background-color: darkblue">
-                <h3 style="margin-top: 25px; color: aliceblue " class="text-center">Thông Tin Nhân Viên</h3>
+                <h3 style="margin-top: 20px; color: aliceblue " class="card-title mb-1 text-center">Danh Sách Chức Vụ</h3>
             </div>
             <div class="card-body">
-                <table class="table table-bordered">
+                <div class="text-end">
+                    <a href="~/Manager/HomeManager/ThemCV"> <button class="btn btn-primary"> Thêm Chức Vụ</button></a>
+                </div>
+                <table style="margin-top:10px" class=" table table-bordered">
+                    <thead>
+                    <th class="text-center"> Mã Chức Vụ </th>
+                    <th class="text-center"> Tên Chức Vụ</th>
+                    <th class="text-center"> Acction </th>
+                    </thead>
                     <tbody>
-                        <tr>
-                            <th> Avata</th>
-                            <th class=" text-center"><img src="@Model.Avt" style="width:100px;height:100px" /></th>
-                        </tr>
-                        <tr>
-                            <th> Họ Và Tên</th>
-                            <th>  @Html.DisplayFor(model => model.HoTenNV)</th>
-                        </tr>
-                        <tr>
-                            <th> Giới Tính</th>
-                            <th> @Html.DisplayFor(model => model.GioiTinh)</th>
-                        </tr>
-                        <tr>
-                            <th> Username</th>
-                            <th>  @Html.DisplayFor(model => model.Username)</th>
-                        </tr>
-                        <tr>
-                            <th> Ngày Sinh</th>
-                            <th> @Html.DisplayFor(model => model.NgaySinh)</th>
-                        </tr>
-                        <tr>
-                            <th> Địa Chỉ</th>
-                            <th>  @Html.DisplayFor(model => model.DiaChi)</th>
-                        </tr>
-                        <tr>
-                            <th> Số Điện Thoại</th>
-                            <th> @Html.DisplayFor(model => model.SDT)</th>
-                        </tr>
-                        <tr>
-                            <th> Email </th>
-                            <th> @Html.DisplayFor(model => model.Email)</th>
-                        </tr>
-                        <tr>
-                            <th> Quê Quán </th>
-                            <th>  @Html.DisplayFor(model => model.QueQuan)</th>
-                        </tr>
-                        <tr>
-                            <th>Căng Cước Công Dân </th>
-                            <th> @Html.DisplayFor(model => model.CCCD)</th>
-                        </tr>
-                        <tr>
-                            <th> Trình Độ Học Vấn </th>
-                            <th> @Html.DisplayFor(model => model.TrinhDoHocVan)</th>
-                        </tr>
-                        <tr>
-                            <th> Tên Công Việc </th>
-                            <th> @Html.DisplayFor(model => model.CHUCVU.TenCV)</th>
-                        </tr>
-                        <tr>
-                            <th> Bậc Lương </th>
-                            <th> @Html.DisplayFor(model => model.LUONG.BacLuong)</th>
-                        </tr>
-                        <tr>
-                            <th> Tên Phòng Ban </th>
-                            <th> @Html.DisplayFor(model => model.PHONGBAN.TenPB)</th>
-                        </tr>
-
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="text-center">
+                                    @Html.DisplayFor(modelItem => item.MaCV)
+                                </td>
+                                <td class="text-center">
+                                    @Html.DisplayFor(modelItem => item.TenCV)
+                                </td>
+                                <td class="text-center">
+                                    <button style="width:100px" class="btn btn-info">   @Html.ActionLink("Edit", "CapNhatCV", new { id = item.MaCV })  </button>
+                                    <button style="width:100px" class="btn btn-warning">   @Html.ActionLink("Delete", "XoaCV", new { id = item.MaCV })  </button>
+                                </td>
+                            </tr>
+                        }
                     </tbody>
                 </table>
-                <div class="card-footer">
-                    <div class="text-end">
-                        <button class="btn btn-warning"> @Html.ActionLink("Back to List", "DanhSachNV") </button>
-                        <button class="btn btn-primary "> @Html.ActionLink("Edit", "CapNhatNV", new { id = Model.MaNV }) </button>
-                    </div>
-
-                </div>
             </div>
         </div>
-    </div>
-</div>
+

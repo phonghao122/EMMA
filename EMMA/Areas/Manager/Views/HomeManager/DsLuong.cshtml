@@ -1,9 +1,13 @@
-﻿@model IEnumerable<EMMA.Models.HOADONLUONG>
+﻿@model PagedList.IPagedList<EMMA.Models.CHITIETLUONG>
+@using PagedList;
+@using PagedList.Mvc;
 
 @{
     ViewBag.Title = "DsLuong";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    EMMA.Models.NHANVIEN nv = (EMMA.Models.NHANVIEN)Session["user"];
 }
+
 <body class="horizontal-layout horizontal-menu  navbar-floating footer-static" data-open="hover"
       data-menu="horizontal-menu" data-col="">
     <nav class="header-navbar navbar-expand-lg navbar navbar-fixed align-items-center navbar-shadow navbar-brand-center"
@@ -12,7 +16,7 @@
             <ul class="nav navbar-nav">
                 <li class="nav-item">
                     <a class="navbar-brand"
-                       href="/html/ltr/horizontal-menu-template/index.html">
+                       href="~/Manager/HomeManager/Index">
                         <h2 class="brand-text mb-0">EMMA</h2>
                     </a>
                 </li>
@@ -71,10 +75,10 @@
                        id="dropdown-user" href="#" data-bs-toggle="dropdown" aria-haspopup="true"
                        aria-expanded="false">
                         <div class="user-nav d-sm-flex d-none">
-                            <span class="user-name fw-bolder">John Doe</span><span class="user-status">Admin</span>
+                            <span class="user-name fw-bolder">@nv.HoTenNV</span><span class="user-status">@nv.CHUCVU.TenCV</span>
                         </div><span class="avatar">
                             <img class="round"
-                                 src="~/public/app-assets/images/portrait/small/avatar-s-11.jpg" alt="avatar"
+                                 src="@nv.Avt" alt="avatar"
                                  height="40" width="40">
                         </span>
                     </a>
@@ -90,62 +94,99 @@
     </nav>
     <div class="container-fluid">
         <div class="horizontal-menu-wrapper">
-            <div style="margin-top:0px" class="header-navbar navbar-expand-sm navbar navbar-horizontal floating-nav avbar-light navbar-shadow menu-border "
+            <div class="header-navbar navbar-expand-sm navbar navbar-horizontal floating-nav avbar-light navbar-shadow menu-border "
                  role="navigation" data-menu="menu-wrapper" data-menu-type="floating-nav">
                 <div class="navbar-header">
                 </div>
                 <div class="shadow-bottom"></div>
                 <div class="navbar-container main-menu-content" data-menu="menu-container">
                     <ul class="nav navbar-nav" id="main-menu-navigation" data-menu="menu-navigation">
-                        <li data-menu="">
+                        <li>
                             <a class="dropdown-item d-flex align-items-center" href="~/Manager/HomeManager/Index" data-bs-toggle="" data-i18n="Dashboards">
-                                <span data-i18n="Analytics"><h5>Trang Chủ</h5></span>
+                                <span><h5>Trang Chủ</h5></span>
                             </a>
                         </li>
 
-                        <li data-menu="">
-                            <a class="dropdown-item d-flex align-items-center" href="~/Manager/HomeManager/DanhSachNV" data-bs-toggle="" data-i18n="Analytics">
-                                <span data-i18n="Analytics"><h5>Danh Sách Nhân Viên</h5></span>
+                        <li class="dropdown dropdown-submenu">
+                            <a class="dropdown-item d-flex align-items-center dropdown-toggle">
+                                <span data-i18n="Invoice"><h5> Nhân Viên</h5></span>
                             </a>
+                            <ul class="dropdown-menu" data-bs-popper="none">
+                                <li data-menu="">
+                                    <a class="dropdown-item d-flex align-items-center" href="~/Manager/HomeManager/DanhSachNV">
+                                        <span data-i18n="Analytics"><h5> Danh Sách Nhân Viên</h5></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center" href="~/Manager/HomeManager/ThemMoiNV">
+                                        <span data-i18n="Analytics"><h5>Thêm Nhân Viên </h5></span>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
 
-                        <li data-menu="">
+                        <li>
                             <a class="dropdown-item d-flex align-items-center" href="~/Manager/HomeManager/DanhSachPB" data-bs-toggle="" data-i18n="Analytics">
                                 <span data-i18n="Analytics"><h5>Phòng Ban</h5></span>
                             </a>
                         </li>
 
-                        <li data-menu="">
-                            <a class="dropdown-item d-flex align-items-center" href="~/Manager/HomeManager/DsLuong" data-bs-toggle="" data-i18n="Analytics">
-                                <span data-i18n="Analytics"><h5>Danh Sách Lương</h5></span>
+                        <li class="dropdown dropdown-submenu" data-menu="dropdown-submenu">
+                            <a class="dropdown-item d-flex align-items-center dropdown-toggle">
+                                <span data-i18n="Invoice"><h5> Lương</h5></span>
+                            </a>
+                            <ul class="dropdown-menu" data-bs-popper="none">
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center" href="~/Manager/HomeManager/DsLuong">
+                                        <span data-i18n="Analytics"><h5> Danh Sách Lương</h5></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center" href="~/Manager/HomeManager/TongHopLuong">
+                                        <span data-i18n="Analytics"><h5>Tổng Hợp Lương </h5></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" href="~/Manager/HomeManager/TraCuuDsCong">
+                                <span data-i18n="Analytics"><h5> Danh Sách Công</h5></span>
                             </a>
                         </li>
 
-                        <li data-menu="">
-                            <a class="dropdown-item d-flex align-items-center" href="~/Manager/HomeManager/TongHopLuong" data-bs-toggle="" data-i18n="Analytics">
-                                <span data-i18n="Analytics"><h5>Tổng Hợp Lương</h5></span>
+
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" href="~/Manager/HomeManager/DsCV">
+                                <span data-i18n="Analytics"><h5> Chức Vụ</h5></span>
                             </a>
                         </li>
 
-                        <li data-menu="">
-                            <a class="dropdown-item d-flex align-items-center" href="/Manager/HomeManager/TraCuuDsCong" data-bs-toggle="" data-i18n="Analytics">
-                                <span data-i18n="Analytics"><h5>Danh Sách Công</h5></span>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" href="~/Manager/HomeManager/DsHD">
+                                <span data-i18n="Analytics"><h5> Hợp Đồng</h5></span>
                             </a>
                         </li>
-
-                        <li data-menu="">
-                            <a class="dropdown-item d-flex align-items-center" href="~/Manager/HomeManager/TongHopCong" data-bs-toggle="" data-i18n="Analytics">
-                                <span data-i18n="Analytics"><h5>Tổng Hợp Công</h5></span>
+                        <li class="dropdown dropdown-submenu" data-menu="dropdown-submenu">
+                            <a class="dropdown-item d-flex align-items-center dropdown-toggle">
+                                <span data-i18n="Invoice"><h5> Chấm Công</h5></span>
                             </a>
+                            <ul class="dropdown-menu" data-bs-popper="none">
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center" href="~/Manager/HomeManager/DsCong">
+                                        <span data-i18n="Analytics"><h5> Danh Sách Chấm Công</h5></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center" href="~/Manager/HomeManager/TongHopCong">
+                                        <span data-i18n="Analytics"><h5>Tổng Hợp Công </h5></span>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
-
                     </ul>
                 </div>
             </div>
         </div>
-
-
-
     </div>
 
     <script src="~/public/app-assets/vendors/js/vendors.min.js"></script>
@@ -154,115 +195,49 @@
     <script src="~/public/app-assets/js/core/app-menu.js"></script>
     <script src="~/public/app-assets/js/core/app.js"></script>
     <script src="~/public/app-assets/js/scripts/pages/dashboard-ecommerce.js"></script>
-
-
+    <link rel="stylesheet" type="text/css" href="~/css/giaodien.css">
 
 </body>
-@{
-    if (ViewBag.df == "ok")
-    {
 
 
-        <div class="row">
-            <div class="col-md-1">
-            </div>
-            <div style="margin-top:150px" class="col-md-10">
-                <div class="card">
-                    <div>
-                        @using (Html.BeginForm())
-                        {
-                            @Html.AntiForgeryToken()
 
-                            <div class="form-horizontal">
-                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                                <label>Thang</label>
-                                <input type="text" name="thang" />
-                                <label>Nam</label>
-                                <input type="text" name="nam" />
-
-                                <div class="form-group">
-                                    <div class="col-md-offset-2 col-md-10">
-                                        <input type="submit" value="Tiếp Tục" class="btn btn-default" />
-                                    </div>
-                                </div>
-                            </div>
-                        }
-                    </div>
-                    <div class="card-heard" style="background-color:aqua">
-                        <h3 style="margin-top:20px " class="card-title mb-1 text-center">Danh Sách Lương</h3>
-                    </div>
-                    <div class="card-body">
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th class="text-center"> Họ Tên Nhân Viên</th>
-                                    <th class="text-center"> Lương Cơ Bản</th>
-                                    <th class="text-center"> Hệ Số Lương</th>
-                                    <th class="text-center"> Thực Lĩnh</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var item in Model)
-                                {
-                                    <tr>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.NHANVIEN.HoTenNV)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.LUONG.LuongCoBan)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.LUONG.HSLuong)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.ThucLinh)
-                                        </td>
-                                    </tr>
-                                }
-                            </tbody>
-
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    }
-    else
-    {
-
-
-        if (ViewBag.tc == "ok")
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+        @using (Html.BeginForm("DsLuong", "HomeManager"))
         {
-
-            <div class="row">
-                <div class="col-md-1">
+            @Html.AntiForgeryToken()
+            <div style="margin-top:160px" class="card">
+                <div class="card-heard" style="background-color: darkblue">
+                    <h3 style="margin-top: 20px; color: aliceblue " class="card-title mb-1 text-center">Danh Sách Lương</h3>
                 </div>
-                <div style="margin-top:150px" class="col-md-10">
-                    <div class="card">
-                        <div>
-                            @using (Html.BeginForm())
-                            {
-                                @Html.AntiForgeryToken()
-
-                                <div class="form-horizontal">
-                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                                    <label>Thang</label>
-                                    <input type="text" name="thang" />
-                                    <label>Nam</label>
-                                    <input type="text" name="nam" />
-
-                                    <div class="form-group">
-                                        <div class="col-md-offset-2 col-md-10">
-                                            <input type="submit" value="Tiếp Tục" class="btn btn-default" />
-                                        </div>
-                                    </div>
-                                </div>
-                            }
+                <div class="card-body">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Tháng</label>
+                            <select class="form-control">
+                                <option value="0"></option>
+                                @for (int i = 1; i < 13; i++)
+                                {
+                                    <option value="@i">@i</option>
+                                }
+                            </select>
                         </div>
-                        <div class="card-heard" style="background-color:aqua">
-                            <h3 style="margin-top:20px " class="card-title mb-1 text-center">Danh Sách Lương</h3>
+                        <div class="col-md-6">
+                            <label>Năm</label>
+                            <select class="form-control">
+                                <option value="0"> </option>
+                                @for (int i = 1992; i < DateTime.Now.Year + 1; i++)
+                                {
+                                    <option value="@i"> @i </option>
+                                }
+                            </select>
                         </div>
-                        <div class="card-body">
+                        <div style="margin-top:10px" class="text-center">
+                            <button style="width:200px" type="submit" class="btn btn-primary">Tiếp Tục</button>
+                        </div>
+                        <div style="margin-top:20px">
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
@@ -291,16 +266,23 @@
                                         </tr>
                                     }
                                 </tbody>
-
                             </table>
+                            <div style="margin-top:10px">
+                                <div class="chinhsua">
+                                    Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+                                </div>
+                                <div>
+                                    <button style="height:36px; width:60px" class="btn btn-info">
+                                        @Html.PagedListPager(Model, page => Url.Action("DsLuong", new { page, currentThang = ViewBag.currentThang, currentNam = ViewBag.currentNam }))
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         }
-        else
-        {
-            <script>alert("Không tìm thấy")</script>
-        }
-    }
-}
+    </div>
+</div>
+
+

@@ -1,9 +1,10 @@
-﻿@model EMMA.Models.NHANVIEN
+﻿@model EMMA.Models.HOPDONGLAODONG
 
 @{
-    ViewBag.Title = "ChiTietNV";
+    ViewBag.Title = "ThemHD";
     Layout = "~/Views/Shared/_Layout.cshtml";
     EMMA.Models.NHANVIEN nv = (EMMA.Models.NHANVIEN)Session["user"];
+    EMMA.Models.EMMAEntities db = new EMMA.Models.EMMAEntities();
 }
 
 <body class="horizontal-layout horizontal-menu  navbar-floating footer-static" data-open="hover"
@@ -193,7 +194,7 @@
     <script src="~/public/app-assets/js/core/app-menu.js"></script>
     <script src="~/public/app-assets/js/core/app.js"></script>
     <script src="~/public/app-assets/js/scripts/pages/dashboard-ecommerce.js"></script>
-    
+    <link rel="stylesheet" type="text/css" href="~/css/giaodien.css">
 
 </body>
 
@@ -201,80 +202,47 @@
 <div class="row">
     <div class="col-md-2"></div>
     <div style="margin-top: 160px" class="col-md-8">
-        <div class="card">
-            <div class="card-heard" style="background-color: darkblue">
-                <h3 style="margin-top: 25px; color: aliceblue " class="text-center">Thông Tin Nhân Viên</h3>
-            </div>
-            <div class="card-body">
-                <table class="table table-bordered">
-                    <tbody>
-                        <tr>
-                            <th> Avata</th>
-                            <th class=" text-center"><img src="@Model.Avt" style="width:100px;height:100px" /></th>
-                        </tr>
-                        <tr>
-                            <th> Họ Và Tên</th>
-                            <th>  @Html.DisplayFor(model => model.HoTenNV)</th>
-                        </tr>
-                        <tr>
-                            <th> Giới Tính</th>
-                            <th> @Html.DisplayFor(model => model.GioiTinh)</th>
-                        </tr>
-                        <tr>
-                            <th> Username</th>
-                            <th>  @Html.DisplayFor(model => model.Username)</th>
-                        </tr>
-                        <tr>
-                            <th> Ngày Sinh</th>
-                            <th> @Html.DisplayFor(model => model.NgaySinh)</th>
-                        </tr>
-                        <tr>
-                            <th> Địa Chỉ</th>
-                            <th>  @Html.DisplayFor(model => model.DiaChi)</th>
-                        </tr>
-                        <tr>
-                            <th> Số Điện Thoại</th>
-                            <th> @Html.DisplayFor(model => model.SDT)</th>
-                        </tr>
-                        <tr>
-                            <th> Email </th>
-                            <th> @Html.DisplayFor(model => model.Email)</th>
-                        </tr>
-                        <tr>
-                            <th> Quê Quán </th>
-                            <th>  @Html.DisplayFor(model => model.QueQuan)</th>
-                        </tr>
-                        <tr>
-                            <th>Căng Cước Công Dân </th>
-                            <th> @Html.DisplayFor(model => model.CCCD)</th>
-                        </tr>
-                        <tr>
-                            <th> Trình Độ Học Vấn </th>
-                            <th> @Html.DisplayFor(model => model.TrinhDoHocVan)</th>
-                        </tr>
-                        <tr>
-                            <th> Tên Công Việc </th>
-                            <th> @Html.DisplayFor(model => model.CHUCVU.TenCV)</th>
-                        </tr>
-                        <tr>
-                            <th> Bậc Lương </th>
-                            <th> @Html.DisplayFor(model => model.LUONG.BacLuong)</th>
-                        </tr>
-                        <tr>
-                            <th> Tên Phòng Ban </th>
-                            <th> @Html.DisplayFor(model => model.PHONGBAN.TenPB)</th>
-                        </tr>
-
-                    </tbody>
-                </table>
-                <div class="card-footer">
-                    <div class="text-end">
-                        <button class="btn btn-warning"> @Html.ActionLink("Back to List", "DanhSachNV") </button>
-                        <button class="btn btn-primary "> @Html.ActionLink("Edit", "CapNhatNV", new { id = Model.MaNV }) </button>
+        <form method="post">
+            <div class="card">
+                <div class="card-heard" style="background-color: darkblue">
+                    <h3 style="margin-top: 20px; color: aliceblue " class="card-title mb-1 text-center">Thêm Hợp Đồng Lao Động</h3>
+                </div>
+                <div class="card-body">
+                    <label> Mã Hợp Đồng</label>
+                    <div class="col-md-12">
+                        @Html.EditorFor(model => model.MaHD, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.MaHD, "", new { @class = "text-danger" })
                     </div>
-
+                    <label> Mã Nhân Viên</label>
+                    <div class="col-md-12">
+                        <select class="form-control" name="MaNV">
+                            @foreach (var n in db.NHANVIEN.ToList())
+                            {
+                                <option value="@n.MaNV">@n.MaNV : @n.HoTenNV</option>
+                            }
+                        </select>
+                    </div>
+                    <label> Loại Hợp Đồng</label>
+                    <div class="col-md-12">
+                        @Html.EditorFor(model => model.LoaiHD, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.LoaiHD, "", new { @class = "text-danger" })
+                    </div>
+                    <label> Ngày Ký</label>
+                    <div class="col-md-12">
+                        @Html.EditorFor(model => model.NgayKy, new { htmlAttributes = new { @class = "form-control", type = "date" } })
+                        @Html.ValidationMessageFor(model => model.NgayKy, "", new { @class = "text-danger" })
+                    </div>
+                    <label> Ngày Hết Hạn</label>
+                    <div class="col-md-12">
+                        @Html.EditorFor(model => model.NgayHetHan, new { htmlAttributes = new { @class = "form-control", type = "date" } })
+                        @Html.ValidationMessageFor(model => model.NgayHetHan, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="card-footer text-end">
+                    <button class="btn btn-warning"> @Html.ActionLink("Back to List", "DsHD")</button>
+                    <button type="submit" class="btn btn-primary"> Thêm Mới </button>
                 </div>
             </div>
-        </div>
+        </form>
     </div>
 </div>

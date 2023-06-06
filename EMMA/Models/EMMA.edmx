@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="EMMAModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="EMMAModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="CONG">
           <Key>
             <PropertyRef Name="MaNV" />
@@ -31,14 +31,7 @@
           <Property Name="Vao" Type="varchar" MaxLength="50" />
           <Property Name="Ra" Type="varchar" MaxLength="50" />
         </EntityType>
-        <EntityType Name="CHUCVU">
-          <Key>
-            <PropertyRef Name="MaCV" />
-          </Key>
-          <Property Name="MaCV" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="TenCV" Type="nvarchar" MaxLength="50" />
-        </EntityType>
-        <EntityType Name="HOADONLUONG">
+        <EntityType Name="CHITIETLUONG">
           <Key>
             <PropertyRef Name="MaNV" />
             <PropertyRef Name="Thang" />
@@ -50,6 +43,13 @@
           <Property Name="BacLuong" Type="varchar" MaxLength="50" />
           <Property Name="HSPhuCap" Type="float" />
           <Property Name="ThucLinh" Type="float" />
+        </EntityType>
+        <EntityType Name="CHUCVU">
+          <Key>
+            <PropertyRef Name="MaCV" />
+          </Key>
+          <Property Name="MaCV" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="TenCV" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="HOPDONGLAODONG">
           <Key>
@@ -109,7 +109,9 @@
           <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <Association Name="FK_CONG_NHANVIEN">
-          <End Role="NHANVIEN" Type="Self.NHANVIEN" Multiplicity="1" />
+          <End Role="NHANVIEN" Type="Self.NHANVIEN" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="CONG" Type="Self.CONG" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="NHANVIEN">
@@ -121,7 +123,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ChamCong_NHANVIEN">
-          <End Role="NHANVIEN" Type="Self.NHANVIEN" Multiplicity="1" />
+          <End Role="NHANVIEN" Type="Self.NHANVIEN" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="ChamCong" Type="Self.ChamCong" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="NHANVIEN">
@@ -134,30 +138,34 @@
         </Association>
         <Association Name="FK_HOADONLUONG_LUONG">
           <End Role="LUONG" Type="Self.LUONG" Multiplicity="0..1" />
-          <End Role="HOADONLUONG" Type="Self.HOADONLUONG" Multiplicity="*" />
+          <End Role="CHITIETLUONG" Type="Self.CHITIETLUONG" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="LUONG">
               <PropertyRef Name="BacLuong" />
             </Principal>
-            <Dependent Role="HOADONLUONG">
+            <Dependent Role="CHITIETLUONG">
               <PropertyRef Name="BacLuong" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_HOADONLUONG_NHANVIEN">
-          <End Role="NHANVIEN" Type="Self.NHANVIEN" Multiplicity="1" />
-          <End Role="HOADONLUONG" Type="Self.HOADONLUONG" Multiplicity="*" />
+          <End Role="NHANVIEN" Type="Self.NHANVIEN" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CHITIETLUONG" Type="Self.CHITIETLUONG" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="NHANVIEN">
               <PropertyRef Name="MaNV" />
             </Principal>
-            <Dependent Role="HOADONLUONG">
+            <Dependent Role="CHITIETLUONG">
               <PropertyRef Name="MaNV" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_HOPDONGLAODONG_NHANVIEN">
-          <End Role="NHANVIEN" Type="Self.NHANVIEN" Multiplicity="1" />
+          <End Role="NHANVIEN" Type="Self.NHANVIEN" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="HOPDONGLAODONG" Type="Self.HOPDONGLAODONG" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="NHANVIEN">
@@ -207,8 +215,8 @@
         <EntityContainer Name="EMMAModelStoreContainer">
           <EntitySet Name="CONG" EntityType="Self.CONG" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ChamCong" EntityType="Self.ChamCong" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CHITIETLUONG" EntityType="Self.CHITIETLUONG" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CHUCVU" EntityType="Self.CHUCVU" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="HOADONLUONG" EntityType="Self.HOADONLUONG" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HOPDONGLAODONG" EntityType="Self.HOPDONGLAODONG" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LUONG" EntityType="Self.LUONG" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NHANVIEN" EntityType="Self.NHANVIEN" Schema="dbo" store:Type="Tables" />
@@ -224,11 +232,11 @@
           </AssociationSet>
           <AssociationSet Name="FK_HOADONLUONG_LUONG" Association="Self.FK_HOADONLUONG_LUONG">
             <End Role="LUONG" EntitySet="LUONG" />
-            <End Role="HOADONLUONG" EntitySet="HOADONLUONG" />
+            <End Role="CHITIETLUONG" EntitySet="CHITIETLUONG" />
           </AssociationSet>
           <AssociationSet Name="FK_HOADONLUONG_NHANVIEN" Association="Self.FK_HOADONLUONG_NHANVIEN">
             <End Role="NHANVIEN" EntitySet="NHANVIEN" />
-            <End Role="HOADONLUONG" EntitySet="HOADONLUONG" />
+            <End Role="CHITIETLUONG" EntitySet="CHITIETLUONG" />
           </AssociationSet>
           <AssociationSet Name="FK_HOPDONGLAODONG_NHANVIEN" Association="Self.FK_HOPDONGLAODONG_NHANVIEN">
             <End Role="NHANVIEN" EntitySet="NHANVIEN" />
@@ -247,7 +255,8 @@
             <End Role="NHANVIEN" EntitySet="NHANVIEN" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="EMMAModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -279,15 +288,7 @@
           <Property Name="Ra" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="NHANVIEN" Relationship="Self.FK_ChamCong_NHANVIEN" FromRole="ChamCong" ToRole="NHANVIEN" />
         </EntityType>
-        <EntityType Name="CHUCVU">
-          <Key>
-            <PropertyRef Name="MaCV" />
-          </Key>
-          <Property Name="MaCV" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="TenCV" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="NHANVIEN" Relationship="Self.FK_NHANVIEN_CHUCVU1" FromRole="CHUCVU" ToRole="NHANVIEN" />
-        </EntityType>
-        <EntityType Name="HOADONLUONG">
+        <EntityType Name="CHITIETLUONG">
           <Key>
             <PropertyRef Name="MaNV" />
             <PropertyRef Name="Thang" />
@@ -299,8 +300,16 @@
           <Property Name="BacLuong" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="HSPhuCap" Type="Double" />
           <Property Name="ThucLinh" Type="Double" />
-          <NavigationProperty Name="LUONG" Relationship="Self.FK_HOADONLUONG_LUONG" FromRole="HOADONLUONG" ToRole="LUONG" />
-          <NavigationProperty Name="NHANVIEN" Relationship="Self.FK_HOADONLUONG_NHANVIEN" FromRole="HOADONLUONG" ToRole="NHANVIEN" />
+          <NavigationProperty Name="LUONG" Relationship="Self.FK_HOADONLUONG_LUONG" FromRole="CHITIETLUONG" ToRole="LUONG" />
+          <NavigationProperty Name="NHANVIEN" Relationship="Self.FK_HOADONLUONG_NHANVIEN" FromRole="CHITIETLUONG" ToRole="NHANVIEN" />
+        </EntityType>
+        <EntityType Name="CHUCVU">
+          <Key>
+            <PropertyRef Name="MaCV" />
+          </Key>
+          <Property Name="MaCV" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TenCV" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="NHANVIEN" Relationship="Self.FK_NHANVIEN_CHUCVU1" FromRole="CHUCVU" ToRole="NHANVIEN" />
         </EntityType>
         <EntityType Name="HOPDONGLAODONG">
           <Key>
@@ -320,7 +329,7 @@
           <Property Name="BacLuong" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="LuongCoBan" Type="Double" />
           <Property Name="HSLuong" Type="Double" />
-          <NavigationProperty Name="HOADONLUONG" Relationship="Self.FK_HOADONLUONG_LUONG" FromRole="LUONG" ToRole="HOADONLUONG" />
+          <NavigationProperty Name="CHITIETLUONG" Relationship="Self.FK_HOADONLUONG_LUONG" FromRole="LUONG" ToRole="CHITIETLUONG" />
           <NavigationProperty Name="NHANVIEN" Relationship="Self.FK_NHANVIEN_LUONG1" FromRole="LUONG" ToRole="NHANVIEN" />
         </EntityType>
         <EntityType Name="NHANVIEN">
@@ -346,8 +355,8 @@
           <Property Name="Role" Type="Int32" />
           <NavigationProperty Name="CONG" Relationship="Self.FK_CONG_NHANVIEN" FromRole="NHANVIEN" ToRole="CONG" />
           <NavigationProperty Name="ChamCong" Relationship="Self.FK_ChamCong_NHANVIEN" FromRole="NHANVIEN" ToRole="ChamCong" />
+          <NavigationProperty Name="CHITIETLUONG" Relationship="Self.FK_HOADONLUONG_NHANVIEN" FromRole="NHANVIEN" ToRole="CHITIETLUONG" />
           <NavigationProperty Name="CHUCVU" Relationship="Self.FK_NHANVIEN_CHUCVU1" FromRole="NHANVIEN" ToRole="CHUCVU" />
-          <NavigationProperty Name="HOADONLUONG" Relationship="Self.FK_HOADONLUONG_NHANVIEN" FromRole="NHANVIEN" ToRole="HOADONLUONG" />
           <NavigationProperty Name="HOPDONGLAODONG" Relationship="Self.FK_HOPDONGLAODONG_NHANVIEN" FromRole="NHANVIEN" ToRole="HOPDONGLAODONG" />
           <NavigationProperty Name="LUONG" Relationship="Self.FK_NHANVIEN_LUONG1" FromRole="NHANVIEN" ToRole="LUONG" />
           <NavigationProperty Name="PHONGBAN" Relationship="Self.FK_NHANVIEN_PHONGBAN1" FromRole="NHANVIEN" ToRole="PHONGBAN" />
@@ -371,7 +380,9 @@
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <Association Name="FK_CONG_NHANVIEN">
-          <End Role="NHANVIEN" Type="Self.NHANVIEN" Multiplicity="1" />
+          <End Role="NHANVIEN" Type="Self.NHANVIEN" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="CONG" Type="Self.CONG" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="NHANVIEN">
@@ -383,13 +394,41 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ChamCong_NHANVIEN">
-          <End Role="NHANVIEN" Type="Self.NHANVIEN" Multiplicity="1" />
+          <End Role="NHANVIEN" Type="Self.NHANVIEN" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="ChamCong" Type="Self.ChamCong" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="NHANVIEN">
               <PropertyRef Name="MaNV" />
             </Principal>
             <Dependent Role="ChamCong">
+              <PropertyRef Name="MaNV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HOADONLUONG_LUONG">
+          <End Role="LUONG" Type="Self.LUONG" Multiplicity="0..1" />
+          <End Role="CHITIETLUONG" Type="Self.CHITIETLUONG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LUONG">
+              <PropertyRef Name="BacLuong" />
+            </Principal>
+            <Dependent Role="CHITIETLUONG">
+              <PropertyRef Name="BacLuong" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HOADONLUONG_NHANVIEN">
+          <End Role="NHANVIEN" Type="Self.NHANVIEN" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CHITIETLUONG" Type="Self.CHITIETLUONG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NHANVIEN">
+              <PropertyRef Name="MaNV" />
+            </Principal>
+            <Dependent Role="CHITIETLUONG">
               <PropertyRef Name="MaNV" />
             </Dependent>
           </ReferentialConstraint>
@@ -406,32 +445,10 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_HOADONLUONG_LUONG">
-          <End Role="LUONG" Type="Self.LUONG" Multiplicity="0..1" />
-          <End Role="HOADONLUONG" Type="Self.HOADONLUONG" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="LUONG">
-              <PropertyRef Name="BacLuong" />
-            </Principal>
-            <Dependent Role="HOADONLUONG">
-              <PropertyRef Name="BacLuong" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_HOADONLUONG_NHANVIEN">
-          <End Role="NHANVIEN" Type="Self.NHANVIEN" Multiplicity="1" />
-          <End Role="HOADONLUONG" Type="Self.HOADONLUONG" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="NHANVIEN">
-              <PropertyRef Name="MaNV" />
-            </Principal>
-            <Dependent Role="HOADONLUONG">
-              <PropertyRef Name="MaNV" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_HOPDONGLAODONG_NHANVIEN">
-          <End Role="NHANVIEN" Type="Self.NHANVIEN" Multiplicity="1" />
+          <End Role="NHANVIEN" Type="Self.NHANVIEN" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="HOPDONGLAODONG" Type="Self.HOPDONGLAODONG" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="NHANVIEN">
@@ -469,8 +486,8 @@
         <EntityContainer Name="EMMAEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="CONG" EntityType="Self.CONG" />
           <EntitySet Name="ChamCong" EntityType="Self.ChamCong" />
+          <EntitySet Name="CHITIETLUONG" EntityType="Self.CHITIETLUONG" />
           <EntitySet Name="CHUCVU" EntityType="Self.CHUCVU" />
-          <EntitySet Name="HOADONLUONG" EntityType="Self.HOADONLUONG" />
           <EntitySet Name="HOPDONGLAODONG" EntityType="Self.HOPDONGLAODONG" />
           <EntitySet Name="LUONG" EntityType="Self.LUONG" />
           <EntitySet Name="NHANVIEN" EntityType="Self.NHANVIEN" />
@@ -484,17 +501,17 @@
             <End Role="NHANVIEN" EntitySet="NHANVIEN" />
             <End Role="ChamCong" EntitySet="ChamCong" />
           </AssociationSet>
-          <AssociationSet Name="FK_NHANVIEN_CHUCVU1" Association="Self.FK_NHANVIEN_CHUCVU1">
-            <End Role="CHUCVU" EntitySet="CHUCVU" />
-            <End Role="NHANVIEN" EntitySet="NHANVIEN" />
-          </AssociationSet>
           <AssociationSet Name="FK_HOADONLUONG_LUONG" Association="Self.FK_HOADONLUONG_LUONG">
             <End Role="LUONG" EntitySet="LUONG" />
-            <End Role="HOADONLUONG" EntitySet="HOADONLUONG" />
+            <End Role="CHITIETLUONG" EntitySet="CHITIETLUONG" />
           </AssociationSet>
           <AssociationSet Name="FK_HOADONLUONG_NHANVIEN" Association="Self.FK_HOADONLUONG_NHANVIEN">
             <End Role="NHANVIEN" EntitySet="NHANVIEN" />
-            <End Role="HOADONLUONG" EntitySet="HOADONLUONG" />
+            <End Role="CHITIETLUONG" EntitySet="CHITIETLUONG" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NHANVIEN_CHUCVU1" Association="Self.FK_NHANVIEN_CHUCVU1">
+            <End Role="CHUCVU" EntitySet="CHUCVU" />
+            <End Role="NHANVIEN" EntitySet="NHANVIEN" />
           </AssociationSet>
           <AssociationSet Name="FK_HOPDONGLAODONG_NHANVIEN" Association="Self.FK_HOPDONGLAODONG_NHANVIEN">
             <End Role="NHANVIEN" EntitySet="NHANVIEN" />
@@ -538,23 +555,23 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="CHUCVU">
-            <EntityTypeMapping TypeName="EMMAModel.CHUCVU">
-              <MappingFragment StoreEntitySet="CHUCVU">
-                <ScalarProperty Name="MaCV" ColumnName="MaCV" />
-                <ScalarProperty Name="TenCV" ColumnName="TenCV" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="HOADONLUONG">
-            <EntityTypeMapping TypeName="EMMAModel.HOADONLUONG">
-              <MappingFragment StoreEntitySet="HOADONLUONG">
+          <EntitySetMapping Name="CHITIETLUONG">
+            <EntityTypeMapping TypeName="EMMAModel.CHITIETLUONG">
+              <MappingFragment StoreEntitySet="CHITIETLUONG">
                 <ScalarProperty Name="MaNV" ColumnName="MaNV" />
                 <ScalarProperty Name="Thang" ColumnName="Thang" />
                 <ScalarProperty Name="Nam" ColumnName="Nam" />
                 <ScalarProperty Name="BacLuong" ColumnName="BacLuong" />
                 <ScalarProperty Name="HSPhuCap" ColumnName="HSPhuCap" />
                 <ScalarProperty Name="ThucLinh" ColumnName="ThucLinh" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CHUCVU">
+            <EntityTypeMapping TypeName="EMMAModel.CHUCVU">
+              <MappingFragment StoreEntitySet="CHUCVU">
+                <ScalarProperty Name="MaCV" ColumnName="MaCV" />
+                <ScalarProperty Name="TenCV" ColumnName="TenCV" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
