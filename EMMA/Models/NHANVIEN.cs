@@ -19,7 +19,7 @@ namespace EMMA.Models
         {
             this.CONG = new HashSet<CONG>();
             this.ChamCong = new HashSet<ChamCong>();
-            this.HOADONLUONG = new HashSet<HOADONLUONG>();
+            this.CHITIETLUONG = new HashSet<CHITIETLUONG>();
             this.HOPDONGLAODONG = new HashSet<HOPDONGLAODONG>();
         }
     
@@ -45,9 +45,9 @@ namespace EMMA.Models
         public virtual ICollection<CONG> CONG { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ChamCong> ChamCong { get; set; }
-        public virtual CHUCVU CHUCVU { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<HOADONLUONG> HOADONLUONG { get; set; }
+        public virtual ICollection<CHITIETLUONG> CHITIETLUONG { get; set; }
+        public virtual CHUCVU CHUCVU { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<HOPDONGLAODONG> HOPDONGLAODONG { get; set; }
         public virtual LUONG LUONG { get; set; }

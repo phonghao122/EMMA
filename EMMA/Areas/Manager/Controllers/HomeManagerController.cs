@@ -579,13 +579,7 @@ namespace EMMA.Areas.Manager.Controllers
         public ActionResult TongHopCong(int thang, int nam)
         {
             CONG model = new CONG();
-            foreach (var a in db.CONG.ToList())
-            {
-                if(a.Thang == thang && a.Nam == nam)
-                {
-                    db.CONG.Remove(a);
-                }
-            }
+            
             var nv = db.ChamCong.FirstOrDefault(m => m.Thang == thang && m.Nam == nam);
             if (nv != null)
             {
@@ -669,7 +663,7 @@ namespace EMMA.Areas.Manager.Controllers
             }
             else
             {
-                var dsLuong = new List<HOADONLUONG>();
+                var dsLuong = new List<CHITIETLUONG>();
                 if (thang != null && nam != null)
                 {
                     page = 1;
@@ -681,11 +675,11 @@ namespace EMMA.Areas.Manager.Controllers
                 }
                 if (string.IsNullOrEmpty(thang.ToString()) || string.IsNullOrEmpty(nam.ToString()))
                 {
-                    dsLuong = db.HOADONLUONG.ToList();
+                    dsLuong = db.CHITIETLUONG.ToList();
                 }
                 else
                 {
-                    dsLuong = db.HOADONLUONG.Where(m => m.Thang == thang && m.Nam == nam).ToList();
+                    dsLuong = db.CHITIETLUONG.Where(m => m.Thang == thang && m.Nam == nam).ToList();
                 }
                 ViewBag.currentThang = thang;
                 ViewBag.currentNam = nam;
@@ -743,15 +737,9 @@ namespace EMMA.Areas.Manager.Controllers
         }
 
         [HttpPost]
-        public ActionResult TongHopLuong(int thang, int nam, HOADONLUONG model)
+        public ActionResult TongHopLuong(int thang, int nam, CHITIETLUONG model)
         {
-            foreach (var a in db.HOADONLUONG.ToList())
-            {
-                if (a.Thang == thang && a.Nam == nam)
-                {
-                    db.HOADONLUONG.Remove(a);
-                }
-            }
+            
             var nv = db.CONG.FirstOrDefault(m => m.Thang == thang && m.Nam == nam);
             if (nv != null)
             {
@@ -771,7 +759,7 @@ namespace EMMA.Areas.Manager.Controllers
                     var luongCB = db.LUONG.Find(model.BacLuong);
                     var luongThoaThuan = luongCB.LuongCoBan + luongCB.LuongCoBan * model.HSPhuCap;
                     model.ThucLinh = (luongThoaThuan / 26) * item.SoNgayCong;
-                    db.HOADONLUONG.Add(model);
+                    db.CHITIETLUONG.Add(model);
                 }
                 db.SaveChanges();
                 return RedirectToAction("DsLuong");
